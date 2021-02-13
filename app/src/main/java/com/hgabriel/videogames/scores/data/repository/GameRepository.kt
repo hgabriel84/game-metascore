@@ -17,6 +17,7 @@ class GameRepository @Inject constructor(
 
     suspend fun fetchGames(): Flow<Resource<GamesResponse>> {
         return flow {
+
             val dbResult = fetchGamesFromDb()
             emit(dbResult)
             emit(Resource.loading(null))

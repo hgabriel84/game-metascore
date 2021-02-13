@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VideogamesScores">
 
-        <activity android:name=".ui.list.GameListActivity">
+        <activity android:name=".ui.GameListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

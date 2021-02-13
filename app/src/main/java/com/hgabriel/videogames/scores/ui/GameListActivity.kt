@@ -1,4 +1,4 @@
-package com.hgabriel.videogames.scores.ui.list
+package com.hgabriel.videogames.scores.ui
 
 import android.os.Bundle
 import androidx.activity.viewModels
