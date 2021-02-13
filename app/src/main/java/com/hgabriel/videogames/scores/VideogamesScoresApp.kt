@@ -1,15 +1,7 @@
 package com.hgabriel.videogames.scores
 
 import android.app.Application
-import timber.log.Timber
+import dagger.hilt.android.HiltAndroidApp
 
-class VideogamesScoresApp : Application() {
-
-    override fun onCreate() {
-        super.onCreate()
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
-    }
-
-}
+@HiltAndroidApp
+class VideogamesScoresApp : Application()
