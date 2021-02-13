@@ -11,18 +11,20 @@ class GameRemoteDataSource @Inject constructor(private val retrofit: Retrofit) {
     suspend fun fetchGame(name: String): Resource<Game> {
         val service = retrofit.create(GameService::class.java)
         return getGameFromPlainText(
+            name = name,
             request = { service.getPS4Game(name) },
             errorMessage = "Error fetching Game"
         )
     }
 
     private suspend fun getGameFromPlainText(
+        name: String,
         request: suspend () -> Response<String>,
         errorMessage: String
     ): Resource<Game> {
         val result = request.invoke()
         return if (result.isSuccessful) {
-            Resource.success(result.body()?.toGame())
+            Resource.success(result.body()?.toGame(name))
         } else {
             Resource.error(errorMessage, null)
         }

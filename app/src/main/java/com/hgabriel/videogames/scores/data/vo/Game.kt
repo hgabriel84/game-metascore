@@ -11,7 +11,6 @@ import androidx.room.PrimaryKey
 data class Game(
     val name: String,
     @PrimaryKey
-    val gameUrl: String,
     val imageUrl: String,
     val metascore: Int,
     val userScore: Float,
