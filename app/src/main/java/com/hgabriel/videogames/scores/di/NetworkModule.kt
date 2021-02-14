@@ -1,5 +1,6 @@
 package com.hgabriel.videogames.scores.di
 
+import com.hgabriel.videogames.scores.Config
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,11 +14,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val baseUrl = "https://www.metacritic.com/"
-
     @Provides
     fun provideHTTPLoggingInterceptor(): HttpLoggingInterceptor =
-        HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BODY) }
+        HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BASIC) }
 
     @Provides
     fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
@@ -29,7 +28,7 @@ object NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .addConverterFactory(ScalarsConverterFactory.create())
-            .baseUrl(baseUrl)
+            .baseUrl(Config.BASE_URL)
             .client(okHttpClient)
             .build()
 }

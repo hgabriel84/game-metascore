@@ -2,6 +2,7 @@ package com.hgabriel.videogames.scores.data.repository
 
 import com.hgabriel.videogames.scores.data.local.GameDao
 import com.hgabriel.videogames.scores.data.remote.GameRemoteDataSource
+import com.hgabriel.videogames.scores.data.vo.Game
 import com.hgabriel.videogames.scores.data.vo.GamesResponse
 import com.hgabriel.videogames.scores.data.vo.Resource
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +22,8 @@ class GameRepository @Inject constructor(
             emit(dbResult)
             emit(Resource.loading(null))
             dbResult.data?.result?.forEach { dbGame ->
-                gameRemoteDataSource.fetchGame(dbGame.pathName).data?.let { remoteGame ->
+                gameRemoteDataSource.fetchGame(dbGame.gamePath).data?.let { remoteGame ->
+                    remoteGame.played = dbGame.played
                     gameDao.insert(remoteGame)
                 }
             }

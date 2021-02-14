@@ -1,20 +1,16 @@
 package com.hgabriel.videogames.scores.data.vo
 
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(
-    tableName = "game",
-    indices = [Index("pathName", unique = true)]
-)
+@Entity
 data class Game(
     val name: String,
     @PrimaryKey
-    val pathName: String,
+    val gamePath: String,
     val imageUrl: String,
     val metascore: Int,
     val userScore: Float,
     val averageScore: Float,
-    val played: Boolean
+    var played: Boolean? = null
 )

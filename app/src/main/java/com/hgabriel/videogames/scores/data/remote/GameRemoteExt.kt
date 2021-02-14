@@ -4,7 +4,7 @@ import com.hgabriel.videogames.scores.data.vo.Game
 import org.jsoup.Jsoup
 import timber.log.Timber
 
-fun String.toGame(pathName: String): Game? {
+fun String.toGame(gamePath: String): Game? {
     try {
         val doc = Jsoup.parse(this)
 
@@ -19,15 +19,14 @@ fun String.toGame(pathName: String): Game? {
 
         return Game(
             name = name,
-            pathName = pathName,
+            gamePath = gamePath,
             imageUrl = imageUrl,
             metascore = metascore,
             userScore = userScore,
-            averageScore = (metascore + (userScore * 10)) / 2,
-            played = false
+            averageScore = (metascore + (userScore * 10)) / 2
         )
     } catch (t: Throwable) {
-        Timber.d(t, "Error scraping game info from html.")
+        Timber.d(t, "Error scraping game data from html.")
         return null
     }
 }
