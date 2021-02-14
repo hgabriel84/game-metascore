@@ -3,8 +3,11 @@ package com.hgabriel.videogames.scores.ui
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import com.hgabriel.videogames.scores.R
 import com.hgabriel.videogames.scores.data.vo.Resource
 import com.hgabriel.videogames.scores.databinding.ActivityGamelistBinding
 import com.hgabriel.videogames.scores.viewmodel.GamesViewModel
@@ -16,6 +19,8 @@ class GameListActivity : AppCompatActivity() {
     private val viewModel by viewModels<GamesViewModel>()
     private lateinit var binding: ActivityGamelistBinding
     private lateinit var gameAdapter: GameAdapter
+    private lateinit var loadigSnackbar: Snackbar
+    private lateinit var errorSnackbar: Snackbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,16 +39,30 @@ class GameListActivity : AppCompatActivity() {
             addItemDecoration(DividerItemDecoration(this.context, linearLayoutManager.orientation))
             adapter = gameAdapter
         }
-
+        loadigSnackbar = Snackbar
+            .make(
+                binding.coordinatorLayout,
+                R.string.updating_data_label,
+                Snackbar.LENGTH_INDEFINITE
+            )
+            .setBackgroundTint(ContextCompat.getColor(this, R.color.blue))
+            .setTextColor(ContextCompat.getColor(this, R.color.white))
+        errorSnackbar =
+            Snackbar.make(binding.coordinatorLayout, R.string.error, Snackbar.LENGTH_SHORT)
+                .setBackgroundTint(ContextCompat.getColor(this, R.color.red_score))
+                .setTextColor(ContextCompat.getColor(this, R.color.white))
     }
 
     private fun initGameList() {
         viewModel.games.observe(this, { resource ->
             when (resource.status) {
-                Resource.Status.SUCCESS ->
+                Resource.Status.SUCCESS -> {
+                    loadigSnackbar.dismiss()
+                    errorSnackbar.dismiss()
                     resource.data?.result?.let { gameAdapter.addAll(it) }
-                Resource.Status.ERROR -> Unit
-                Resource.Status.LOADING -> Unit
+                }
+                Resource.Status.ERROR -> errorSnackbar.show()
+                Resource.Status.LOADING -> loadigSnackbar.show()
             }
         })
     }
