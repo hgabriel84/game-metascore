@@ -17,12 +17,11 @@ class GameRepository @Inject constructor(
 
     suspend fun fetchGames(): Flow<Resource<GamesResponse>> {
         return flow {
-
             val dbResult = fetchGamesFromDb()
             emit(dbResult)
             emit(Resource.loading(null))
             dbResult.data?.result?.forEach { dbGame ->
-                gameRemoteDataSource.fetchGame(dbGame.name).data?.let { remoteGame ->
+                gameRemoteDataSource.fetchGame(dbGame.pathName).data?.let { remoteGame ->
                     gameDao.insert(remoteGame)
                 }
             }
