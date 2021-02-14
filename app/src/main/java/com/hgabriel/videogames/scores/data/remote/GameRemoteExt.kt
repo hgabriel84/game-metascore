@@ -12,10 +12,24 @@ fun String.toGame(gamePath: String): Game? {
         val imageUrl =
             doc.select("div.product_media").select("img.product_image").first().attr("src")
         val scores = doc.select("div.product_scores")
-        val metascore =
+        val metascore = try {
             scores.select("div.metascore_wrap").select("div.metascore_w").first().text().toInt()
-        val userScore =
+        } catch (t: Throwable) {
+            Timber.d(t, "Not enough critic reviews to calculate metascore.")
+            -1
+        }
+        val userScore = try {
             scores.select("div.userscore_wrap").select("div.metascore_w").first().text().toFloat()
+        } catch (t: Throwable) {
+            Timber.d(t, "Not enough user reviews to calculate user score.")
+            -1f
+        }
+
+        val averageScore = if (userScore < 0 || metascore < 0) {
+            -1f
+        } else {
+            (metascore + (userScore * 10)) / 2
+        }
 
         return Game(
             name = name,
@@ -23,7 +37,7 @@ fun String.toGame(gamePath: String): Game? {
             imageUrl = imageUrl,
             metascore = metascore,
             userScore = userScore,
-            averageScore = (metascore + (userScore * 10)) / 2
+            averageScore = averageScore
         )
     } catch (t: Throwable) {
         Timber.d(t, "Error scraping game data from html.")

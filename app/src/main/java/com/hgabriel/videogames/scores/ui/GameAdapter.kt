@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.hgabriel.videogames.scores.R
 import com.hgabriel.videogames.scores.data.vo.Game
 import com.hgabriel.videogames.scores.databinding.ListItemGameBinding
@@ -35,12 +34,19 @@ class GameAdapter(private val list: ArrayList<Game>) :
             // labels
             itemBinding.tvName.text = game.name
             itemBinding.tvMetascore.text =
-                String.format(context.getString(R.string.metascore), game.metascore)
+                String.format(
+                    context.getString(R.string.metascore),
+                    game.metascore.takeIf { it >= 0 } ?: "-"
+                )
             itemBinding.tvUserscore.text =
-                String.format(context.getString(R.string.userscore), game.userScore)
+                String.format(
+                    context.getString(R.string.userscore),
+                    game.userScore.takeIf { it >= 0 } ?: "-"
+                )
             val df = DecimalFormat("#.##")
             df.roundingMode = RoundingMode.CEILING
-            itemBinding.tvAverageScore.text = df.format(game.averageScore)
+            itemBinding.tvAverageScore.text =
+                game.averageScore.takeIf { it >= 0 }?.let { df.format(it) } ?: "-"
 
             // image
             Glide.with(itemBinding.root)
