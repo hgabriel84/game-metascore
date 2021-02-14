@@ -21,10 +21,12 @@ class GamesViewModel @Inject constructor(private val repo: GameRepository) : Vie
         fetchGames()
     }
 
+    fun addGame(gamePath: String) {
+        viewModelScope.launch { repo.addGame(gamePath).collect { games.value = it } }
+    }
+
     private fun fetchGames() {
-        viewModelScope.launch {
-            repo.fetchGames().collect { games.value = it }
-        }
+        viewModelScope.launch { repo.fetchGames().collect { games.value = it } }
     }
 
 }

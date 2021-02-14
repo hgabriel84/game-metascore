@@ -92,7 +92,7 @@ class GameListActivity : AppCompatActivity() {
 
     private fun showAddGame() {
         AddGameBottomSheet { gamePath ->
-            gamePath?.let { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() }
+            gamePath?.let { viewModel.addGame(it) }
         }.show(supportFragmentManager, addGameBottomSheetTag)
         binding.fab.hide()
     }

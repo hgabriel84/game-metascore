@@ -2,7 +2,6 @@ package com.hgabriel.videogames.scores.data.repository
 
 import com.hgabriel.videogames.scores.data.local.GameDao
 import com.hgabriel.videogames.scores.data.remote.GameRemoteDataSource
-import com.hgabriel.videogames.scores.data.vo.Game
 import com.hgabriel.videogames.scores.data.vo.GamesResponse
 import com.hgabriel.videogames.scores.data.vo.Resource
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +25,16 @@ class GameRepository @Inject constructor(
                     remoteGame.played = dbGame.played
                     gameDao.insert(remoteGame)
                 }
+            }
+            emit(fetchGamesFromDb())
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun addGame(gamePath: String): Flow<Resource<GamesResponse>> {
+        return flow {
+            emit(Resource.loading(null))
+            gameRemoteDataSource.fetchGame(gamePath).data?.let { remoteGame ->
+                gameDao.insert(remoteGame)
             }
             emit(fetchGamesFromDb())
         }.flowOn(Dispatchers.IO)
