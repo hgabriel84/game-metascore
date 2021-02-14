@@ -19,6 +19,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class GameListActivity : AppCompatActivity() {
 
+    private val addGameBottomSheetTag = "AddGameBottomSheet"
+
     private val viewModel by viewModels<GamesViewModel>()
     private lateinit var binding: ActivityGamelistBinding
     private lateinit var gameAdapter: GameAdapter
@@ -35,6 +37,7 @@ class GameListActivity : AppCompatActivity() {
     }
 
     private fun setupLayout() {
+        // recycler view
         gameAdapter = GameAdapter(arrayListOf())
         val linearLayoutManager = LinearLayoutManager(this)
         binding.rvGames.apply {
@@ -52,6 +55,8 @@ class GameListActivity : AppCompatActivity() {
                 }
             })
         }
+
+        // snackbars
         loadigSnackbar = Snackbar
             .make(
                 binding.coordinatorLayout,
@@ -64,9 +69,9 @@ class GameListActivity : AppCompatActivity() {
             Snackbar.make(binding.coordinatorLayout, R.string.error, Snackbar.LENGTH_SHORT)
                 .setBackgroundTint(ContextCompat.getColor(this, R.color.red_score))
                 .setTextColor(ContextCompat.getColor(this, R.color.white))
-        binding.fab.setOnClickListener {
-            Toast.makeText(this, "ADD GAME", Toast.LENGTH_SHORT).show()
-        }
+
+        // listeners
+        binding.fab.setOnClickListener { showAddGame() }
     }
 
     private fun initGameList() {
@@ -78,8 +83,17 @@ class GameListActivity : AppCompatActivity() {
                     resource.data?.result?.let { gameAdapter.addAll(it) }
                 }
                 Resource.Status.ERROR -> errorSnackbar.show()
-                Resource.Status.LOADING -> loadigSnackbar.show()
+                Resource.Status.LOADING -> {
+                    loadigSnackbar.show()
+                }
             }
         })
+    }
+
+    private fun showAddGame() {
+        AddGameBottomSheet { gamePath ->
+            gamePath?.let { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() }
+        }.show(supportFragmentManager, addGameBottomSheetTag)
+        binding.fab.hide()
     }
 }

@@ -5,4 +5,6 @@
     <string name="updating_data_label">Updating game score</string>
     <string name="error">Error</string>
     <string name="add_game_content_description">add game</string>
+    <string name="game_path_label">Game path</string>
+    <string name="save">save</string>
 </resources>
