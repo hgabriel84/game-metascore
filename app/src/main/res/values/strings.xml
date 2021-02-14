@@ -2,6 +2,7 @@
     <string name="app_name">GameMetascore</string>
     <string name="metascore">metascore: %s</string>
     <string name="userscore">user score: %s</string>
-    <string name="updating_data_label">UPDATING GAME SCORE</string>
-    <string name="error">ERROR</string>
+    <string name="updating_data_label">Updating game score</string>
+    <string name="error">Error</string>
+    <string name="add_game_content_description">add game</string>
 </resources>

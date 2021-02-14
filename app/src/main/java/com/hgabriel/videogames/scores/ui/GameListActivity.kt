@@ -1,17 +1,20 @@
 package com.hgabriel.videogames.scores.ui
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.hgabriel.videogames.scores.R
 import com.hgabriel.videogames.scores.data.vo.Resource
 import com.hgabriel.videogames.scores.databinding.ActivityGamelistBinding
 import com.hgabriel.videogames.scores.viewmodel.GamesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class GameListActivity : AppCompatActivity() {
@@ -38,6 +41,16 @@ class GameListActivity : AppCompatActivity() {
             layoutManager = linearLayoutManager
             addItemDecoration(DividerItemDecoration(this.context, linearLayoutManager.orientation))
             adapter = gameAdapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (dy > 0) {
+                        binding.fab.hide()
+                    } else {
+                        binding.fab.show()
+                    }
+                    super.onScrolled(recyclerView, dx, dy)
+                }
+            })
         }
         loadigSnackbar = Snackbar
             .make(
@@ -51,6 +64,9 @@ class GameListActivity : AppCompatActivity() {
             Snackbar.make(binding.coordinatorLayout, R.string.error, Snackbar.LENGTH_SHORT)
                 .setBackgroundTint(ContextCompat.getColor(this, R.color.red_score))
                 .setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.fab.setOnClickListener {
+            Toast.makeText(this, "ADD GAME", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun initGameList() {
