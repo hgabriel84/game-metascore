@@ -3,6 +3,7 @@ package com.hgabriel.videogames.scores.ui
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +18,6 @@ import com.hgabriel.videogames.scores.data.vo.Resource
 import com.hgabriel.videogames.scores.databinding.ActivityGamelistBinding
 import com.hgabriel.videogames.scores.viewmodel.GamesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class GameListActivity : AppCompatActivity() {
@@ -96,6 +96,11 @@ class GameListActivity : AppCompatActivity() {
                 Resource.Status.SUCCESS -> {
                     if (::snackbar.isInitialized) snackbar.dismiss()
                     resource.data?.result?.let { gameAdapter.addAll(it) }
+                    binding.tvEmptyState.visibility = if (gameAdapter.itemCount == 0) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
                 }
                 Resource.Status.ERROR -> showErrorSnackbar()
                 Resource.Status.LOADING -> showLoadingSnackbar()
