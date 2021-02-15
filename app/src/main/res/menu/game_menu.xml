@@ -7,11 +7,11 @@
         android:id="@+id/action_order"
         android:orderInCategory="100"
         android:title="@string/order"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search_24"
         android:orderInCategory="200"
         android:title="@string/search"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>

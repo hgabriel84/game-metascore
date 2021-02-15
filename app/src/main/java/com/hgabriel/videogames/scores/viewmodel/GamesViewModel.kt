@@ -35,10 +35,23 @@ class GamesViewModel @Inject constructor(private val repo: GameRepository) : Vie
         }
     }
 
-    fun fetchGames() {
+    fun toggleOrder() {
         viewModelScope.launch {
-            repo.fetchGames(order.value ?: GameOrder.AVERAGE_SCORE).collect { games.value = it }
+            order.value?.let { gameOrder ->
+                when (gameOrder) {
+                    GameOrder.AVERAGE_SCORE -> order.value = GameOrder.NAME
+                    GameOrder.NAME -> order.value = GameOrder.AVERAGE_SCORE
+                }
+            }
+            repo.loadGamesFromDb(order.value ?: GameOrder.AVERAGE_SCORE)
+                .collect { games.value = it }
         }
     }
 
+    private fun fetchGames() {
+        viewModelScope.launch {
+            repo.fetchGames(order.value ?: GameOrder.AVERAGE_SCORE)
+                .collect { games.value = it }
+        }
+    }
 }

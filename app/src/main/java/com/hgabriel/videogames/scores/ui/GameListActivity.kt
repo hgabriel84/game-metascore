@@ -2,6 +2,8 @@ package com.hgabriel.videogames.scores.ui
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -49,6 +51,21 @@ class GameListActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_order -> {
+                viewModel.toggleOrder()
+                invalidateOptionsMenu()
+                true
+            }
+            R.id.action_search -> {
+                Toast.makeText(this, "SEARCH", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun setupLayout() {
         // recycler view
         gameAdapter = GameAdapter(arrayListOf())
@@ -84,8 +101,6 @@ class GameListActivity : AppCompatActivity() {
                 Resource.Status.LOADING -> showLoadingSnackbar()
             }
         })
-
-        viewModel.order.observe(this, { viewModel.fetchGames() })
     }
 
     private fun showAddGame() {
