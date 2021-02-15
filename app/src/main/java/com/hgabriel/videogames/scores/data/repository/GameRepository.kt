@@ -2,6 +2,7 @@ package com.hgabriel.videogames.scores.data.repository
 
 import com.hgabriel.videogames.scores.data.local.GameDao
 import com.hgabriel.videogames.scores.data.remote.GameRemoteDataSource
+import com.hgabriel.videogames.scores.data.vo.GameOrder
 import com.hgabriel.videogames.scores.data.vo.GamesResponse
 import com.hgabriel.videogames.scores.data.vo.Resource
 import kotlinx.coroutines.Dispatchers
@@ -15,9 +16,9 @@ class GameRepository @Inject constructor(
     private val gameDao: GameDao
 ) {
 
-    suspend fun fetchGames(): Flow<Resource<GamesResponse>> {
+    suspend fun fetchGames(order: GameOrder): Flow<Resource<GamesResponse>> {
         return flow {
-            val dbResult = fetchGamesFromDb()
+            val dbResult = fetchGamesFromDb(order)
             emit(dbResult)
             emit(Resource.loading(null))
             dbResult.data?.result?.forEach { dbGame ->
@@ -26,20 +27,23 @@ class GameRepository @Inject constructor(
                     gameDao.insert(remoteGame)
                 }
             }
-            emit(fetchGamesFromDb())
+            emit(fetchGamesFromDb(order))
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun addGame(gamePath: String): Flow<Resource<GamesResponse>> {
+    suspend fun addGame(gamePath: String, order: GameOrder): Flow<Resource<GamesResponse>> {
         return flow {
             emit(Resource.loading(null))
             gameRemoteDataSource.fetchGame(gamePath).data?.let { remoteGame ->
                 gameDao.insert(remoteGame)
             }
-            emit(fetchGamesFromDb())
+            emit(fetchGamesFromDb(order))
         }.flowOn(Dispatchers.IO)
     }
 
-    private fun fetchGamesFromDb(): Resource<GamesResponse> =
-        Resource.success(GamesResponse(gameDao.getAll()))
+    private fun fetchGamesFromDb(order: GameOrder): Resource<GamesResponse> =
+        when (order) {
+            GameOrder.AVERAGE_SCORE -> Resource.success(GamesResponse(gameDao.getAllByScore()))
+            GameOrder.NAME -> Resource.success(GamesResponse(gameDao.getAllByName()))
+        }
 }

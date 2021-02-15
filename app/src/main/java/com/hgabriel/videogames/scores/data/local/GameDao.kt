@@ -7,7 +7,10 @@ import com.hgabriel.videogames.scores.data.vo.Game
 interface GameDao {
 
     @Query("SELECT * FROM game order by averageScore DESC")
-    fun getAll(): List<Game>
+    fun getAllByScore(): List<Game>
+
+    @Query("SELECT * FROM game order by name ASC")
+    fun getAllByName(): List<Game>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(game: Game)
