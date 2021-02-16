@@ -8,4 +8,4 @@ Videogames can be added, removed, and marked as played.
 
 This is only for personal use.
 
-![screenshot](https://github.com/hgabriel84/videogames-scores/blob/main/screenshots/Screenshot_20210216-141556.png =150x300)
+![screenshot](https://github.com/hgabriel84/videogames-scores/blob/main/screenshots/screenshot.png)
