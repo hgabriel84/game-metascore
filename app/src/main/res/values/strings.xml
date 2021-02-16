@@ -9,7 +9,7 @@
     <string name="save">save</string>
     <string name="order">order</string>
     <string name="search">search</string>
-    <string name="add_game_explained">Add a game by inserting part of Metacritic url corresponding to platform and game name.\nExample: playstation-4/cyberpunk-2077</string>
+    <string name="add_game_explained">Add a game by inserting Metacritic url.\nExample: https://www.metacritic.com/game/playstation-4/bloodborne</string>
     <string name="played">Played</string>
     <string name="delete">Delete</string>
     <string name="game_deleted">Game deleted</string>
