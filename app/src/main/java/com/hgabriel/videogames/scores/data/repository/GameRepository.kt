@@ -41,8 +41,8 @@ class GameRepository @Inject constructor(
             emit(Resource.loading(null))
             gameRemoteDataSource.fetchGame(gamePath).data?.let { remoteGame ->
                 gameDao.insert(remoteGame)
-            }
-            emit(loadFromDb(order))
+                emit(loadFromDb(order))
+            } ?: emit(Resource.error("error adding game", null))
         }.flowOn(Dispatchers.IO)
 
     suspend fun addGame(game: Game, order: GameOrder): Flow<Resource<GamesResponse>> =
