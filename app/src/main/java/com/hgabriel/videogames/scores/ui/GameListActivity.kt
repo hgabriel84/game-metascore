@@ -134,6 +134,7 @@ class GameListActivity : AppCompatActivity() {
             .setBackgroundTint(ContextCompat.getColor(this, R.color.blue))
             .setTextColor(ContextCompat.getColor(this, R.color.white))
             .setAction(R.string.undo) { viewModel.restoreGame() }
+            .setActionTextColor(ContextCompat.getColor(this, R.color.white))
         snackbar.show()
     }
 

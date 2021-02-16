@@ -16,19 +16,19 @@ fun String.toGame(gamePath: String): Game? {
             scores.select("div.metascore_wrap").select("div.metascore_w").first().text().toInt()
         } catch (t: Throwable) {
             Timber.d(t, "Not enough critic reviews to calculate metascore.")
-            -1
+            null
         }
         val userScore = try {
             scores.select("div.userscore_wrap").select("div.metascore_w").first().text().toFloat()
         } catch (t: Throwable) {
             Timber.d(t, "Not enough user reviews to calculate user score.")
-            -1f
+            null
         }
 
-        val averageScore = if (userScore < 0 || metascore < 0) {
-            -1f
-        } else {
+        val averageScore = if (userScore != null && metascore != null) {
             (metascore + (userScore * 10)) / 2
+        } else {
+            null
         }
 
         return Game(

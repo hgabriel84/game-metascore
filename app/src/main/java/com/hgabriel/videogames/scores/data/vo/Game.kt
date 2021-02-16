@@ -9,8 +9,8 @@ data class Game(
     @PrimaryKey
     val gamePath: String,
     val imageUrl: String,
-    val metascore: Int,
-    val userScore: Float,
-    val averageScore: Float,
+    val metascore: Int?,
+    val userScore: Float?,
+    val averageScore: Float?,
     var played: Boolean
 )

@@ -39,19 +39,12 @@ class GameAdapter(
             // labels
             itemBinding.tvName.text = game.name
             itemBinding.tvMetascore.text =
-                String.format(
-                    context.getString(R.string.metascore),
-                    game.metascore.takeIf { it >= 0 } ?: "-"
-                )
+                String.format(context.getString(R.string.metascore), game.metascore ?: "-")
             itemBinding.tvUserscore.text =
-                String.format(
-                    context.getString(R.string.userscore),
-                    game.userScore.takeIf { it >= 0 } ?: "-"
-                )
+                String.format(context.getString(R.string.userscore), game.userScore ?: "-")
             val df = DecimalFormat("#.##")
             df.roundingMode = RoundingMode.CEILING
-            itemBinding.tvAverageScore.text =
-                game.averageScore.takeIf { it >= 0 }?.let { df.format(it) } ?: "-"
+            itemBinding.tvAverageScore.text = game.averageScore?.let { df.format(it) } ?: "-"
 
             // image
             Glide.with(itemBinding.root)
@@ -65,13 +58,15 @@ class GameAdapter(
             }
         }
 
-        private fun getAverageScoreTextColor(context: Context, score: Float) =
-            when (score) {
-                in 0f..49.9f -> ContextCompat.getColor(context, R.color.red_score)
-                in 50f..79.9f -> ContextCompat.getColor(context, R.color.yellow_score)
-                in 80f..100f -> ContextCompat.getColor(context, R.color.green_score)
-                else -> ContextCompat.getColor(context, R.color.blue)
-            }
+        private fun getAverageScoreTextColor(context: Context, score: Float?) =
+            score?.let {
+                when (it) {
+                    in 0f..49.9f -> ContextCompat.getColor(context, R.color.red_score)
+                    in 50f..79.9f -> ContextCompat.getColor(context, R.color.yellow_score)
+                    in 80f..100f -> ContextCompat.getColor(context, R.color.green_score)
+                    else -> ContextCompat.getColor(context, R.color.blue)
+                }
+            } ?: ContextCompat.getColor(context, R.color.blue)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder =
