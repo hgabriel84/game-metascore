@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hgabriel.videogames.scores.data.repository.GameRepository
+import com.hgabriel.videogames.scores.data.vo.Game
 import com.hgabriel.videogames.scores.data.vo.GameOrder
 import com.hgabriel.videogames.scores.data.vo.GamesResponse
 import com.hgabriel.videogames.scores.data.vo.Resource
@@ -23,6 +24,10 @@ class GamesViewModel @Inject constructor(private val repo: GameRepository) : Vie
         MutableLiveData<GameOrder>()
     }
 
+    val deletedGame: MutableLiveData<Game?> by lazy {
+        MutableLiveData<Game?>()
+    }
+
     init {
         order.value = GameOrder.AVERAGE_SCORE
         fetchGames()
@@ -31,6 +36,32 @@ class GamesViewModel @Inject constructor(private val repo: GameRepository) : Vie
     fun addGame(gamePath: String) {
         viewModelScope.launch {
             repo.addGame(gamePath, order.value ?: GameOrder.AVERAGE_SCORE)
+                .collect { games.value = it }
+        }
+    }
+
+    fun deleteGame(game: Game) {
+        viewModelScope.launch {
+            repo.deleteGame(game, order.value ?: GameOrder.AVERAGE_SCORE)
+                .collect { games.value = it }
+            deletedGame.value = game
+        }
+    }
+
+    fun restoreGame() {
+        viewModelScope.launch {
+            deletedGame.value?.let { game ->
+                repo.addGame(game, order.value ?: GameOrder.AVERAGE_SCORE)
+                    .collect { games.value = it }
+            }
+            deletedGame.value = null
+        }
+    }
+
+    fun togglePlayed(game: Game) {
+        viewModelScope.launch {
+            game.played = !game.played
+            repo.addGame(game, order.value ?: GameOrder.AVERAGE_SCORE)
                 .collect { games.value = it }
         }
     }

@@ -2,7 +2,7 @@
     <string name="app_name">GameMetascore</string>
     <string name="metascore">metascore: %s</string>
     <string name="userscore">user score: %s</string>
-    <string name="updating_data_label">Updating game score</string>
+    <string name="updating_data">Updating game score</string>
     <string name="error">Error</string>
     <string name="add_game_content_description">add game</string>
     <string name="game_path_label">Game path</string>
@@ -10,4 +10,8 @@
     <string name="order">order</string>
     <string name="search">search</string>
     <string name="add_game_explained">Add a game by inserting part of Metacritic url corresponding to platform and game name.\nExample: playstation-4/cyberpunk-2077</string>
+    <string name="played">Played</string>
+    <string name="delete">Delete</string>
+    <string name="game_deleted">Game deleted</string>
+    <string name="undo">Undo</string>
 </resources>

@@ -2,6 +2,7 @@ package com.hgabriel.videogames.scores.data.repository
 
 import com.hgabriel.videogames.scores.data.local.GameDao
 import com.hgabriel.videogames.scores.data.remote.GameRemoteDataSource
+import com.hgabriel.videogames.scores.data.vo.Game
 import com.hgabriel.videogames.scores.data.vo.GameOrder
 import com.hgabriel.videogames.scores.data.vo.GamesResponse
 import com.hgabriel.videogames.scores.data.vo.Resource
@@ -29,6 +30,12 @@ class GameRepository @Inject constructor(
             }
         }.flowOn(Dispatchers.IO)
 
+    suspend fun loadGamesFromDb(order: GameOrder): Flow<Resource<GamesResponse>> =
+        flow {
+            val dbResult = loadFromDb(order)
+            emit(dbResult)
+        }.flowOn(Dispatchers.IO)
+
     suspend fun addGame(gamePath: String, order: GameOrder): Flow<Resource<GamesResponse>> =
         flow {
             emit(Resource.loading(null))
@@ -38,10 +45,18 @@ class GameRepository @Inject constructor(
             emit(loadFromDb(order))
         }.flowOn(Dispatchers.IO)
 
-    suspend fun loadGamesFromDb(order: GameOrder): Flow<Resource<GamesResponse>> =
+    suspend fun addGame(game: Game, order: GameOrder): Flow<Resource<GamesResponse>> =
         flow {
-            val dbResult = loadFromDb(order)
-            emit(dbResult)
+            emit(Resource.loading(null))
+            gameDao.insert(game)
+            emit(loadFromDb(order))
+        }.flowOn(Dispatchers.IO)
+
+    suspend fun deleteGame(game: Game, order: GameOrder): Flow<Resource<GamesResponse>> =
+        flow {
+            emit(Resource.loading(null))
+            gameDao.delete(listOf(game))
+            emit(loadFromDb(order))
         }.flowOn(Dispatchers.IO)
 
     private fun loadFromDb(order: GameOrder): Resource<GamesResponse> =

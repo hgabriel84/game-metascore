@@ -12,24 +12,29 @@ import com.hgabriel.videogames.scores.databinding.ListItemGameBinding
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
-class GameAdapter(private val list: ArrayList<Game>) :
+class GameAdapter(
+    private val list: ArrayList<Game>,
+    private val onLongClickCallback: (game: Game) -> Unit
+) :
     RecyclerView.Adapter<GameAdapter.GameViewHolder>() {
 
-    class GameViewHolder(private val itemBinding: ListItemGameBinding) :
+    class GameViewHolder(
+        private val itemBinding: ListItemGameBinding,
+        private val onLongClickCallback: (game: Game) -> Unit
+    ) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(game: Game) {
             val context = itemBinding.root.context
             // colors
-            game.played?.takeIf { it }?.let {
-                itemBinding.clContent.setBackgroundColor(
-                    ContextCompat.getColor(context, R.color.green_light)
-                )
-            } ?: itemBinding.clContent.setBackgroundColor(
-                ContextCompat.getColor(context, R.color.grey_light)
-            )
-            itemBinding.tvAverageScore.setTextColor(
-                getAverageScoreTextColor(context, game.averageScore)
-            )
+            if (game.played) {
+                itemBinding.clContent
+                    .setBackgroundColor(ContextCompat.getColor(context, R.color.green_light))
+            } else {
+                itemBinding.clContent
+                    .setBackgroundColor(ContextCompat.getColor(context, R.color.grey_light))
+            }
+            itemBinding.tvAverageScore
+                .setTextColor(getAverageScoreTextColor(context, game.averageScore))
 
             // labels
             itemBinding.tvName.text = game.name
@@ -52,6 +57,12 @@ class GameAdapter(private val list: ArrayList<Game>) :
             Glide.with(itemBinding.root)
                 .load(game.imageUrl)
                 .into(itemBinding.ivCover)
+
+            // long click
+            itemView.setOnLongClickListener {
+                onLongClickCallback(game)
+                true
+            }
         }
 
         private fun getAverageScoreTextColor(context: Context, score: Float) =
@@ -69,7 +80,8 @@ class GameAdapter(private val list: ArrayList<Game>) :
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ),
+            onLongClickCallback
         )
 
     override fun getItemCount(): Int = list.size

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -13,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.hgabriel.videogames.scores.R
+import com.hgabriel.videogames.scores.data.vo.Game
 import com.hgabriel.videogames.scores.data.vo.GameOrder
 import com.hgabriel.videogames.scores.data.vo.Resource
 import com.hgabriel.videogames.scores.databinding.ActivityGamelistBinding
@@ -23,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class GameListActivity : AppCompatActivity() {
 
     private val addGameBottomSheetTag = "AddGameBottomSheet"
+    private val editGameBottomSheetTag = "EditGameBottomSheet"
 
     private val viewModel by viewModels<GamesViewModel>()
 
@@ -58,17 +59,13 @@ class GameListActivity : AppCompatActivity() {
                 invalidateOptionsMenu()
                 true
             }
-            R.id.action_search -> {
-                Toast.makeText(this, "SEARCH", Toast.LENGTH_SHORT).show()
-                true
-            }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     private fun setupLayout() {
         // recycler view
-        gameAdapter = GameAdapter(arrayListOf())
+        gameAdapter = GameAdapter(arrayListOf()) { showEditGame(it) }
         val linearLayoutManager = LinearLayoutManager(this)
         binding.rvGames.apply {
             layoutManager = linearLayoutManager
@@ -103,16 +100,25 @@ class GameListActivity : AppCompatActivity() {
                     }
                 }
                 Resource.Status.ERROR -> showErrorSnackbar()
-                Resource.Status.LOADING -> showLoadingSnackbar()
+                Resource.Status.LOADING -> Unit
             }
         })
+
+        viewModel.deletedGame.observe(this, { it?.let { showRestoreGameSnackbar() } })
     }
 
     private fun showAddGame() {
         AddGameBottomSheet { gamePath ->
             gamePath?.let { viewModel.addGame(it) }
         }.show(supportFragmentManager, addGameBottomSheetTag)
-        binding.fab.hide()
+    }
+
+    private fun showEditGame(game: Game) {
+        EditGameBottomSheet(
+            game,
+            onToggle = { viewModel.togglePlayed(game) },
+            onDelete = { viewModel.deleteGame(game) }
+        ).show(supportFragmentManager, editGameBottomSheetTag)
     }
 
     private fun showErrorSnackbar() {
@@ -122,15 +128,12 @@ class GameListActivity : AppCompatActivity() {
         snackbar.show()
     }
 
-    private fun showLoadingSnackbar() {
+    private fun showRestoreGameSnackbar() {
         snackbar = Snackbar
-            .make(
-                binding.coordinatorLayout,
-                R.string.updating_data_label,
-                Snackbar.LENGTH_INDEFINITE
-            )
+            .make(binding.coordinatorLayout, R.string.game_deleted, Snackbar.LENGTH_LONG)
             .setBackgroundTint(ContextCompat.getColor(this, R.color.blue))
             .setTextColor(ContextCompat.getColor(this, R.color.white))
+            .setAction(R.string.undo) { viewModel.restoreGame() }
         snackbar.show()
     }
 

@@ -1,0 +1,40 @@
+package com.hgabriel.videogames.scores.ui
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.hgabriel.videogames.scores.data.vo.Game
+import com.hgabriel.videogames.scores.databinding.BottomSheetEditGameBinding
+
+class EditGameBottomSheet(
+    private val game: Game,
+    private val onToggle: () -> Unit,
+    private val onDelete: () -> Unit
+) : BottomSheetDialogFragment() {
+    private lateinit var binding: BottomSheetEditGameBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = BottomSheetEditGameBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        binding.tvName.text = game.name
+        binding.cbToggle.isChecked = game.played
+        binding.cbToggle.setOnCheckedChangeListener { _, _ ->
+            onToggle()
+            this.dismiss()
+        }
+        binding.clDelete.setOnClickListener {
+            onDelete()
+            this.dismiss()
+        }
+    }
+}
