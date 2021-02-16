@@ -5,6 +5,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface GameService {
-    @GET("{gamePath}")
+    @GET("game/{gamePath}")
     suspend fun getGame(@Path("gamePath", encoded = true) gamePath: String): Response<String>
 }

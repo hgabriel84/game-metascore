@@ -26,7 +26,7 @@ class AddGameBottomSheet(
         super.onActivityCreated(savedInstanceState)
         binding.tvSave.setOnClickListener {
             val inputText = binding.tiGamePath.editText?.text.toString()
-            val gamePath = inputText.removePrefix(Config.BASE_URL)
+            val gamePath = inputText.removePrefix("${Config.BASE_URL}/game/")
             onSave(gamePath)
             this.dismiss()
         }
