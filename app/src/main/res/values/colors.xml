@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="blue">#FF0070D1</color>
-    <color name="blue_variant">#FF4040CE</color>
-    <color name="green">#FF03DAC6</color>
-    <color name="green_variant">#FF018786</color>
-    <color name="green_light">#FFBDFDF6</color>
-    <color name="grey_light">#FFF2EDEA</color>
+    <color name="primary">#FF0070D1</color>
+    <color name="primary_variant">#FF4040CE</color>
+    <color name="on_primary">#FFFFFFFF</color>
+    <color name="secondary">#FF03DAC6</color>
+    <color name="secondary_variant">#FF018786</color>
+    <color name="on_secondary">#FF000000</color>
+
+    <!-- list item game -->
+    <color name="list_item_game_label">#FF000000</color>
+    <color name="list_item_game_bg">#FFF8F8F8</color>
+    <color name="list_item_game_played_bg">#FFBDFDF6</color>
+
+    <!-- edit game -->
+    <color name="edit_game_label">#FF000000</color>
+    <color name="edit_game_bg">#FFF8F8F8</color>
+    <color name="edit_game_divider">#FFF2EDEA</color>
+
+    <!-- score -->
     <color name="green_score">#FF66CC33</color>
     <color name="yellow_score">#FFFFCC33</color>
     <color name="red_score">#FFFF0000</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    <!-- snackbar -->
+    <color name="snackbar_error_bg">#FFFF0000</color>
+    <color name="snackbar_restore_bg">#FF0070D1</color>
+    <color name="snackbar_label">#FFFFFFFF</color>
 </resources>

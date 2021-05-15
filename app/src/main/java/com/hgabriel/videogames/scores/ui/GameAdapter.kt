@@ -28,10 +28,10 @@ class GameAdapter(
             // colors
             if (game.played) {
                 itemBinding.clContent
-                    .setBackgroundColor(ContextCompat.getColor(context, R.color.green_light))
+                    .setBackgroundColor(ContextCompat.getColor(context, R.color.list_item_game_played_bg))
             } else {
                 itemBinding.clContent
-                    .setBackgroundColor(ContextCompat.getColor(context, R.color.grey_light))
+                    .setBackgroundColor(ContextCompat.getColor(context, R.color.list_item_game_bg))
             }
             itemBinding.tvAverageScore
                 .setTextColor(getAverageScoreTextColor(context, game.averageScore))
@@ -64,9 +64,9 @@ class GameAdapter(
                     in 0f..49.9f -> ContextCompat.getColor(context, R.color.red_score)
                     in 50f..79.9f -> ContextCompat.getColor(context, R.color.yellow_score)
                     in 80f..100f -> ContextCompat.getColor(context, R.color.green_score)
-                    else -> ContextCompat.getColor(context, R.color.blue)
+                    else -> ContextCompat.getColor(context, R.color.primary)
                 }
-            } ?: ContextCompat.getColor(context, R.color.blue)
+            } ?: ContextCompat.getColor(context, R.color.primary)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder =

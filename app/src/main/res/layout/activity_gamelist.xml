@@ -27,7 +27,6 @@
             android:padding="10dp"
             android:text="@string/add_game_explained"
             android:textAlignment="center"
-            android:textColor="@color/blue"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,8 +41,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:contentDescription="@string/add_game_content_description"
-        app:backgroundTint="@color/blue"
+        app:backgroundTint="@color/primary"
         app:srcCompat="@drawable/ic_plus_24"
-        app:tint="@color/white" />
+        app:tint="@color/on_primary" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

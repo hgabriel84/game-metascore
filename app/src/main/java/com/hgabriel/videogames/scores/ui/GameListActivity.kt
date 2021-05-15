@@ -123,18 +123,18 @@ class GameListActivity : AppCompatActivity() {
 
     private fun showErrorSnackbar() {
         snackbar = Snackbar.make(binding.coordinatorLayout, R.string.error, Snackbar.LENGTH_SHORT)
-            .setBackgroundTint(ContextCompat.getColor(this, R.color.red_score))
-            .setTextColor(ContextCompat.getColor(this, R.color.white))
+            .setBackgroundTint(ContextCompat.getColor(this, R.color.snackbar_error_bg))
+            .setTextColor(ContextCompat.getColor(this, R.color.snackbar_label))
         snackbar.show()
     }
 
     private fun showRestoreGameSnackbar() {
         snackbar = Snackbar
             .make(binding.coordinatorLayout, R.string.game_deleted, Snackbar.LENGTH_LONG)
-            .setBackgroundTint(ContextCompat.getColor(this, R.color.blue))
-            .setTextColor(ContextCompat.getColor(this, R.color.white))
+            .setBackgroundTint(ContextCompat.getColor(this, R.color.snackbar_restore_bg))
+            .setTextColor(ContextCompat.getColor(this, R.color.snackbar_label))
             .setAction(R.string.undo) { viewModel.restoreGame() }
-            .setActionTextColor(ContextCompat.getColor(this, R.color.white))
+            .setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_label))
         snackbar.show()
     }
 
