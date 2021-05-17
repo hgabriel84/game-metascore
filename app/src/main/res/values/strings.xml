@@ -12,7 +12,9 @@
     <string name="search">search</string>
     <string name="add_game_explained">Add a game by inserting Metacritic url.\nExample: https://www.metacritic.com/game/playstation-4/bloodborne</string>
     <string name="played">Played</string>
+    <string name="liked">Liked</string>
     <string name="delete">Delete</string>
     <string name="game_deleted">Game deleted</string>
     <string name="undo">Undo</string>
+    <string name="liked_game_content_description">liked game</string>
 </resources>

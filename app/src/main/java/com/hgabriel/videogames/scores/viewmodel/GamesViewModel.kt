@@ -66,6 +66,14 @@ class GamesViewModel @Inject constructor(private val repo: GameRepository) : Vie
         }
     }
 
+    fun toggleLiked(game: Game) {
+        viewModelScope.launch {
+            game.liked = !game.liked
+            repo.addGame(game, order.value ?: GameOrder.AVERAGE_SCORE)
+                .collect { games.value = it }
+        }
+    }
+
     fun toggleOrder() {
         viewModelScope.launch {
             order.value?.let { gameOrder ->

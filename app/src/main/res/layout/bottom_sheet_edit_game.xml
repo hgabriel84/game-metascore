@@ -22,7 +22,7 @@
         tools:text="Batman" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/cbToggle"
+        android:id="@+id/cbPlayed"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/played"
@@ -33,13 +33,33 @@
         app:layout_constraintTop_toBottomOf="@id/tvName" />
 
     <View
-        android:id="@+id/vDivider"
+        android:id="@+id/vPlayedDivider"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/edit_game_divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cbToggle" />
+        app:layout_constraintTop_toBottomOf="@id/cbPlayed" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/cbLiked"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/liked"
+        android:textColor="@color/edit_game_label"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vPlayedDivider" />
+
+    <View
+        android:id="@+id/vLikedDivider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/edit_game_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cbLiked" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clDelete"
@@ -47,7 +67,7 @@
         android:layout_height="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/vDivider">
+        app:layout_constraintTop_toBottomOf="@id/vLikedDivider">
 
         <ImageView
             android:id="@+id/ivDelete"

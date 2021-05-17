@@ -10,7 +10,8 @@ import com.hgabriel.videogames.scores.databinding.BottomSheetEditGameBinding
 
 class EditGameBottomSheet(
     private val game: Game,
-    private val onToggle: () -> Unit,
+    private val onPlayed: () -> Unit,
+    private val onLiked: () -> Unit,
     private val onDelete: () -> Unit
 ) : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetEditGameBinding
@@ -24,12 +25,17 @@ class EditGameBottomSheet(
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.tvName.text = game.name
-        binding.cbToggle.isChecked = game.played
-        binding.cbToggle.setOnCheckedChangeListener { _, _ ->
-            onToggle()
+        binding.cbPlayed.isChecked = game.played
+        binding.cbPlayed.setOnCheckedChangeListener { _, _ ->
+            onPlayed()
+            this.dismiss()
+        }
+        binding.cbLiked.isChecked = game.liked
+        binding.cbLiked.setOnCheckedChangeListener { _, _ ->
+            onLiked()
             this.dismiss()
         }
         binding.clDelete.setOnClickListener {

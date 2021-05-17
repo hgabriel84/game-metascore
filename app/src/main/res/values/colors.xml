@@ -11,6 +11,7 @@
     <color name="list_item_game_label">#FF000000</color>
     <color name="list_item_game_bg">#FFF8F8F8</color>
     <color name="list_item_game_played_bg">#FFBDFDF6</color>
+    <color name="list_item_game_liked">#FFF44336</color>
 
     <!-- edit game -->
     <color name="edit_game_label">#FF000000</color>

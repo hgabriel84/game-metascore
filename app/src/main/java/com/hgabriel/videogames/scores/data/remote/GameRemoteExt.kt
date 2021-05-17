@@ -38,7 +38,8 @@ fun String.toGame(gamePath: String): Game? {
             metascore = metascore,
             userScore = userScore,
             averageScore = averageScore,
-            played = false
+            played = false,
+            liked = false
         )
     } catch (t: Throwable) {
         Timber.d(t, "Error scraping game data from html.")

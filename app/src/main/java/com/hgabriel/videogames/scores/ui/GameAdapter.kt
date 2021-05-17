@@ -2,6 +2,7 @@ package com.hgabriel.videogames.scores.ui
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -28,7 +29,12 @@ class GameAdapter(
             // colors
             if (game.played) {
                 itemBinding.clContent
-                    .setBackgroundColor(ContextCompat.getColor(context, R.color.list_item_game_played_bg))
+                    .setBackgroundColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.list_item_game_played_bg
+                        )
+                    )
             } else {
                 itemBinding.clContent
                     .setBackgroundColor(ContextCompat.getColor(context, R.color.list_item_game_bg))
@@ -50,6 +56,9 @@ class GameAdapter(
             Glide.with(itemBinding.root)
                 .load(game.imageUrl)
                 .into(itemBinding.ivCover)
+
+            // liked game
+            itemBinding.ivLiked.visibility = if (game.liked) View.VISIBLE else View.INVISIBLE
 
             // long click
             itemView.setOnLongClickListener {

@@ -116,7 +116,8 @@ class GameListActivity : AppCompatActivity() {
     private fun showEditGame(game: Game) {
         EditGameBottomSheet(
             game,
-            onToggle = { viewModel.togglePlayed(game) },
+            onPlayed = { viewModel.togglePlayed(game) },
+            onLiked = { viewModel.toggleLiked(game) },
             onDelete = { viewModel.deleteGame(game) }
         ).show(supportFragmentManager, editGameBottomSheetTag)
     }

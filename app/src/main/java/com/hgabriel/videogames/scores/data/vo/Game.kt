@@ -12,5 +12,6 @@ data class Game(
     val metascore: Int?,
     val userScore: Float?,
     val averageScore: Float?,
-    var played: Boolean
+    var played: Boolean,
+    var liked: Boolean
 )
