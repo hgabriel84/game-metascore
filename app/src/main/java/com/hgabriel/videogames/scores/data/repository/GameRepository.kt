@@ -25,6 +25,7 @@ class GameRepository @Inject constructor(
             dbResult.data?.result?.forEach { dbGame ->
                 gameRemoteDataSource.fetchGame(dbGame.gamePath).data?.let { remoteGame ->
                     remoteGame.played = dbGame.played
+                    remoteGame.liked = dbGame.liked
                     gameDao.insert(remoteGame)
                 }
             }
