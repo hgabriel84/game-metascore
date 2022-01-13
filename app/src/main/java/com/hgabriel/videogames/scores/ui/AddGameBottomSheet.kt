@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.hgabriel.videogames.scores.Config
 import com.hgabriel.videogames.scores.databinding.BottomSheetAddGameBinding
 
 class AddGameBottomSheet(
@@ -26,8 +25,7 @@ class AddGameBottomSheet(
         super.onActivityCreated(savedInstanceState)
         binding.tvSave.setOnClickListener {
             val inputText = binding.tiGamePath.editText?.text.toString()
-            val gamePath = inputText.removePrefix("${Config.BASE_URL}/game/")
-            onSave(gamePath)
+            onSave(inputText)
             this.dismiss()
         }
     }

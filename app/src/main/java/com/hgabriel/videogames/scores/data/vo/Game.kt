@@ -5,13 +5,13 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Game(
+    @PrimaryKey val id: Int,
     val name: String,
-    @PrimaryKey
-    val gamePath: String,
-    val imageUrl: String,
-    val metascore: Int?,
-    val userScore: Float?,
-    val averageScore: Float?,
-    var played: Boolean,
-    var liked: Boolean
+    val coverId: Int,
+    var cover: String? = null,
+    val criticsRating: Float?,
+    val usersRating: Float?,
+    val totalRating: Float?,
+    var played: Boolean = false,
+    var liked: Boolean = false
 )

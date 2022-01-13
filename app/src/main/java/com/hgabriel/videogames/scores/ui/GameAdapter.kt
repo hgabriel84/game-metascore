@@ -40,21 +40,21 @@ class GameAdapter(
                     .setBackgroundColor(ContextCompat.getColor(context, R.color.list_item_game_bg))
             }
             itemBinding.tvAverageScore
-                .setTextColor(getAverageScoreTextColor(context, game.averageScore))
+                .setTextColor(getAverageScoreTextColor(context, game.totalRating))
 
             // labels
             itemBinding.tvName.text = game.name
             itemBinding.tvMetascore.text =
-                String.format(context.getString(R.string.metascore), game.metascore ?: "-")
+                String.format(context.getString(R.string.metascore), game.totalRating ?: "-")
             itemBinding.tvUserscore.text =
-                String.format(context.getString(R.string.userscore), game.userScore ?: "-")
+                String.format(context.getString(R.string.userscore), game.totalRating ?: "-")
             val df = DecimalFormat("#.##")
             df.roundingMode = RoundingMode.CEILING
-            itemBinding.tvAverageScore.text = game.averageScore?.let { df.format(it) } ?: "-"
+            itemBinding.tvAverageScore.text = game.totalRating?.let { df.format(it) } ?: "-"
 
             // image
             Glide.with(itemBinding.root)
-                .load(game.imageUrl)
+                .load(game.cover)
                 .into(itemBinding.ivCover)
 
             // liked game

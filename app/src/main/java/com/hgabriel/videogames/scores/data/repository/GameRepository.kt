@@ -2,10 +2,7 @@ package com.hgabriel.videogames.scores.data.repository
 
 import com.hgabriel.videogames.scores.data.local.GameDao
 import com.hgabriel.videogames.scores.data.remote.GameRemoteDataSource
-import com.hgabriel.videogames.scores.data.vo.Game
-import com.hgabriel.videogames.scores.data.vo.GameOrder
-import com.hgabriel.videogames.scores.data.vo.GamesResponse
-import com.hgabriel.videogames.scores.data.vo.Resource
+import com.hgabriel.videogames.scores.data.vo.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -22,11 +19,13 @@ class GameRepository @Inject constructor(
             emit(Resource.loading(null))
             val dbResult = loadFromDb(order)
             emit(dbResult)
-            dbResult.data?.result?.forEach { dbGame ->
-                gameRemoteDataSource.fetchGame(dbGame.gamePath).data?.let { remoteGame ->
-                    remoteGame.played = dbGame.played
-                    remoteGame.liked = dbGame.liked
-                    gameDao.insert(remoteGame)
+            dbResult.data?.result?.map { it.id }?.let { ids ->
+                gameRemoteDataSource.getGames(ids).data?.forEach { remoteGame ->
+                    val dbGame = dbResult.data.result.find { it.id == remoteGame.id }
+                    remoteGame.apply {
+                        played = dbGame?.played ?: false
+                        liked = dbGame?.liked ?: false
+                    }
                 }
             }
         }.flowOn(Dispatchers.IO)
@@ -35,15 +34,6 @@ class GameRepository @Inject constructor(
         flow {
             val dbResult = loadFromDb(order)
             emit(dbResult)
-        }.flowOn(Dispatchers.IO)
-
-    suspend fun addGame(gamePath: String, order: GameOrder): Flow<Resource<GamesResponse>> =
-        flow {
-            emit(Resource.loading(null))
-            gameRemoteDataSource.fetchGame(gamePath).data?.let { remoteGame ->
-                gameDao.insert(remoteGame)
-                emit(loadFromDb(order))
-            } ?: emit(Resource.error("error adding game", null))
         }.flowOn(Dispatchers.IO)
 
     suspend fun addGame(game: Game, order: GameOrder): Flow<Resource<GamesResponse>> =

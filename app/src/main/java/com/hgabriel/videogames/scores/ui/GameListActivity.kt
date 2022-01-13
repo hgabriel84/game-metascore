@@ -109,7 +109,7 @@ class GameListActivity : AppCompatActivity() {
 
     private fun showAddGame() {
         AddGameBottomSheet { gamePath ->
-            gamePath?.let { viewModel.addGame(it) }
+            gamePath?.let { /* viewModel.addGame(it) */ }
         }.show(supportFragmentManager, addGameBottomSheetTag)
     }
 

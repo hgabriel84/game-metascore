@@ -6,7 +6,7 @@ import com.hgabriel.videogames.scores.data.vo.Game
 @Dao
 interface GameDao {
 
-    @Query("SELECT * FROM game order by averageScore DESC")
+    @Query("SELECT * FROM game order by totalRating DESC")
     fun getAllByScore(): List<Game>
 
     @Query("SELECT * FROM game order by name ASC")

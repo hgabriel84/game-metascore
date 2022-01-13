@@ -21,7 +21,7 @@ class GamesViewModel @Inject constructor(private val repo: GameRepository) : Vie
     }
 
     val order: MutableLiveData<GameOrder> by lazy {
-        MutableLiveData<GameOrder>()
+        MutableLiveData<GameOrder>(GameOrder.AVERAGE_SCORE)
     }
 
     val deletedGame: MutableLiveData<Game?> by lazy {
@@ -31,13 +31,6 @@ class GamesViewModel @Inject constructor(private val repo: GameRepository) : Vie
     init {
         order.value = GameOrder.AVERAGE_SCORE
         fetchGames()
-    }
-
-    fun addGame(gamePath: String) {
-        viewModelScope.launch {
-            repo.addGame(gamePath, order.value ?: GameOrder.AVERAGE_SCORE)
-                .collect { games.value = it }
-        }
     }
 
     fun deleteGame(game: Game) {
