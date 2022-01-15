@@ -9,9 +9,9 @@ data class Game(
     val name: String,
     val coverId: Int,
     var cover: String? = null,
-    val criticsRating: Float?,
-    val usersRating: Float?,
-    val totalRating: Float?,
+    val criticsRating: Float? = null,
+    val usersRating: Float? = null,
+    val totalRating: Float? = null,
     var played: Boolean = false,
     var liked: Boolean = false
 )

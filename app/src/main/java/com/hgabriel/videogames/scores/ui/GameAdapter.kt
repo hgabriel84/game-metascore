@@ -45,9 +45,9 @@ class GameAdapter(
             // labels
             itemBinding.tvName.text = game.name
             itemBinding.tvMetascore.text =
-                String.format(context.getString(R.string.metascore), game.totalRating ?: "-")
+                String.format(context.getString(R.string.metascore), game.criticsRating ?: "-")
             itemBinding.tvUserscore.text =
-                String.format(context.getString(R.string.userscore), game.totalRating ?: "-")
+                String.format(context.getString(R.string.userscore), game.usersRating ?: "-")
             val df = DecimalFormat("#.##")
             df.roundingMode = RoundingMode.CEILING
             itemBinding.tvAverageScore.text = game.totalRating?.let { df.format(it) } ?: "-"

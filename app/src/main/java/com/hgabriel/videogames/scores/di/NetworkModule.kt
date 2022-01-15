@@ -14,4 +14,5 @@ class NetworkModule {
     @Singleton
     @Provides
     fun provideGameService(): GameService = GameService.create()
+
 }

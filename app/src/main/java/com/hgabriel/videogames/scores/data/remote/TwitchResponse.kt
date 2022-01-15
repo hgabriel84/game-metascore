@@ -1,0 +1,9 @@
+package com.hgabriel.videogames.scores.data.remote
+
+import com.squareup.moshi.Json
+
+data class TwitchResponse(
+    @Json(name = "access_token") val accessToken: String,
+    @Json(name = "expires_in") val expiresIn: String,
+    @Json(name = "token_type") val tokenType: String
+)
