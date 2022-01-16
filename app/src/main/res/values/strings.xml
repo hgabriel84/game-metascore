@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GameMetascore</string>
-    <string name="metascore">metascore: %s</string>
-    <string name="userscore">user score: %s</string>
+    <string name="critics_rating">critics: %s</string>
+    <string name="users_rating">users: %s</string>
     <string name="updating_data">Updating game score</string>
     <string name="error">Error</string>
     <string name="add_game_content_description">add game</string>
@@ -10,7 +10,7 @@
     <string name="save">save</string>
     <string name="order">order</string>
     <string name="search">search</string>
-    <string name="add_game_explained">Add a game by inserting Metacritic url.\nExample: https://www.metacritic.com/game/playstation-4/bloodborne</string>
+    <string name="add_game_explained">To start adding games to your collection, use the + button</string>
     <string name="played">Played</string>
     <string name="liked">Liked</string>
     <string name="delete">Delete</string>

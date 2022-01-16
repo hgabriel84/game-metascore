@@ -9,7 +9,7 @@ interface GameDao {
     @Query("SELECT * FROM game order by totalRating DESC")
     fun getAllByScore(): List<Game>
 
-    @Query("SELECT * FROM game order by name ASC")
+    @Query("SELECT * FROM game order by UPPER(name) ASC")
     fun getAllByName(): List<Game>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -1,6 +1,6 @@
 package com.hgabriel.videogames.scores.data.vo
 
 enum class GameOrder {
-    AVERAGE_SCORE,
+    TOTAL_RATING,
     NAME
 }

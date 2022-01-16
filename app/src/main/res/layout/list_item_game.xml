@@ -28,25 +28,25 @@
         android:textColor="@color/list_item_game_label"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/tvAverageScore"
+        app:layout_constraintEnd_toStartOf="@id/tvTotalRating"
         app:layout_constraintStart_toEndOf="@+id/ivCover"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="the-last-of-us-remastered" />
 
     <TextView
-        android:id="@+id/tvMetascore"
+        android:id="@+id/tvCriticsRating"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:textColor="@color/list_item_game_label"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@id/tvUserscore"
-        app:layout_constraintEnd_toStartOf="@id/tvAverageScore"
+        app:layout_constraintBottom_toTopOf="@id/tvUsersRating"
+        app:layout_constraintEnd_toStartOf="@id/tvTotalRating"
         app:layout_constraintStart_toEndOf="@+id/ivCover"
         tools:text="metascore: 95" />
 
     <TextView
-        android:id="@+id/tvUserscore"
+        android:id="@+id/tvUsersRating"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -54,12 +54,12 @@
         android:textColor="@color/list_item_game_label"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tvAverageScore"
+        app:layout_constraintEnd_toStartOf="@id/tvTotalRating"
         app:layout_constraintStart_toEndOf="@+id/ivCover"
         tools:text="userscore: 88" />
 
     <TextView
-        android:id="@+id/tvAverageScore"
+        android:id="@+id/tvTotalRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"

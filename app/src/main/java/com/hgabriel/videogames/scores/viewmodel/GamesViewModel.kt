@@ -21,7 +21,7 @@ class GamesViewModel @Inject constructor(private val repo: GameRepository) : Vie
     }
 
     val order: MutableLiveData<GameOrder> by lazy {
-        MutableLiveData<GameOrder>(GameOrder.AVERAGE_SCORE)
+        MutableLiveData<GameOrder>(GameOrder.TOTAL_RATING)
     }
 
     val deletedGame: MutableLiveData<Game?> by lazy {
@@ -29,13 +29,13 @@ class GamesViewModel @Inject constructor(private val repo: GameRepository) : Vie
     }
 
     init {
-        order.value = GameOrder.AVERAGE_SCORE
+        order.value = GameOrder.TOTAL_RATING
         fetchGames()
     }
 
     fun deleteGame(game: Game) {
         viewModelScope.launch {
-            repo.deleteGame(game, order.value ?: GameOrder.AVERAGE_SCORE)
+            repo.deleteGame(game, order.value ?: GameOrder.TOTAL_RATING)
                 .collect { games.value = it }
             deletedGame.value = game
         }
@@ -44,7 +44,7 @@ class GamesViewModel @Inject constructor(private val repo: GameRepository) : Vie
     fun restoreGame() {
         viewModelScope.launch {
             deletedGame.value?.let { game ->
-                repo.addGame(game, order.value ?: GameOrder.AVERAGE_SCORE)
+                repo.addGame(game, order.value ?: GameOrder.TOTAL_RATING)
                     .collect { games.value = it }
             }
             deletedGame.value = null
@@ -54,7 +54,7 @@ class GamesViewModel @Inject constructor(private val repo: GameRepository) : Vie
     fun togglePlayed(game: Game) {
         viewModelScope.launch {
             game.played = !game.played
-            repo.addGame(game, order.value ?: GameOrder.AVERAGE_SCORE)
+            repo.addGame(game, order.value ?: GameOrder.TOTAL_RATING)
                 .collect { games.value = it }
         }
     }
@@ -62,7 +62,7 @@ class GamesViewModel @Inject constructor(private val repo: GameRepository) : Vie
     fun toggleLiked(game: Game) {
         viewModelScope.launch {
             game.liked = !game.liked
-            repo.addGame(game, order.value ?: GameOrder.AVERAGE_SCORE)
+            repo.addGame(game, order.value ?: GameOrder.TOTAL_RATING)
                 .collect { games.value = it }
         }
     }
@@ -71,18 +71,18 @@ class GamesViewModel @Inject constructor(private val repo: GameRepository) : Vie
         viewModelScope.launch {
             order.value?.let { gameOrder ->
                 when (gameOrder) {
-                    GameOrder.AVERAGE_SCORE -> order.value = GameOrder.NAME
-                    GameOrder.NAME -> order.value = GameOrder.AVERAGE_SCORE
+                    GameOrder.TOTAL_RATING -> order.value = GameOrder.NAME
+                    GameOrder.NAME -> order.value = GameOrder.TOTAL_RATING
                 }
             }
-            repo.loadGamesFromDb(order.value ?: GameOrder.AVERAGE_SCORE)
+            repo.loadGamesFromDb(order.value ?: GameOrder.TOTAL_RATING)
                 .collect { games.value = it }
         }
     }
 
     private fun fetchGames() {
         viewModelScope.launch {
-            repo.fetchGames(order.value ?: GameOrder.AVERAGE_SCORE)
+            repo.fetchGames(order.value ?: GameOrder.TOTAL_RATING)
                 .collect { games.value = it }
         }
     }

@@ -78,7 +78,7 @@ class GameRepository @Inject constructor(
 
     private fun loadFromDb(order: GameOrder): Resource<GamesResponse> =
         when (order) {
-            GameOrder.AVERAGE_SCORE -> Resource.success(GamesResponse(gameDao.getAllByScore()))
+            GameOrder.TOTAL_RATING -> Resource.success(GamesResponse(gameDao.getAllByScore()))
             GameOrder.NAME -> Resource.success(GamesResponse(gameDao.getAllByName()))
         }
 }

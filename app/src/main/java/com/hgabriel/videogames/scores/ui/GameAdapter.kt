@@ -12,6 +12,7 @@ import com.hgabriel.videogames.scores.data.vo.Game
 import com.hgabriel.videogames.scores.databinding.ListItemGameBinding
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import kotlin.math.roundToInt
 
 class GameAdapter(
     private val list: ArrayList<Game>,
@@ -28,34 +29,42 @@ class GameAdapter(
             val context = itemBinding.root.context
             // colors
             if (game.played) {
-                itemBinding.clContent
-                    .setBackgroundColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.list_item_game_played_bg
-                        )
+                itemBinding.clContent.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.list_item_game_played_bg
                     )
+                )
             } else {
-                itemBinding.clContent
-                    .setBackgroundColor(ContextCompat.getColor(context, R.color.list_item_game_bg))
+                itemBinding.clContent.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.list_item_game_bg
+                    )
+                )
             }
-            itemBinding.tvAverageScore
-                .setTextColor(getAverageScoreTextColor(context, game.totalRating))
+            itemBinding.tvTotalRating.setTextColor(
+                getTotalRatingTextColor(
+                    context,
+                    game.totalRating
+                )
+            )
 
             // labels
             itemBinding.tvName.text = game.name
-            itemBinding.tvMetascore.text =
-                String.format(context.getString(R.string.metascore), game.criticsRating ?: "-")
-            itemBinding.tvUserscore.text =
-                String.format(context.getString(R.string.userscore), game.usersRating ?: "-")
+            itemBinding.tvCriticsRating.text =
+                String.format(
+                    context.getString(R.string.critics_rating),
+                    game.criticsRating.toLabel()
+                )
+            itemBinding.tvUsersRating.text =
+                String.format(context.getString(R.string.users_rating), game.usersRating.toLabel())
             val df = DecimalFormat("#.##")
             df.roundingMode = RoundingMode.CEILING
-            itemBinding.tvAverageScore.text = game.totalRating?.let { df.format(it) } ?: "-"
+            itemBinding.tvTotalRating.text = game.totalRating.toLabel()
 
             // image
-            Glide.with(itemBinding.root)
-                .load(game.cover)
-                .into(itemBinding.ivCover)
+            Glide.with(itemBinding.root).load(game.cover).into(itemBinding.ivCover)
 
             // liked game
             itemBinding.ivLiked.visibility = if (game.liked) View.VISIBLE else View.INVISIBLE
@@ -67,7 +76,9 @@ class GameAdapter(
             }
         }
 
-        private fun getAverageScoreTextColor(context: Context, score: Float?) =
+        private fun Float?.toLabel(): String = this?.roundToInt()?.toString() ?: "-"
+
+        private fun getTotalRatingTextColor(context: Context, score: Float?) =
             score?.let {
                 when (it) {
                     in 0f..49.9f -> ContextCompat.getColor(context, R.color.red_score)

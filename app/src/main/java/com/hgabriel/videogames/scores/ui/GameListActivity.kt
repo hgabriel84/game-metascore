@@ -141,7 +141,7 @@ class GameListActivity : AppCompatActivity() {
 
     private fun GameOrder.getMenuOrderIcon(): Int =
         when (this) {
-            GameOrder.AVERAGE_SCORE -> R.drawable.ic_score_24
+            GameOrder.TOTAL_RATING -> R.drawable.ic_score_24
             GameOrder.NAME -> R.drawable.ic_alpha_24
         }
 }
