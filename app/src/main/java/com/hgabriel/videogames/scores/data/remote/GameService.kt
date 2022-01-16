@@ -29,7 +29,7 @@ interface GameService {
         private const val BASE_URL = "https://api.igdb.com/v4/"
 
         fun create(): GameService {
-            val logger = HttpLoggingInterceptor().apply { level = Level.BODY }
+            val logger = HttpLoggingInterceptor().apply { level = Level.BASIC }
 
             val authorization = Interceptor { chain ->
                 val requestBuilder = chain.request().newBuilder()

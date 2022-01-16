@@ -40,10 +40,14 @@ class GameRepository @Inject constructor(
     ): Flow<Resource<GamesResponse>> =
         flow {
             emit(Resource.loading(null))
-            gamesToImport.games.map { it.id }.forEach { id ->
-                gameRemoteDataSource.getGame(id).data?.let { remoteGame ->
+            gamesToImport.games.forEach { gameToImport ->
+                gameRemoteDataSource.getGame(gameToImport.id).data?.let { remoteGame ->
                     remoteGame.coverId?.let {
                         remoteGame.cover = gameRemoteDataSource.getCoverUrl(it).data
+                    }
+                    remoteGame.apply {
+                        played = gameToImport.played
+                        liked = gameToImport.liked
                     }
                     gameDao.insert(remoteGame)
                 }
