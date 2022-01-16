@@ -8,48 +8,52 @@ import javax.inject.Inject
 class GameRemoteDataSource @Inject constructor(private val service: GameService) {
 
     suspend fun searchGame(keyword: String): Resource<List<Game>> {
-        val body = "fields id,name,cover,aggregated_rating,rating,total_rating; search $keyword;"
+        val body =
+            "fields id,name,cover,aggregated_rating,rating,total_rating; search \"$keyword\";"
         val result = service.searchGame(body.toRequestBody())
         return if (result.isSuccessful) {
-            Resource.success(result.body()?.toGame())
+            Resource.success(result.body()?.toGames())
         } else {
             Resource.error("Error searching game", null)
         }
     }
 
-    suspend fun getGames(ids: List<Int>): Resource<List<Game>> {
-        if (ids.isEmpty()) {
-            return Resource.success(emptyList())
-        }
-
-        val body = "fields *; where id = (${ids.joinToString(separator = ",")});"
-        val result = service.getGames(body.toRequestBody())
+    suspend fun getGame(id: Int): Resource<Game> {
+        val body = "fields id,name,cover,aggregated_rating,rating,total_rating; where id = ($id);"
+        val result = service.getGame(body.toRequestBody())
         return if (result.isSuccessful) {
-            Resource.success(result.body()?.toGame())
+            result.body()?.toGame()?.let { Resource.success(it) }
+                ?: Resource.error("Error fetching game", null)
         } else {
-            Resource.error("Error fetching games", null)
+            Resource.error("Error fetching game", null)
         }
     }
 
     suspend fun getCoverUrl(id: Int): Resource<String> {
-        val body = "fields url; where game = $id;"
+        val body = "fields image_id; where id = $id;"
         val result = service.getCoverUrl(body.toRequestBody())
         return if (result.isSuccessful) {
-            Resource.success(result.body())
+            result.body()?.toCoverUrl()?.let { Resource.success(it) }
+                ?: Resource.error("Error fetching game cover", null)
         } else {
             Resource.error("Error fetching game cover", null)
         }
     }
 
-    private fun List<GameResponse>.toGame(): List<Game> =
-        map {
-            Game(
-                id = it.id,
-                name = it.name,
-                coverId = it.cover,
-                criticsRating = it.criticsRating,
-                usersRating = it.usersRating,
-                totalRating = it.totalRating
-            )
-        }
+    private fun List<GameResponse>.toGames(): List<Game> = map { it.toGame() }
+
+    private fun List<GameResponse>.toGame(): Game? = firstOrNull()?.toGame()
+
+    private fun GameResponse.toGame() =
+        Game(
+            id = id,
+            name = name,
+            coverId = cover,
+            criticsRating = criticsRating,
+            usersRating = usersRating,
+            totalRating = totalRating
+        )
+
+    private fun List<CoverResponse>.toCoverUrl(): String? =
+        firstOrNull()?.imageId?.let { "https://images.igdb.com/igdb/image/upload/t_cover_big/$it.png" }
 }

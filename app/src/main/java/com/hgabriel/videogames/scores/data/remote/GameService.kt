@@ -20,10 +20,10 @@ interface GameService {
     suspend fun searchGame(@Body body: RequestBody): Response<List<GameResponse>>
 
     @POST("games")
-    suspend fun getGames(@Body body: RequestBody): Response<List<GameResponse>>
+    suspend fun getGame(@Body body: RequestBody): Response<List<GameResponse>>
 
     @POST("covers")
-    suspend fun getCoverUrl(@Body body: RequestBody): Response<String>
+    suspend fun getCoverUrl(@Body body: RequestBody): Response<List<CoverResponse>>
 
     companion object {
         private const val BASE_URL = "https://api.igdb.com/v4/"

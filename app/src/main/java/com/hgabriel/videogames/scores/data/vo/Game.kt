@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class Game(
     @PrimaryKey val id: Int,
     val name: String,
-    val coverId: Int,
+    val coverId: Int? = null,
     var cover: String? = null,
     val criticsRating: Float? = null,
     val usersRating: Float? = null,

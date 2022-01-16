@@ -19,16 +19,38 @@ class GameRepository @Inject constructor(
             emit(Resource.loading(null))
             val dbResult = loadFromDb(order)
             emit(dbResult)
-            dbResult.data?.result?.map { it.id }?.let { ids ->
-                gameRemoteDataSource.getGames(ids).data?.forEach { remoteGame ->
-                    val dbGame = dbResult.data.result.find { it.id == remoteGame.id }
-                    remoteGame.apply {
-                        played = dbGame?.played ?: false
-                        liked = dbGame?.liked ?: false
+            dbResult.data?.result?.forEach { localGame ->
+                gameRemoteDataSource.getGame(localGame.id).data?.let { remoteGame ->
+                    remoteGame.coverId?.let {
+                        remoteGame.cover = gameRemoteDataSource.getCoverUrl(it).data
                     }
+                    remoteGame.apply {
+                        played = localGame.played
+                        liked = localGame.liked
+                    }
+                    gameDao.insert(remoteGame)
                 }
             }
+            emit(loadFromDb(order))
         }.flowOn(Dispatchers.IO)
+
+    suspend fun importGames(
+        gamesToImport: MetaGames,
+        order: GameOrder
+    ): Flow<Resource<GamesResponse>> =
+        flow {
+            emit(Resource.loading(null))
+            gamesToImport.games.map { it.id }.forEach { id ->
+                gameRemoteDataSource.getGame(id).data?.let { remoteGame ->
+                    remoteGame.coverId?.let {
+                        remoteGame.cover = gameRemoteDataSource.getCoverUrl(it).data
+                    }
+                    gameDao.insert(remoteGame)
+                }
+            }
+            emit(loadFromDb(order))
+        }.flowOn(Dispatchers.IO)
+
 
     suspend fun loadGamesFromDb(order: GameOrder): Flow<Resource<GamesResponse>> =
         flow {
