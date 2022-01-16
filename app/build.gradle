@@ -17,16 +17,16 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // Consult the README on instructions for setting up Twitch application to access IGDB API
+        buildConfigField("String", "TWITCH_CLIENT_ID", "\"" + getTwitchClientId() + "\"")
+        buildConfigField("String", "TWITCH_CLIENT_SECRET", "\"" + getTwitchClientSecret() + "\"")
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        buildTypes.each {
-            it.buildConfigField 'String', 'TwitchClientId', twitchclientid
-            it.buildConfigField 'String', 'TwitchClientSecret', twitchclientsecret
         }
     }
     compileOptions {
@@ -77,4 +77,12 @@ dependencies {
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
+
+def getTwitchClientId() {
+    return project.findProperty("twitch_client_id")
+}
+
+def getTwitchClientSecret() {
+    return project.findProperty("twitch_client_secret")
 }
