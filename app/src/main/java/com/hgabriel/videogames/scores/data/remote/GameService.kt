@@ -13,6 +13,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
+import java.util.concurrent.TimeUnit
 
 interface GameService {
 
@@ -39,6 +40,9 @@ interface GameService {
             }
 
             val client = OkHttpClient.Builder()
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(30, TimeUnit.SECONDS)
                 .authenticator(TwitchAuthenticator())
                 .addInterceptor(logger)
                 .addInterceptor(authorization)
