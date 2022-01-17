@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.hgabriel.videogames.scores.R
 import com.hgabriel.videogames.scores.data.vo.Game
@@ -22,7 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class GameListActivity : AppCompatActivity() {
 
-    private val addGameBottomSheetTag = "AddGameBottomSheet"
     private val editGameBottomSheetTag = "EditGameBottomSheet"
 
     private val viewModel by viewModels<GamesViewModel>()
@@ -71,20 +69,7 @@ class GameListActivity : AppCompatActivity() {
             layoutManager = linearLayoutManager
             addItemDecoration(DividerItemDecoration(this.context, linearLayoutManager.orientation))
             adapter = gameAdapter
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    if (dy > 0) {
-                        binding.fab.hide()
-                    } else {
-                        binding.fab.show()
-                    }
-                    super.onScrolled(recyclerView, dx, dy)
-                }
-            })
         }
-
-        // listeners
-        binding.fab.setOnClickListener { showAddGame() }
     }
 
     private fun initGameList() {
@@ -105,12 +90,6 @@ class GameListActivity : AppCompatActivity() {
         })
 
         viewModel.deletedGame.observe(this, { it?.let { showRestoreGameSnackbar() } })
-    }
-
-    private fun showAddGame() {
-        AddGameBottomSheet { gamePath ->
-            gamePath?.let { /* viewModel.addGame(it) */ }
-        }.show(supportFragmentManager, addGameBottomSheetTag)
     }
 
     private fun showEditGame(game: Game) {

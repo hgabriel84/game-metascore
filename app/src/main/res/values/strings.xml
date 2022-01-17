@@ -4,10 +4,7 @@
     <string name="users_rating">users: %s</string>
     <string name="updating_data">Updating game score</string>
     <string name="error">Error</string>
-    <string name="add_game_content_description">add game</string>
     <string name="game_cover_content_description">game cover</string>
-    <string name="game_path_label">Game path</string>
-    <string name="save">save</string>
     <string name="order">order</string>
     <string name="search">search</string>
     <string name="add_game_explained">To start adding games to your collection, use the + button</string>
