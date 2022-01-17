@@ -7,6 +7,7 @@ import com.hgabriel.gamemetascore.data.GameRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,8 +21,9 @@ class GameViewModel @Inject constructor(
         savedStateHandle.get(GAME_ORDER_SAVED_STATE_KEY) ?: GameOrder.RATING
     )
 
-    val games: LiveData<List<Game>> = gameRepository.getGames(order.value).asLiveData()
-
+    val games: LiveData<List<Game>> = order.flatMapLatest {
+        gameRepository.getGames(it)
+    }.asLiveData()
 
     init {
         viewModelScope.launch {
