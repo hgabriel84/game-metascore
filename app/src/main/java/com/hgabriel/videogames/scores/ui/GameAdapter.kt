@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.hgabriel.videogames.scores.R
-import com.hgabriel.videogames.scores.data.vo.Game
+import com.hgabriel.videogames.scores.data.Game
 import com.hgabriel.videogames.scores.databinding.ListItemGameBinding
 import java.math.RoundingMode
 import java.text.DecimalFormat

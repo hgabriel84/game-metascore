@@ -1,10 +1,10 @@
 package com.hgabriel.videogames.scores.api
 
 import com.hgabriel.videogames.scores.BuildConfig
-import com.hgabriel.videogames.scores.data.remote.CoverResponse
-import com.hgabriel.videogames.scores.data.remote.IgdbGameResponse
-import com.hgabriel.videogames.scores.data.remote.SessionManager
-import com.hgabriel.videogames.scores.data.remote.TwitchAuthenticator
+import com.hgabriel.videogames.scores.data.CoverResponse
+import com.hgabriel.videogames.scores.data.IgdbGameResponse
+import com.hgabriel.videogames.scores.data.SessionManager
+import com.hgabriel.videogames.scores.data.TwitchAuthenticator
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor

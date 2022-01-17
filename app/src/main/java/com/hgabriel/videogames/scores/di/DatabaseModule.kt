@@ -2,8 +2,8 @@ package com.hgabriel.videogames.scores.di
 
 import android.content.Context
 import androidx.room.Room
-import com.hgabriel.videogames.scores.data.local.GameDao
-import com.hgabriel.videogames.scores.data.local.GameDatabase
+import com.hgabriel.videogames.scores.data.GameDao
+import com.hgabriel.videogames.scores.data.GameDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

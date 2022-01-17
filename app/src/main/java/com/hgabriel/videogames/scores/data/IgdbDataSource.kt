@@ -1,11 +1,10 @@
-package com.hgabriel.videogames.scores.data.remote
+package com.hgabriel.videogames.scores.data
 
-import com.hgabriel.videogames.scores.data.vo.Game
-import com.hgabriel.videogames.scores.data.vo.Resource
+import com.hgabriel.videogames.scores.api.IgdbService
 import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
-class GameRemoteDataSource @Inject constructor(private val service: GameService) {
+class IgdbDataSource @Inject constructor(private val service: IgdbService) {
 
     suspend fun searchGame(keyword: String): Resource<List<Game>> {
         val body =
@@ -40,11 +39,11 @@ class GameRemoteDataSource @Inject constructor(private val service: GameService)
         }
     }
 
-    private fun List<GameResponse>.toGames(): List<Game> = map { it.toGame() }
+    private fun List<IgdbGameResponse>.toGames(): List<Game> = map { it.toGame() }
 
-    private fun List<GameResponse>.toGame(): Game? = firstOrNull()?.toGame()
+    private fun List<IgdbGameResponse>.toGame(): Game? = firstOrNull()?.toGame()
 
-    private fun GameResponse.toGame() =
+    private fun IgdbGameResponse.toGame() =
         Game(
             id = id,
             name = name,

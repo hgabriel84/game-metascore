@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.hgabriel.videogames.scores.data.vo.Game
+import com.hgabriel.videogames.scores.data.Game
 import com.hgabriel.videogames.scores.databinding.BottomSheetEditGameBinding
 
 class EditGameBottomSheet(

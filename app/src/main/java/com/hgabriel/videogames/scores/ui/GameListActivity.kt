@@ -11,11 +11,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.hgabriel.videogames.scores.R
-import com.hgabriel.videogames.scores.data.vo.Game
-import com.hgabriel.videogames.scores.data.vo.GameOrder
-import com.hgabriel.videogames.scores.data.vo.Resource
+import com.hgabriel.videogames.scores.data.Game
+import com.hgabriel.videogames.scores.data.GameOrder
 import com.hgabriel.videogames.scores.databinding.ActivityGamelistBinding
-import com.hgabriel.videogames.scores.viewmodel.GamesViewModel
+import com.hgabriel.videogames.scores.viewmodel.GameViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,7 +22,7 @@ class GameListActivity : AppCompatActivity() {
 
     private val editGameBottomSheetTag = "EditGameBottomSheet"
 
-    private val viewModel by viewModels<GamesViewModel>()
+    private val viewModel by viewModels<GameViewModel>()
 
     private lateinit var binding: ActivityGamelistBinding
     private lateinit var gameAdapter: GameAdapter
@@ -45,7 +44,7 @@ class GameListActivity : AppCompatActivity() {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         menu?.findItem(R.id.action_order)?.let { item ->
-            viewModel.order.value?.getMenuOrderIcon()?.let { item.setIcon(it) }
+            viewModel.getOrder().getMenuOrderIcon().let { item.setIcon(it) }
         }
         return true
     }
@@ -73,6 +72,7 @@ class GameListActivity : AppCompatActivity() {
     }
 
     private fun initGameList() {
+        /*
         viewModel.games.observe(this, { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
@@ -88,16 +88,24 @@ class GameListActivity : AppCompatActivity() {
                 Resource.Status.LOADING -> Unit
             }
         })
-
-        viewModel.deletedGame.observe(this, { it?.let { showRestoreGameSnackbar() } })
+         */
+        viewModel.games.observe(this, {
+            gameAdapter.addAll(it)
+            binding.tvEmptyState.visibility = if (gameAdapter.itemCount == 0) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+        })
+        // viewModel.deletedGame.observe(this, { it?.let { showRestoreGameSnackbar() } })
     }
 
     private fun showEditGame(game: Game) {
         EditGameBottomSheet(
             game,
-            onPlayed = { viewModel.togglePlayed(game) },
-            onLiked = { viewModel.toggleLiked(game) },
-            onDelete = { viewModel.deleteGame(game) }
+            onPlayed = { },
+            onLiked = { },
+            onDelete = { }
         ).show(supportFragmentManager, editGameBottomSheetTag)
     }
 
@@ -113,14 +121,14 @@ class GameListActivity : AppCompatActivity() {
             .make(binding.coordinatorLayout, R.string.game_deleted, Snackbar.LENGTH_LONG)
             .setBackgroundTint(ContextCompat.getColor(this, R.color.snackbar_restore_bg))
             .setTextColor(ContextCompat.getColor(this, R.color.snackbar_label))
-            .setAction(R.string.undo) { viewModel.restoreGame() }
+            .setAction(R.string.undo) {}  // { viewModel.restoreGame() }
             .setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_label))
         snackbar.show()
     }
 
     private fun GameOrder.getMenuOrderIcon(): Int =
         when (this) {
-            GameOrder.TOTAL_RATING -> R.drawable.ic_score_24
+            GameOrder.RATING -> R.drawable.ic_score_24
             GameOrder.NAME -> R.drawable.ic_alpha_24
         }
 }
