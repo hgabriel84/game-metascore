@@ -1,6 +1,6 @@
 package com.hgabriel.videogames.scores.di
 
-import com.hgabriel.videogames.scores.data.remote.GameService
+import com.hgabriel.videogames.scores.api.IgdbService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,6 +13,6 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideGameService(): GameService = GameService.create()
+    fun provideIgdbService(): IgdbService = IgdbService.create()
 
 }

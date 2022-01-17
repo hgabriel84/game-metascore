@@ -1,7 +1,7 @@
 package com.hgabriel.videogames.scores.data.repository
 
 import com.hgabriel.videogames.scores.data.local.GameDao
-import com.hgabriel.videogames.scores.data.remote.GameRemoteDataSource
+import com.hgabriel.videogames.scores.data.remote.IgdbDataSource
 import com.hgabriel.videogames.scores.data.vo.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class GameRepository @Inject constructor(
-    private val gameRemoteDataSource: GameRemoteDataSource,
+    private val igdbDataSource: IgdbDataSource,
     private val gameDao: GameDao
 ) {
 
@@ -20,9 +20,9 @@ class GameRepository @Inject constructor(
             val dbResult = loadFromDb(order)
             emit(dbResult)
             dbResult.data?.result?.forEach { localGame ->
-                gameRemoteDataSource.getGame(localGame.id).data?.let { remoteGame ->
+                igdbDataSource.getGame(localGame.id).data?.let { remoteGame ->
                     remoteGame.coverId?.let {
-                        remoteGame.cover = gameRemoteDataSource.getCoverUrl(it).data
+                        remoteGame.cover = igdbDataSource.getCoverUrl(it).data
                     }
                     remoteGame.apply {
                         played = localGame.played
@@ -41,9 +41,9 @@ class GameRepository @Inject constructor(
         flow {
             emit(Resource.loading(null))
             gamesToImport.games.forEach { gameToImport ->
-                gameRemoteDataSource.getGame(gameToImport.id).data?.let { remoteGame ->
+                igdbDataSource.getGame(gameToImport.id).data?.let { remoteGame ->
                     remoteGame.coverId?.let {
-                        remoteGame.cover = gameRemoteDataSource.getCoverUrl(it).data
+                        remoteGame.cover = igdbDataSource.getCoverUrl(it).data
                     }
                     remoteGame.apply {
                         played = gameToImport.played
@@ -78,7 +78,7 @@ class GameRepository @Inject constructor(
 
     private fun loadFromDb(order: GameOrder): Resource<GamesResponse> =
         when (order) {
-            GameOrder.TOTAL_RATING -> Resource.success(GamesResponse(gameDao.getAllByScore()))
-            GameOrder.NAME -> Resource.success(GamesResponse(gameDao.getAllByName()))
+            GameOrder.TOTAL_RATING -> Resource.success(GamesResponse(gameDao.getGamesByRating()))
+            GameOrder.NAME -> Resource.success(GamesResponse(gameDao.getGamesByName()))
         }
 }
