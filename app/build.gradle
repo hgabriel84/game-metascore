@@ -7,8 +7,9 @@ plugins {
 
 android {
     compileSdkVersion 31
-    buildToolsVersion "30.0.3"
-
+    buildFeatures {
+        dataBinding true
+    }
     defaultConfig {
         applicationId "com.hgabriel.gamemetascore"
         minSdkVersion 21
@@ -35,9 +36,8 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
-    }
-    buildFeatures {
-        viewBinding true
+        freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+        freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.FlowPreview"
     }
 }
 

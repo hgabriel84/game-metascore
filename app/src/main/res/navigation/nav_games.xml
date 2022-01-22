@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:startDestination="@id/game_list_fragment">
+
+    <fragment
+        android:id="@+id/game_list_fragment"
+        android:name="com.hgabriel.gamemetascore.ui.GameFragment"
+        android:layout="@layout/fragment_game">
+
+    </fragment>
+
+</navigation>

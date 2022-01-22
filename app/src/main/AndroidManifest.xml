@@ -13,7 +13,7 @@
         android:theme="@style/Theme.GameMetascore">
 
         <activity
-            android:name=".ui.GameListActivity"
+            android:name=".ui.MetascoreActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

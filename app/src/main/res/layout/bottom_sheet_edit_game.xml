@@ -1,98 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/edit_game_bg">
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="0dp"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
-        android:padding="10dp"
-        android:textAllCaps="true"
-        android:textColor="@color/on_primary"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Batman" />
-
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/cbPlayed"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/played"
-        android:textAllCaps="true"
-        android:textColor="@color/edit_game_label"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvName" />
-
-    <View
-        android:id="@+id/vPlayedDivider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/edit_game_divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cbPlayed" />
-
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/cbLiked"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/liked"
-        android:textAllCaps="true"
-        android:textColor="@color/edit_game_label"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/vPlayedDivider" />
-
-    <View
-        android:id="@+id/vLikedDivider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/edit_game_divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cbLiked" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clDelete"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/vLikedDivider">
-
-        <ImageView
-            android:id="@+id/ivDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_delete_24" />
+        android:background="@color/edit_game_bg">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/delete"
+            android:background="@color/primary"
+            android:padding="10dp"
+            android:textAllCaps="true"
+            android:textColor="@color/on_primary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Batman" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cbPlayed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/played"
             android:textAllCaps="true"
             android:textColor="@color/edit_game_label"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ivDelete"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+        <View
+            android:id="@+id/vPlayedDivider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/edit_game_divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cbPlayed" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cbLiked"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/liked"
+            android:textAllCaps="true"
+            android:textColor="@color/edit_game_label"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vPlayedDivider" />
+
+        <View
+            android:id="@+id/vLikedDivider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/edit_game_divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cbLiked" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clDelete"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vLikedDivider">
+
+            <ImageView
+                android:id="@+id/ivDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_delete_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete"
+                android:textAllCaps="true"
+                android:textColor="@color/edit_game_label"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivDelete"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

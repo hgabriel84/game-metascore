@@ -1,88 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/clContent"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/list_item_game_bg">
 
-    <ImageView
-        android:id="@+id/ivCover"
-        android:layout_width="100dp"
-        android:layout_height="120dp"
-        android:contentDescription="@string/game_cover_content_description"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/clContent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
-        android:maxLines="2"
-        android:textAllCaps="true"
-        android:textColor="@color/list_item_game_label"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/tvTotalRating"
-        app:layout_constraintStart_toEndOf="@+id/ivCover"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="the-last-of-us-remastered" />
+        android:background="@color/list_item_game_bg">
 
-    <TextView
-        android:id="@+id/tvCriticsRating"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:textColor="@color/list_item_game_label"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@id/tvUsersRating"
-        app:layout_constraintEnd_toStartOf="@id/tvTotalRating"
-        app:layout_constraintStart_toEndOf="@+id/ivCover"
-        tools:text="metascore: 95" />
+        <ImageView
+            android:id="@+id/ivCover"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:contentDescription="@string/game_cover_content_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/tvUsersRating"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"
-        android:textColor="@color/list_item_game_label"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tvTotalRating"
-        app:layout_constraintStart_toEndOf="@+id/ivCover"
-        tools:text="userscore: 88" />
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:maxLines="2"
+            android:textAllCaps="true"
+            android:textColor="@color/list_item_game_label"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/tvTotalRating"
+            app:layout_constraintStart_toEndOf="@+id/ivCover"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="the-last-of-us-remastered" />
 
-    <TextView
-        android:id="@+id/tvTotalRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="92"
-        tools:textColor="@color/primary" />
+        <TextView
+            android:id="@+id/tvCriticsRating"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/list_item_game_label"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/tvUsersRating"
+            app:layout_constraintEnd_toStartOf="@id/tvTotalRating"
+            app:layout_constraintStart_toEndOf="@+id/ivCover"
+            tools:text="critics: 95" />
 
-    <ImageView
-        android:contentDescription="@string/liked_game_content_description"
-        android:id="@+id/ivLiked"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
-        android:src="@drawable/ic_liked_24"
-        app:tint="@color/list_item_game_liked"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+        <TextView
+            android:id="@+id/tvUsersRating"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/list_item_game_label"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvTotalRating"
+            app:layout_constraintStart_toEndOf="@+id/ivCover"
+            tools:text="userscore: 88" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvTotalRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="92"
+            tools:textColor="@color/primary" />
+
+        <ImageView
+            android:id="@+id/ivLiked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:contentDescription="@string/liked_game_content_description"
+            android:src="@drawable/ic_liked_24"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/list_item_game_liked"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

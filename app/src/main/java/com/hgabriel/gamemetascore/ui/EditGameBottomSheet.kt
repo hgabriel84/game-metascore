@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.hgabriel.gamemetascore.data.Game
-import com.hgabriel.gamemetascore.databinding.BottomSheetEditGameBinding
-
+//import com.hgabriel.gamemetascore.databinding.BottomSheetEditGameBinding
+/*
 class EditGameBottomSheet(
     private val game: Game,
     private val onPlayed: () -> Unit,
@@ -44,3 +44,5 @@ class EditGameBottomSheet(
         }
     }
 }
+
+ */

@@ -4,75 +4,81 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.hgabriel.gamemetascore.R
 import com.hgabriel.gamemetascore.data.Game
 import com.hgabriel.gamemetascore.databinding.ListItemGameBinding
-import java.math.RoundingMode
-import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
-class GameAdapter(
-    private val list: ArrayList<Game>,
-    private val onLongClickCallback: (game: Game) -> Unit
-) :
-    RecyclerView.Adapter<GameAdapter.GameViewHolder>() {
+class GameAdapter : ListAdapter<Game, RecyclerView.ViewHolder>(GameDiffCallback()) {
 
-    class GameViewHolder(
-        private val itemBinding: ListItemGameBinding,
-        private val onLongClickCallback: (game: Game) -> Unit
-    ) :
-        RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(game: Game) {
-            val context = itemBinding.root.context
-            // colors
-            if (game.played) {
-                itemBinding.clContent.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.list_item_game_played_bg
-                    )
-                )
-            } else {
-                itemBinding.clContent.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.list_item_game_bg
-                    )
-                )
-            }
-            itemBinding.tvTotalRating.setTextColor(
-                getTotalRatingTextColor(
-                    context,
-                    game.totalRating
-                )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+        GameViewHolder(
+            ListItemGameBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
             )
+        )
 
-            // labels
-            itemBinding.tvName.text = game.name
-            itemBinding.tvCriticsRating.text =
-                String.format(
-                    context.getString(R.string.critics_rating),
-                    game.criticsRating.toLabel()
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val game = getItem(position)
+        (holder as GameViewHolder).bind(game)
+    }
+
+    class GameViewHolder(private val binding: ListItemGameBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(item: Game) {
+            binding.apply {
+
+                // labels
+                tvName.text = item.name
+
+                tvCriticsRating.text = String.format(
+                    root.context.getString(R.string.critics_rating),
+                    item.criticsRating.toLabel()
                 )
-            itemBinding.tvUsersRating.text =
-                String.format(context.getString(R.string.users_rating), game.usersRating.toLabel())
-            val df = DecimalFormat("#.##")
-            df.roundingMode = RoundingMode.CEILING
-            itemBinding.tvTotalRating.text = game.totalRating.toLabel()
 
-            // image
-            Glide.with(itemBinding.root).load(game.cover).into(itemBinding.ivCover)
+                tvUsersRating.text = String.format(
+                    root.context.getString(R.string.users_rating),
+                    item.usersRating.toLabel()
+                )
 
-            // liked game
-            itemBinding.ivLiked.visibility = if (game.liked) View.VISIBLE else View.INVISIBLE
+                tvTotalRating.text = item.totalRating.toLabel()
 
-            // long click
-            itemView.setOnLongClickListener {
-                onLongClickCallback(game)
-                true
+                // image
+                Glide.with(root).load(item.cover).into(ivCover)
+
+                // liked game
+                ivLiked.visibility = if (item.liked) View.VISIBLE else View.INVISIBLE
+
+                // long click
+                itemView.setOnLongClickListener {
+                    Toast.makeText(root.context, "SOON", Toast.LENGTH_SHORT).show()
+                    true
+                }
+
+                // colors
+                if (item.played) {
+                    clContent.setBackgroundColor(
+                        ContextCompat.getColor(root.context, R.color.list_item_game_played_bg)
+                    )
+                } else {
+                    clContent.setBackgroundColor(
+                        ContextCompat.getColor(root.context, R.color.list_item_game_bg)
+                    )
+                }
+                tvTotalRating.setTextColor(
+                    getTotalRatingTextColor(root.context, item.totalRating)
+                )
+
+                executePendingBindings()
             }
         }
 
@@ -88,28 +94,18 @@ class GameAdapter(
                 }
             } ?: ContextCompat.getColor(context, R.color.primary)
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder =
-        GameViewHolder(
-            ListItemGameBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            ),
-            onLongClickCallback
-        )
-
-    override fun getItemCount(): Int = list.size
-
-    override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
-        holder.bind(list[position])
-    }
-
-    fun addAll(games: List<Game>) {
-        list.apply {
-            clear()
-            addAll(games)
-        }
-        notifyDataSetChanged()
-    }
 }
+
+private class GameDiffCallback : DiffUtil.ItemCallback<Game>() {
+    override fun areItemsTheSame(oldItem: Game, newItem: Game): Boolean = oldItem.id == newItem.id
+
+    override fun areContentsTheSame(oldItem: Game, newItem: Game): Boolean = oldItem == newItem
+
+}
+
+/*
+class GameAdapter(
+    private val list: ArrayList<Game>,
+    private val onLongClickCallback: (game: Game) -> Unit
+)
+*/
