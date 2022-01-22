@@ -1,4 +1,4 @@
-package com.hgabriel.gamemetascore.scores.data.vo
+package com.hgabriel.gamemetascore.data
 
 data class MetaGame(
     val id: Int,

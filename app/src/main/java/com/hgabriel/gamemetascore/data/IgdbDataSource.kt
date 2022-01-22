@@ -5,7 +5,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 class IgdbDataSource @Inject constructor(private val service: IgdbService) {
-
+/*
     suspend fun searchGame(keyword: String): Resource<List<Game>> {
         val body =
             "fields id,name,cover,aggregated_rating,rating,total_rating; search \"$keyword\";"
@@ -55,4 +55,6 @@ class IgdbDataSource @Inject constructor(private val service: IgdbService) {
 
     private fun List<CoverResponse>.toCoverUrl(): String? =
         firstOrNull()?.imageId?.let { "https://images.igdb.com/igdb/image/upload/t_cover_big/$it.png" }
+
+ */
 }

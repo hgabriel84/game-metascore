@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/game_list_fragment"
-        android:name="com.hgabriel.gamemetascore.ui.GameFragment"
+        android:name="com.hgabriel.gamemetascore.ui.GamesFragment"
         android:layout="@layout/fragment_game">
 
     </fragment>
