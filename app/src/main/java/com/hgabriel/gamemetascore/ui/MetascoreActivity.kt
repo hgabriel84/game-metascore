@@ -23,11 +23,6 @@ class MetascoreActivity : AppCompatActivity() {
     private lateinit var snackbar: Snackbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityGamelistBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        setupLayout()
         initGameList()
     }
 
