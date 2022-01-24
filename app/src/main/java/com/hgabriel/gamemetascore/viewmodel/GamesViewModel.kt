@@ -2,40 +2,30 @@ package com.hgabriel.gamemetascore.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hgabriel.gamemetascore.R
 import com.hgabriel.gamemetascore.data.Game
 import com.hgabriel.gamemetascore.data.GameOrder
 import com.hgabriel.gamemetascore.data.GameRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.transformLatest
 import javax.inject.Inject
 
 @HiltViewModel
 class GamesViewModel @Inject constructor(
-    gameRepository: GameRepository//,
-    // private val savedStateHandle: SavedStateHandle
+    gameRepository: GameRepository
 ) : ViewModel() {
 
-    private val order: MutableStateFlow<GameOrder> = MutableStateFlow(
-        GameOrder.RATING //savedStateHandle.get(GAME_ORDER_SAVED_STATE_KEY) ?: GameOrder.RATING
-    )
-/*
-    val games: LiveData<List<Game>> = order.flatMapLatest {
-        gameRepository.getGames(it)
-    }.asLiveData()
+    private val order: MutableStateFlow<GameOrder> = MutableStateFlow(GameOrder.RATING)
 
- */
-
-    val uiState: StateFlow<GamesUiState> = flow {
-        emit(GamesUiState.Success(gameRepository.getGames(GameOrder.RATING)))
+    val uiState: StateFlow<GamesUiState> = order.transformLatest {
+        emit(GamesUiState.Success(gameRepository.getGames(order.value)))
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.Lazily, // SharingStarted.WhileSubscribed(5000),
+        started = WhileSubscribed(5000),
         initialValue = GamesUiState.Loading
     )
 
@@ -45,17 +35,10 @@ class GamesViewModel @Inject constructor(
         object Loading : GamesUiState()
     }
 
-    init {
-        /*
-        viewModelScope.launch {
-            order.collect { newOrder ->
-                savedStateHandle.set(GAME_ORDER_SAVED_STATE_KEY, newOrder)
-            }
-        }
-         */
+    fun getOrderIcon(): Int = when (order.value) {
+        GameOrder.RATING -> R.drawable.ic_score_24
+        GameOrder.NAME -> R.drawable.ic_alpha_24
     }
-/*
-    fun getOrder(): GameOrder = order.value
 
     fun toggleOrder() {
         when (order.value) {
@@ -63,10 +46,4 @@ class GamesViewModel @Inject constructor(
             GameOrder.NAME -> order.value = GameOrder.RATING
         }
     }
-
-    companion object {
-        private const val GAME_ORDER_SAVED_STATE_KEY = "GAME_ORDER_SAVED_STATE_KEY"
-    }
-
- */
 }

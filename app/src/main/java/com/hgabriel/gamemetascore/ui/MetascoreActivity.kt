@@ -19,34 +19,10 @@ class MetascoreActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<GameViewModel>()
 
-    private lateinit var binding: ActivityGamelistBinding
     private lateinit var snackbar: Snackbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initGameList()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.game_menu, menu)
-        return true
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menu?.findItem(R.id.action_order)?.let { item ->
-            viewModel.getOrder().getMenuOrderIcon().let { item.setIcon(it) }
-        }
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_order -> {
-                viewModel.toggleOrder()
-                invalidateOptionsMenu()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     private fun initGameList() {
@@ -88,12 +64,6 @@ class MetascoreActivity : AppCompatActivity() {
             .setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_label))
         snackbar.show()
     }
-
-    private fun GameOrder.getMenuOrderIcon(): Int =
-        when (this) {
-            GameOrder.RATING -> R.drawable.ic_score_24
-            GameOrder.NAME -> R.drawable.ic_alpha_24
-        }
 
  */
 }
