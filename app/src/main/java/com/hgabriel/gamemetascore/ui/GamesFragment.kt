@@ -7,7 +7,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -16,9 +15,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hgabriel.gamemetascore.R
+import com.hgabriel.gamemetascore.adapters.GamesAdapter
 import com.hgabriel.gamemetascore.data.Game
-import com.hgabriel.gamemetascore.data.GameOrder
-import com.hgabriel.gamemetascore.databinding.FragmentGameBinding
+import com.hgabriel.gamemetascore.databinding.FragmentGamesBinding
 import com.hgabriel.gamemetascore.viewmodel.GamesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -34,7 +33,7 @@ class GamesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentGameBinding.inflate(inflater, container, false)
+        val binding = FragmentGamesBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
         val adapter = GamesAdapter()
@@ -72,7 +71,7 @@ class GamesFragment : Fragment() {
         }
     }
 
-    private fun subscribeUi(binding: FragmentGameBinding, adapter: GamesAdapter) {
+    private fun subscribeUi(binding: FragmentGamesBinding, adapter: GamesAdapter) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
@@ -87,18 +86,18 @@ class GamesFragment : Fragment() {
         }
     }
 
-    private fun setLoadingState(binding: FragmentGameBinding) {
+    private fun setLoadingState(binding: FragmentGamesBinding) {
         binding.tvEmptyState.visibility = View.GONE
         binding.pbLoading.visibility = View.VISIBLE
         binding.rvGames.visibility = View.GONE
     }
 
-    private fun setErrorState(binding: FragmentGameBinding) {
+    private fun setErrorState(binding: FragmentGamesBinding) {
 
     }
 
     private fun setSuccessState(
-        binding: FragmentGameBinding,
+        binding: FragmentGamesBinding,
         games: List<Game>,
         adapter: GamesAdapter
     ) {
