@@ -36,6 +36,7 @@ class GamesFragment : Fragment() {
         val binding = FragmentGamesBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
+        activity?.setTitle(R.string.app_name)
         val adapter = GamesAdapter()
         val linearLayoutManager = LinearLayoutManager(context)
         binding.rvGames.apply {

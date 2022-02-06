@@ -22,4 +22,7 @@
     <color name="game_detail_bg">#FFF8F8F8</color>
     <color name="game_detail_label">#FF000000</color>
     <color name="game_detail_divider">#FFF2EDEA</color>
+    <color name="game_detail_edit_label">#FFF2EDEA</color>
+    <color name="game_detail_edit_icon">#FFF2EDEA</color>
+    <color name="game_detail_edit_bg">@color/primary</color>
 </resources>

@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.24814814814814815" />
+        <entry key="app/src/main/res/drawable/ic_delete_24.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_gameMetascore.xml" value="0.37318840579710144" />
         <entry key="app/src/main/res/layout/activity_gamelist.xml" value="0.37318840579710144" />
         <entry key="app/src/main/res/layout/activity_metascore.xml" value="0.1" />

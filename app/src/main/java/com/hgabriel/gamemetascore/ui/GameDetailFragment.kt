@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.hgabriel.gamemetascore.R
 import com.hgabriel.gamemetascore.data.Game
 import com.hgabriel.gamemetascore.databinding.FragmentGameDetailBinding
+import com.hgabriel.gamemetascore.utilities.getTotalRatingTextColor
 import com.hgabriel.gamemetascore.utilities.toLabel
 import com.hgabriel.gamemetascore.viewmodels.GameDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,7 +66,7 @@ class GameDetailFragment : Fragment() {
             pbLoading.visibility = View.GONE
 
             // labels
-            tvName.text = game.name
+            activity?.title = game.name
             tvSummary.text = game.summary
             tvTotalRating.text = game.totalRating.toLabel()
             tvCriticsRating.text = String.format(
@@ -77,6 +78,13 @@ class GameDetailFragment : Fragment() {
                 game.usersRating.toLabel()
             )
             tvStoryline.text = game.storyline
+
+            // checkbox
+            cbLiked.isChecked = game.liked
+            cbPlayed.isChecked = game.played
+
+            // colors
+            tvTotalRating.setTextColor(getTotalRatingTextColor(root.context, game.totalRating))
 
             // cover
             Glide.with(root).load(game.cover).into(ivCover)
