@@ -2,8 +2,8 @@ package com.hgabriel.gamemetascore.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.hgabriel.gamemetascore.R
 import androidx.databinding.DataBindingUtil.setContentView
+import com.hgabriel.gamemetascore.R
 import com.hgabriel.gamemetascore.databinding.ActivityMetascoreBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,56 +14,4 @@ class MetascoreActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView<ActivityMetascoreBinding>(this, R.layout.activity_metascore)
     }
-/*
-    private val editGameBottomSheetTag = "EditGameBottomSheet"
-
-    private val viewModel by viewModels<GameViewModel>()
-
-    private lateinit var snackbar: Snackbar
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        initGameList()
-    }
-
-    private fun initGameList() {
-        viewModel.games.observe(this, { resource ->
-            when (resource.status) {
-                Resource.Status.SUCCESS -> {
-                    if (::snackbar.isInitialized) snackbar.dismiss()
-                    resource.data?.result?.let { gameAdapter.addAll(it) }
-                }
-                Resource.Status.ERROR -> showErrorSnackbar()
-                Resource.Status.LOADING -> Unit
-            }
-        })
-        // viewModel.deletedGame.observe(this, { it?.let { showRestoreGameSnackbar() } })
-    }
-
-    private fun showEditGame(game: Game) {
-        EditGameBottomSheet(
-            game,
-            onPlayed = { },
-            onLiked = { },
-            onDelete = { }
-        ).show(supportFragmentManager, editGameBottomSheetTag)
-    }
-
-    private fun showErrorSnackbar() {
-        snackbar = Snackbar.make(binding.coordinatorLayout, R.string.error, Snackbar.LENGTH_SHORT)
-            .setBackgroundTint(ContextCompat.getColor(this, R.color.snackbar_error_bg))
-            .setTextColor(ContextCompat.getColor(this, R.color.snackbar_label))
-        snackbar.show()
-    }
-
-    private fun showRestoreGameSnackbar() {
-        snackbar = Snackbar
-            .make(binding.coordinatorLayout, R.string.game_deleted, Snackbar.LENGTH_LONG)
-            .setBackgroundTint(ContextCompat.getColor(this, R.color.snackbar_restore_bg))
-            .setTextColor(ContextCompat.getColor(this, R.color.snackbar_label))
-            .setAction(R.string.undo) {}  // { viewModel.restoreGame() }
-            .setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_label))
-        snackbar.show()
-    }
-
- */
 }

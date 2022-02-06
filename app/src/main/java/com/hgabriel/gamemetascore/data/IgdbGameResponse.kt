@@ -6,7 +6,8 @@ data class IgdbGameResponse(
     val id: Int,
     val name: String,
     val cover: Int?,
-    val description: String?,
+    val storyline: String?,
+    val summary: String?,
     @Json(name = "aggregated_rating") val criticsRating: Float?,
     @Json(name = "rating") val usersRating: Float?,
     @Json(name = "total_rating") val totalRating: Float?

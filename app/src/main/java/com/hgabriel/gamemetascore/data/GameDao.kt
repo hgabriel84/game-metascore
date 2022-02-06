@@ -1,7 +1,10 @@
 package com.hgabriel.gamemetascore.data
 
-import androidx.room.*
-import kotlinx.coroutines.flow.Flow
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 
 @Dao
 interface GameDao {
@@ -11,6 +14,9 @@ interface GameDao {
 
     @Query("SELECT * FROM game order by UPPER(name) ASC")
     suspend fun getGamesByName(): List<Game>
+
+    @Query("SELECT * FROM game where id=:id")
+    suspend fun getGameById(id: Int): Game
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(game: Game)

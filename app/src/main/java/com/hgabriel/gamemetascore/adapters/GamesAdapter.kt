@@ -1,11 +1,9 @@
 package com.hgabriel.gamemetascore.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -14,9 +12,9 @@ import com.bumptech.glide.Glide
 import com.hgabriel.gamemetascore.R
 import com.hgabriel.gamemetascore.data.Game
 import com.hgabriel.gamemetascore.databinding.ListItemGameBinding
-import com.hgabriel.gamemetascore.ui.GameDetailFragment
 import com.hgabriel.gamemetascore.ui.GamesFragmentDirections
-import kotlin.math.roundToInt
+import com.hgabriel.gamemetascore.utilities.getTotalRatingTextColor
+import com.hgabriel.gamemetascore.utilities.toLabel
 
 class GamesAdapter : ListAdapter<Game, RecyclerView.ViewHolder>(GameDiffCallback()) {
 
@@ -42,17 +40,14 @@ class GamesAdapter : ListAdapter<Game, RecyclerView.ViewHolder>(GameDiffCallback
 
                 // labels
                 tvName.text = item.name
-
                 tvCriticsRating.text = String.format(
                     root.context.getString(R.string.critics_rating),
                     item.criticsRating.toLabel()
                 )
-
                 tvUsersRating.text = String.format(
                     root.context.getString(R.string.users_rating),
                     item.usersRating.toLabel()
                 )
-
                 tvTotalRating.text = item.totalRating.toLabel()
 
                 // image
@@ -61,7 +56,7 @@ class GamesAdapter : ListAdapter<Game, RecyclerView.ViewHolder>(GameDiffCallback
                 // liked game
                 ivLiked.visibility = if (item.liked) View.VISIBLE else View.INVISIBLE
 
-                // long click
+                // on click
                 itemView.setOnClickListener {
                     navigateToGame(item, it)
                 }
@@ -76,25 +71,11 @@ class GamesAdapter : ListAdapter<Game, RecyclerView.ViewHolder>(GameDiffCallback
                         ContextCompat.getColor(root.context, R.color.list_item_game_bg)
                     )
                 }
-                tvTotalRating.setTextColor(
-                    getTotalRatingTextColor(root.context, item.totalRating)
-                )
+                tvTotalRating.setTextColor(getTotalRatingTextColor(root.context, item.totalRating))
 
                 executePendingBindings()
             }
         }
-
-        private fun Float?.toLabel(): String = this?.roundToInt()?.toString() ?: "-"
-
-        private fun getTotalRatingTextColor(context: Context, score: Float?) =
-            score?.let {
-                when (it) {
-                    in 0f..49.9f -> ContextCompat.getColor(context, R.color.red_score)
-                    in 50f..79.9f -> ContextCompat.getColor(context, R.color.yellow_score)
-                    in 80f..100f -> ContextCompat.getColor(context, R.color.green_score)
-                    else -> ContextCompat.getColor(context, R.color.primary)
-                }
-            } ?: ContextCompat.getColor(context, R.color.primary)
 
         private fun navigateToGame(game: Game, view: View) {
             val direction =
@@ -106,7 +87,5 @@ class GamesAdapter : ListAdapter<Game, RecyclerView.ViewHolder>(GameDiffCallback
 
 private class GameDiffCallback : DiffUtil.ItemCallback<Game>() {
     override fun areItemsTheSame(oldItem: Game, newItem: Game): Boolean = oldItem.id == newItem.id
-
     override fun areContentsTheSame(oldItem: Game, newItem: Game): Boolean = oldItem == newItem
-
 }

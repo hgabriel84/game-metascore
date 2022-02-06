@@ -18,7 +18,7 @@ import com.hgabriel.gamemetascore.R
 import com.hgabriel.gamemetascore.adapters.GamesAdapter
 import com.hgabriel.gamemetascore.data.Game
 import com.hgabriel.gamemetascore.databinding.FragmentGamesBinding
-import com.hgabriel.gamemetascore.viewmodel.GamesViewModel
+import com.hgabriel.gamemetascore.viewmodels.GamesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -72,8 +72,8 @@ class GamesFragment : Fragment() {
     }
 
     private fun subscribeUi(binding: FragmentGamesBinding, adapter: GamesAdapter) {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     when (uiState) {
                         is GamesViewModel.GamesUiState.Error -> setErrorState(binding)

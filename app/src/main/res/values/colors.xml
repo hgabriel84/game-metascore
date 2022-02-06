@@ -13,18 +13,13 @@
     <color name="list_item_game_played_bg">#FFBDFDF6</color>
     <color name="list_item_game_liked">#FFF44336</color>
 
-    <!-- edit game -->
-    <color name="edit_game_label">#FF000000</color>
-    <color name="edit_game_bg">#FFF8F8F8</color>
-    <color name="edit_game_divider">#FFF2EDEA</color>
-
     <!-- score -->
     <color name="green_score">#FF66CC33</color>
     <color name="yellow_score">#FFFFCC33</color>
     <color name="red_score">#FFFF0000</color>
 
-    <!-- snackbar -->
-    <color name="snackbar_error_bg">#FFFF0000</color>
-    <color name="snackbar_restore_bg">#FF0070D1</color>
-    <color name="snackbar_label">#FFFFFFFF</color>
+    <!-- game detail -->
+    <color name="game_detail_bg">#FFF8F8F8</color>
+    <color name="game_detail_label">#FF000000</color>
+    <color name="game_detail_divider">#FFF2EDEA</color>
 </resources>

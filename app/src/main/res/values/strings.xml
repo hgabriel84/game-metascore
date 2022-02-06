@@ -1,17 +1,15 @@
 <resources>
     <string name="app_name">GameMetascore</string>
-    <string name="critics_rating">critics: %s</string>
-    <string name="users_rating">users: %s</string>
-    <string name="updating_data">Updating game score</string>
-    <string name="error">Error</string>
-    <string name="game_cover_content_description">game cover</string>
-    <string name="order">order</string>
-    <string name="search">search</string>
-    <string name="add_game_explained">To start adding games to your collection, use the + button</string>
+    <string name="critics_rating">Critics: %s</string>
+    <string name="users_rating">Users: %s</string>
+    <string name="add_game_explained">To start adding games to your collection, use the search button</string>
     <string name="played">Played</string>
     <string name="liked">Liked</string>
     <string name="delete">Delete</string>
     <string name="game_deleted">Game deleted</string>
     <string name="undo">Undo</string>
+    <string name="order">Order</string>
     <string name="liked_game_content_description">liked game</string>
+    <string name="delete_game_content_description">delete game</string>
+    <string name="game_cover_content_description">game cover</string>
 </resources>

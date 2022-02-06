@@ -12,6 +12,8 @@ class GameRepository @Inject constructor(private val gameDao: GameDao) {
             GameOrder.NAME -> gameDao.getGamesByName()
         }
 
+    suspend fun getGame(id: Int) = gameDao.getGameById(id)
+
     suspend fun addGame(game: Game) = gameDao.insert(game)
 
     suspend fun removeGame(game: Game) = gameDao.delete(game)
