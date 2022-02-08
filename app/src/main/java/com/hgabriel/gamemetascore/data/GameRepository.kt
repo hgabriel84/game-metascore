@@ -16,7 +16,7 @@ class GameRepository @Inject constructor(private val gameDao: GameDao) {
 
     suspend fun addGame(game: Game) = gameDao.insert(game)
 
-    suspend fun removeGame(game: Game) = gameDao.delete(game)
+    suspend fun removeGame(id: Int) = gameDao.deleteById(id)
 
     suspend fun togglePlayed(id: Int) {
         val game = gameDao.getGameById(id).apply { played = !played }

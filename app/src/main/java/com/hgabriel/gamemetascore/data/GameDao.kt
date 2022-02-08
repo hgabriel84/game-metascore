@@ -1,7 +1,6 @@
 package com.hgabriel.gamemetascore.data
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -21,6 +20,6 @@ interface GameDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(game: Game)
 
-    @Delete
-    suspend fun delete(game: Game)
+    @Query("DELETE FROM game WHERE id=:id")
+    suspend fun deleteById(id: Int)
 }

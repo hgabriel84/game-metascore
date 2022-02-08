@@ -1,8 +1,11 @@
 package com.hgabriel.gamemetascore.data
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity
 data class Game(
     @PrimaryKey val id: Int,
@@ -15,6 +18,6 @@ data class Game(
     val totalRating: Float? = null,
     var played: Boolean = false,
     var liked: Boolean = false
-)
+) : Parcelable
 
 enum class GameOrder { RATING, NAME }

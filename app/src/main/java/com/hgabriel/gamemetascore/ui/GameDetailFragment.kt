@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.hgabriel.gamemetascore.R
 import com.hgabriel.gamemetascore.data.Game
@@ -86,6 +89,12 @@ class GameDetailFragment : Fragment() {
             // callbacks
             cbLiked.setOnClickListener { viewModel.toggleLiked() }
             cbPlayed.setOnClickListener { viewModel.togglePlayed() }
+            clDelete.setOnClickListener {
+                // prevent actions in game about to be deleted
+                cbLiked.setOnClickListener(null)
+                cbPlayed.setOnClickListener(null)
+                onDelete(game)
+            }
 
             // colors
             tvTotalRating.setTextColor(getTotalRatingTextColor(root.context, game.totalRating))
@@ -93,6 +102,17 @@ class GameDetailFragment : Fragment() {
             // cover
             Glide.with(root).load(game.cover).into(ivCover)
         }
+    }
+
+    private fun onDelete(game: Game) {
+        viewModel.delete()
+        setFragmentResult(GAME_DETAIL_REQUEST_KEY, bundleOf(GAME_KEY to game))
+        findNavController().navigateUp()
+    }
+
+    companion object {
+        const val GAME_DETAIL_REQUEST_KEY = "GAME_DETAIL_REQUEST_KEY"
+        const val GAME_KEY = "game"
     }
 
 }

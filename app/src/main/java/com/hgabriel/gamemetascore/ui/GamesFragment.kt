@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -45,6 +46,11 @@ class GamesFragment : Fragment() {
             this.adapter = adapter
         }
         subscribeUi(binding, adapter)
+
+        setFragmentResultListener(GameDetailFragment.GAME_DETAIL_REQUEST_KEY) { _, bundle ->
+            val game = (bundle.get(GameDetailFragment.GAME_KEY) as Game)
+            // TODO restore logic here
+        }
 
         setHasOptionsMenu(true)
         return binding.root

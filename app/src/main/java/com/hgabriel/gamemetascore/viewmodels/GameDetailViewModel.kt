@@ -30,8 +30,8 @@ class GameDetailViewModel @Inject constructor(
     )
 
     fun toggleLiked() = viewModelScope.launch { gameRepository.toggleLiked(gameId) }
-
     fun togglePlayed() = viewModelScope.launch { gameRepository.togglePlayed(gameId) }
+    fun delete() = viewModelScope.launch { gameRepository.removeGame(gameId) }
 
     sealed class GameDetailUiState {
         data class Success(val game: Game) : GameDetailUiState()
