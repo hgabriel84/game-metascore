@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.hgabriel.gamemetascore.R
 import com.hgabriel.gamemetascore.adapters.GamesAdapter
 import com.hgabriel.gamemetascore.data.Game
@@ -49,7 +50,7 @@ class GamesFragment : Fragment() {
 
         setFragmentResultListener(GameDetailFragment.GAME_DETAIL_REQUEST_KEY) { _, bundle ->
             val game = (bundle.get(GameDetailFragment.GAME_KEY) as Game)
-            // TODO restore logic here
+            setRestoreGameState(binding.root, game)
         }
 
         setHasOptionsMenu(true)
@@ -83,7 +84,6 @@ class GamesFragment : Fragment() {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     when (uiState) {
-                        is GamesViewModel.GamesUiState.Error -> setErrorState(binding)
                         GamesViewModel.GamesUiState.Loading -> setLoadingState(binding)
                         is GamesViewModel.GamesUiState.Success ->
                             setSuccessState(binding, uiState.games, adapter)
@@ -97,10 +97,6 @@ class GamesFragment : Fragment() {
         binding.tvEmptyState.visibility = View.GONE
         binding.pbLoading.visibility = View.VISIBLE
         binding.rvGames.visibility = View.GONE
-    }
-
-    private fun setErrorState(binding: FragmentGamesBinding) {
-
     }
 
     private fun setSuccessState(
@@ -117,6 +113,12 @@ class GamesFragment : Fragment() {
             binding.rvGames.visibility = View.VISIBLE
             adapter.submitList(games)
         }
+    }
+
+    private fun setRestoreGameState(view: View, game: Game) {
+        Snackbar.make(view, R.string.game_deleted, Snackbar.LENGTH_SHORT)
+            .setAction(R.string.undo) { viewModel.restoreGame(game) }
+            .show()
     }
 
 }

@@ -8,19 +8,22 @@ import com.hgabriel.gamemetascore.data.GameOrder
 import com.hgabriel.gamemetascore.data.GameRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.transformLatest
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GamesViewModel @Inject constructor(gameRepository: GameRepository) : ViewModel() {
+class GamesViewModel @Inject constructor(private val gameRepository: GameRepository) : ViewModel() {
 
-    // TODO for testing purposes
+    private var order = GameOrder.RATING
+    private val _uiState: MutableStateFlow<GamesUiState> = MutableStateFlow(GamesUiState.Loading)
+    val uiState: StateFlow<GamesUiState> = _uiState
+
     init {
+
         viewModelScope.launch {
+            /* TODO for testing purposes
             gameRepository.addGame(
                 Game(
                     id = 19560,
@@ -35,34 +38,48 @@ class GamesViewModel @Inject constructor(gameRepository: GameRepository) : ViewM
                     liked = true
                 )
             )
+
+            gameRepository.addGame(
+                Game(
+                    id = 136560,
+                    name = "EA Sports UFC 4",
+                    cover = "https://images.igdb.com/igdb/image/upload/t_cover_big/co2es1.png",
+                    summary = "In EA SPORTS UFC 4 the fighter you become is shaped by your fight style, your achievements, and your personality. Develop and customize your character through a unified progression system across all modes. Go from unknown amateur to UFC superstar in the new Career Mode, experience the origins of combat sports in two all-new environments; The Kumite and The Backyard, or challenge the world in new Blitz Battles or Online World Championships to become the undisputed champ. In gameplay, fluid clinch-to-strike combinations offer more responsive and authentic stand-up gameplay, while overhauled takedown and ground mechanics deliver more control in those key phases of the fight. No matter how, or where, you play EA SPORTS UFC 4 puts ‘you’ at the center of every fight.",
+                    criticsRating = 79.14f,
+                    usersRating = 70.12f,
+                    totalRating = 74.63f,
+                    played = true,
+                    liked = true
+                )
+            )
+            */
+
+            gameRepository.games(order)
+                .collect { games -> _uiState.value = GamesUiState.Success(games) }
         }
     }
 
-    private val order: MutableStateFlow<GameOrder> = MutableStateFlow(GameOrder.RATING)
-
-    val uiState: StateFlow<GamesUiState> = order.transformLatest {
-        emit(GamesUiState.Success(gameRepository.getGames(order.value)))
-    }.stateIn(
-        scope = viewModelScope,
-        started = WhileSubscribed(5000),
-        initialValue = GamesUiState.Loading
-    )
-
-    sealed class GamesUiState {
-        data class Success(val games: List<Game>) : GamesUiState()
-        data class Error(val message: String) : GamesUiState()
-        object Loading : GamesUiState()
-    }
-
-    fun getOrderIcon(): Int = when (order.value) {
+    fun getOrderIcon(): Int = when (order) {
         GameOrder.RATING -> R.drawable.ic_score_24
         GameOrder.NAME -> R.drawable.ic_alpha_24
     }
 
     fun toggleOrder() {
-        when (order.value) {
-            GameOrder.RATING -> order.value = GameOrder.NAME
-            GameOrder.NAME -> order.value = GameOrder.RATING
+        order = when (order) {
+            GameOrder.RATING -> GameOrder.NAME
+            GameOrder.NAME -> GameOrder.RATING
         }
+
+        viewModelScope.launch {
+            gameRepository.games(order)
+                .collect { games -> _uiState.value = GamesUiState.Success(games) }
+        }
+    }
+
+    fun restoreGame(game: Game) = viewModelScope.launch { gameRepository.addGame(game) }
+
+    sealed class GamesUiState {
+        data class Success(val games: List<Game>) : GamesUiState()
+        object Loading : GamesUiState()
     }
 }

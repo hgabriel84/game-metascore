@@ -6,10 +6,10 @@ import javax.inject.Singleton
 @Singleton
 class GameRepository @Inject constructor(private val gameDao: GameDao) {
 
-    suspend fun getGames(order: GameOrder) =
+    fun games(order: GameOrder) =
         when (order) {
-            GameOrder.RATING -> gameDao.getGamesByRating()
-            GameOrder.NAME -> gameDao.getGamesByName()
+            GameOrder.RATING -> gameDao.gamesByRating()
+            GameOrder.NAME -> gameDao.gamesByName()
         }
 
     suspend fun getGame(id: Int) = gameDao.getGameById(id)

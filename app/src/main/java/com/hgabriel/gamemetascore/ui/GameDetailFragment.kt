@@ -46,7 +46,6 @@ class GameDetailFragment : Fragment() {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     when (uiState) {
-                        is GameDetailViewModel.GameDetailUiState.Error -> setErrorState(binding)
                         GameDetailViewModel.GameDetailUiState.Loading -> setLoadingState(binding)
                         is GameDetailViewModel.GameDetailUiState.Success ->
                             setSuccessState(binding, uiState.game)
@@ -54,10 +53,6 @@ class GameDetailFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun setErrorState(binding: FragmentGameDetailBinding) {
-        binding.pbLoading.visibility = View.VISIBLE
     }
 
     private fun setLoadingState(binding: FragmentGameDetailBinding) {

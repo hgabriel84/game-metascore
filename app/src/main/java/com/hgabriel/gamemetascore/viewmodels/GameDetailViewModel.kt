@@ -35,7 +35,6 @@ class GameDetailViewModel @Inject constructor(
 
     sealed class GameDetailUiState {
         data class Success(val game: Game) : GameDetailUiState()
-        data class Error(val message: String) : GameDetailUiState()
         object Loading : GameDetailUiState()
     }
 
