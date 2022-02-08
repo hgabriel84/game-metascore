@@ -83,6 +83,10 @@ class GameDetailFragment : Fragment() {
             cbLiked.isChecked = game.liked
             cbPlayed.isChecked = game.played
 
+            // callbacks
+            cbLiked.setOnClickListener { viewModel.toggleLiked() }
+            cbPlayed.setOnClickListener { viewModel.togglePlayed() }
+
             // colors
             tvTotalRating.setTextColor(getTotalRatingTextColor(root.context, game.totalRating))
 

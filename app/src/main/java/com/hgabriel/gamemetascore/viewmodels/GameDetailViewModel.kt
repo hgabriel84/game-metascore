@@ -10,12 +10,13 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class GameDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    gameRepository: GameRepository
+    private val gameRepository: GameRepository
 ) : ViewModel() {
 
     private val gameId: Int = savedStateHandle.get<Int>(GAME_ID_SAVED_STATE_KEY)!!
@@ -27,6 +28,10 @@ class GameDetailViewModel @Inject constructor(
         started = SharingStarted.Lazily,
         initialValue = GameDetailUiState.Loading
     )
+
+    fun toggleLiked() = viewModelScope.launch { gameRepository.toggleLiked(gameId) }
+
+    fun togglePlayed() = viewModelScope.launch { gameRepository.togglePlayed(gameId) }
 
     sealed class GameDetailUiState {
         data class Success(val game: Game) : GameDetailUiState()
