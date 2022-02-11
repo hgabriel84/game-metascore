@@ -4,200 +4,170 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/game_detail_bg">
+        android:orientation="vertical">
 
-        <!-- PROGRESS BAR -->
-        <ProgressBar
-            android:id="@+id/pbLoading"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/primary" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="@color/game_detail_bg">
 
-        <!-- CONTENT -->
-        <ScrollView
-            android:id="@+id/svContent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:id="@+id/clContent"
-                android:layout_width="match_parent"
+            <!-- PROGRESS BAR -->
+            <ProgressBar
+                android:id="@+id/pbLoading"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clTop"
+            <!-- CONTENT -->
+            <ScrollView
+                android:id="@+id/svContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/clContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="0dp"
-                    android:paddingEnd="8dp">
-
-                    <ImageView
-                        android:id="@+id/ivCover"
-                        android:layout_width="210dp"
-                        android:layout_height="280dp"
-                        android:contentDescription="@string/game_cover_content_description"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:srcCompat="@tools:sample/avatars" />
-
-                    <TextView
-                        android:id="@+id/tvUsersRating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/game_detail_label"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        tools:text="userscore: 88" />
-
-                    <TextView
-                        android:id="@+id/tvCriticsRating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/game_detail_label"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toTopOf="@id/tvUsersRating"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        tools:text="critics: 95" />
-
-                    <TextView
-                        android:id="@+id/tvTotalRating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="50sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toTopOf="@id/tvCriticsRating"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        tools:text="92"
-                        tools:textColor="@color/primary" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <TextView
-                    android:id="@+id/tvSummary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="4dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="4dp"
-                    android:textColor="@color/game_detail_label"
-                    android:textSize="16sp"
-                    tools:text="God of War is the sequel to God of War III as well as a continuation of the canon God of War chronology. Unlike previous installments, this game focuses on Norse mythology and follows an older and more seasoned Kratos and his son Atreus in the years since the third game. It is in this harsh, unforgiving world that he must fight to survive… and teach his son to do the same." />
-
-                <TextView
-                    android:id="@+id/tvStoryline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="4dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="4dp"
-                    android:paddingBottom="8dp"
-                    android:textColor="@color/game_detail_label"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvSummary"
-                    tools:text="Many years have passed since Kratos, Spartan warrior and former Greek God of War, took his vengeance against the Greek Gods, and he now lives with his young son Atreus in ancient Norway in the realm of Midgard. The game begins after the death of the Jötunn warrior Faye, Kratos' second wife and Atreus' mother, whose last request was for her ashes to be spread at the highest speak of the nine realms. Kratos and Atreus prepare a funeral pyre for her, mourn her death and soon go on a hunt as per Kratos' desire. However much to Kratos' disappointment, Atreus proves his incompetence and lack of focus, making Kratos reconsider taking Atreus in his journey. Kratos is soon attacked by a mysterious stranger with godlike powers, and who cannot feel anything physically. After seemingly killing him, Kratos reluctantly takes Atreus with him and begins their journey." />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cbPlayed"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/played"
-                        android:textAllCaps="true"
-                        android:textColor="@color/game_detail_label"
-                        android:textSize="12sp"
-                        app:buttonTint="@color/game_detail_edit_icon"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:checked="true" />
-
-                    <View
-                        android:id="@+id/vPlayedDivider"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:background="@color/game_detail_divider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cbPlayed" />
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/cbLiked"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/liked"
-                        android:textAllCaps="true"
-                        android:textColor="@color/game_detail_label"
-                        android:textSize="12sp"
-                        app:buttonTint="@color/game_detail_edit_icon"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/vPlayedDivider" />
-
-                    <View
-                        android:id="@+id/vLikedDivider"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:background="@color/game_detail_divider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cbLiked" />
+                    android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clDelete"
-                        android:layout_width="0dp"
-                        android:layout_height="48dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/vLikedDivider">
+                        android:id="@+id/clTop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="0dp"
+                        android:paddingEnd="8dp">
 
                         <ImageView
-                            android:id="@+id/ivDelete"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="@string/delete_game_content_description"
-                            android:paddingStart="4dp"
-                            android:paddingEnd="4dp"
-                            app:tint="@color/game_detail_edit_icon"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:id="@+id/ivCover"
+                            android:layout_width="210dp"
+                            android:layout_height="280dp"
+                            android:contentDescription="@string/game_cover_content_description"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_delete_24" />
+                            tools:srcCompat="@tools:sample/avatars" />
 
                         <TextView
+                            android:id="@+id/tvUsersRating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/delete"
-                            android:textAllCaps="true"
                             android:textColor="@color/game_detail_label"
-                            android:textSize="12sp"
+                            android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/ivDelete"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintEnd_toEndOf="parent"
+                            tools:text="userscore: 88" />
+
+                        <TextView
+                            android:id="@+id/tvCriticsRating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/game_detail_label"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toTopOf="@id/tvUsersRating"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            tools:text="critics: 95" />
+
+                        <TextView
+                            android:id="@+id/tvTotalRating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="50sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toTopOf="@id/tvCriticsRating"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            tools:text="92"
+                            tools:textColor="@color/primary" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/tvSummary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="4dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="4dp"
+                        android:textColor="@color/game_detail_label"
+                        android:textSize="16sp"
+                        tools:text="God of War is the sequel to God of War III as well as a continuation of the canon God of War chronology. Unlike previous installments, this game focuses on Norse mythology and follows an older and more seasoned Kratos and his son Atreus in the years since the third game. It is in this harsh, unforgiving world that he must fight to survive… and teach his son to do the same." />
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/tvStoryline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="4dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="4dp"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/game_detail_label"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvSummary"
+                        tools:text="Many years have passed since Kratos, Spartan warrior and former Greek God of War, took his vengeance against the Greek Gods, and he now lives with his young son Atreus in ancient Norway in the realm of Midgard. The game begins after the death of the Jötunn warrior Faye, Kratos' second wife and Atreus' mother, whose last request was for her ashes to be spread at the highest speak of the nine realms. Kratos and Atreus prepare a funeral pyre for her, mourn her death and soon go on a hunt as per Kratos' desire. However much to Kratos' disappointment, Atreus proves his incompetence and lack of focus, making Kratos reconsider taking Atreus in his journey. Kratos is soon attacked by a mysterious stranger with godlike powers, and who cannot feel anything physically. After seemingly killing him, Kratos reluctantly takes Atreus with him and begins their journey." />
 
-        </ScrollView>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/cbPlayed"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/played"
+                            android:textAllCaps="true"
+                            android:textColor="@color/game_detail_label"
+                            android:textSize="12sp"
+                            app:buttonTint="@color/game_detail_edit_icon"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:checked="true" />
+
+                        <View
+                            android:id="@+id/vPlayedDivider"
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:background="@color/game_detail_divider"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/cbPlayed" />
+
+                        <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/cbLiked"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/liked"
+                            android:textAllCaps="true"
+                            android:textColor="@color/game_detail_label"
+                            android:textSize="12sp"
+                            app:buttonTint="@color/game_detail_edit_icon"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/vPlayedDivider" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 
 </layout>

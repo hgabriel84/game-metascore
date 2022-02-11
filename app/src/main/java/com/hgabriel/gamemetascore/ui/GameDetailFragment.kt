@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
@@ -12,6 +13,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.hgabriel.gamemetascore.R
 import com.hgabriel.gamemetascore.data.Game
@@ -36,9 +39,17 @@ class GameDetailFragment : Fragment() {
         val binding = FragmentGameDetailBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
+        setupToolbar(binding.toolbar)
         subscribeUi(binding)
 
         return binding.root
+    }
+
+    private fun setupToolbar(toolbar: Toolbar) {
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        toolbar.setupWithNavController(navController, appBarConfiguration)
+        toolbar.inflateMenu(R.menu.game_detail_menu)
     }
 
     private fun subscribeUi(binding: FragmentGameDetailBinding) {
@@ -84,11 +95,14 @@ class GameDetailFragment : Fragment() {
             // callbacks
             cbLiked.setOnClickListener { viewModel.toggleLiked() }
             cbPlayed.setOnClickListener { viewModel.togglePlayed() }
-            clDelete.setOnClickListener {
-                // prevent actions in game about to be deleted
-                cbLiked.setOnClickListener(null)
-                cbPlayed.setOnClickListener(null)
-                onDelete(game)
+            toolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.action_detail -> {
+                        onDelete(game)
+                        true
+                    }
+                    else -> false
+                }
             }
 
             // colors
