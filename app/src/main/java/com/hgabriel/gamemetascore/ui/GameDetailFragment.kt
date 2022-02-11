@@ -75,7 +75,7 @@ class GameDetailFragment : Fragment() {
             pbLoading.visibility = View.GONE
 
             // labels
-            activity?.title = game.name
+            toolbar.title = game.name
             tvSummary.text = game.summary
             tvTotalRating.text = game.totalRating.toLabel()
             tvCriticsRating.text = String.format(

@@ -23,4 +23,5 @@
     <color name="game_detail_label">#FF000000</color>
     <color name="game_detail_divider">#FFF2EDEA</color>
     <color name="game_detail_edit_icon">@color/primary</color>
+    <color name="game_detail_toolbar_label">#FFF2EDEA</color>
 </resources>

@@ -12,6 +12,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
+            app:titleTextColor="@color/game_detail_toolbar_label"
             android:layout_height="48dp"
             android:background="@color/primary" />
 
