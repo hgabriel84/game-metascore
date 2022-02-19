@@ -5,6 +5,7 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.24814814814814815" />
         <entry key="app/src/main/res/drawable/ic_delete_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_score_24.xml" value="0.185" />
         <entry key="app/src/main/res/layout/activity_gameMetascore.xml" value="0.37318840579710144" />
         <entry key="app/src/main/res/layout/activity_gamelist.xml" value="0.37318840579710144" />
         <entry key="app/src/main/res/layout/activity_metascore.xml" value="0.1" />
@@ -14,7 +15,7 @@
         <entry key="app/src/main/res/layout/fragment_game_detail.xml" value="0.2558139534883721" />
         <entry key="app/src/main/res/layout/fragment_game_list.xml" value="0.37318840579710144" />
         <entry key="app/src/main/res/layout/fragment_game_search.xml" value="0.37604166666666666" />
-        <entry key="app/src/main/res/layout/fragment_games.xml" value="0.26132246376811596" />
+        <entry key="app/src/main/res/layout/fragment_games.xml" value="0.335" />
         <entry key="app/src/main/res/layout/list_item_game.xml" value="0.335" />
         <entry key="app/src/main/res/menu/game_detail_menu.xml" value="0.37025641025641026" />
         <entry key="app/src/main/res/menu/game_menu.xml" value="0.28229166666666666" />

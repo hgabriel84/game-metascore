@@ -2,9 +2,6 @@ package com.hgabriel.gamemetascore.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -38,7 +35,6 @@ class GamesFragment : Fragment() {
         val binding = FragmentGamesBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
-        activity?.setTitle(R.string.app_name)
         val adapter = GamesAdapter()
         val linearLayoutManager = LinearLayoutManager(context)
         binding.rvGames.apply {
@@ -53,30 +49,7 @@ class GamesFragment : Fragment() {
             setRestoreGameState(binding.root, game)
         }
 
-        setHasOptionsMenu(true)
         return binding.root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.game_menu, menu)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        menu.findItem(R.id.action_order)?.let { item ->
-            viewModel.getOrderIcon().also { item.setIcon(it) }
-        }
-        super.onPrepareOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_order -> {
-                viewModel.toggleOrder()
-                activity?.invalidateOptionsMenu()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     private fun subscribeUi(binding: FragmentGamesBinding, adapter: GamesAdapter) {
@@ -86,7 +59,7 @@ class GamesFragment : Fragment() {
                     when (uiState) {
                         GamesViewModel.GamesUiState.Loading -> setLoadingState(binding)
                         is GamesViewModel.GamesUiState.Success ->
-                            setSuccessState(binding, uiState.games, adapter)
+                            setSuccessState(binding, uiState.games, uiState.orderIcon, adapter)
                     }
                 }
             }
@@ -96,21 +69,26 @@ class GamesFragment : Fragment() {
     private fun setLoadingState(binding: FragmentGamesBinding) {
         binding.tvEmptyState.visibility = View.GONE
         binding.pbLoading.visibility = View.VISIBLE
-        binding.rvGames.visibility = View.GONE
+        binding.grGames.visibility = View.GONE
     }
 
     private fun setSuccessState(
         binding: FragmentGamesBinding,
         games: List<Game>,
+        orderIcon: Int,
         adapter: GamesAdapter
     ) {
         binding.pbLoading.visibility = View.GONE
         if (games.isEmpty()) {
             binding.tvEmptyState.visibility = View.VISIBLE
-            binding.rvGames.visibility = View.GONE
+            binding.grGames.visibility = View.GONE
         } else {
             binding.tvEmptyState.visibility = View.GONE
-            binding.rvGames.visibility = View.VISIBLE
+            binding.grGames.visibility = View.VISIBLE
+            binding.ivSort.apply {
+                setImageResource(orderIcon)
+                setOnClickListener { viewModel.toggleOrder() }
+            }
             adapter.submitList(games)
         }
     }

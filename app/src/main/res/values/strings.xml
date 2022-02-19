@@ -12,4 +12,5 @@
     <string name="liked_game_content_description">liked game</string>
     <string name="delete_game_content_description">delete game</string>
     <string name="game_cover_content_description">game cover</string>
+    <string name="sort_content_description">sort games</string>
 </resources>
