@@ -49,7 +49,7 @@ class GameDetailFragment : Fragment() {
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         toolbar.setupWithNavController(navController, appBarConfiguration)
-        toolbar.inflateMenu(R.menu.game_detail_menu)
+        toolbar.inflateMenu(R.menu.menu_game_detail)
     }
 
     private fun subscribeUi(binding: FragmentGameDetailBinding) {

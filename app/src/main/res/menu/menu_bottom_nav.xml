@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/game_list_fragment"
+        android:icon="@drawable/ic_videogame_24"
+        android:title="@string/games" />
+    <item
+        android:id="@+id/game_add_fragment"
+        android:icon="@drawable/ic_add_24"
+        android:title="@string/add" />
+    <item
+        android:id="@+id/game_import_export_fragment"
+        android:icon="@drawable/ic_share_24"
+        android:title="@string/import_export" />
+</menu>

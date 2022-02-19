@@ -17,14 +17,6 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
-        <action
-            android:id="@+id/action_game_list_fragment_to_game_search_fragment"
-            app:destination="@id/game_search_fragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-
     </fragment>
 
     <fragment
@@ -38,9 +30,16 @@
     </fragment>
 
     <fragment
-        android:id="@+id/game_search_fragment"
-        android:name="com.hgabriel.gamemetascore.ui.GameSearchFragment"
-        tools:layout="@layout/fragment_game_search">
+        android:id="@+id/game_add_fragment"
+        android:name="com.hgabriel.gamemetascore.ui.GameAddFragment"
+        tools:layout="@layout/fragment_game_add">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/game_import_export_fragment"
+        android:name="com.hgabriel.gamemetascore.ui.GameImportExportFragment"
+        tools:layout="@layout/fragment_game_import_export">
 
     </fragment>
 
