@@ -3,7 +3,7 @@ package com.hgabriel.gamemetascore.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,10 +11,12 @@ import com.bumptech.glide.Glide
 import com.hgabriel.gamemetascore.R
 import com.hgabriel.gamemetascore.data.IgdbGame
 import com.hgabriel.gamemetascore.databinding.ListItemGameAddBinding
+import com.hgabriel.gamemetascore.ui.GameAddFragmentDirections
 import com.hgabriel.gamemetascore.utilities.getTotalRatingTextColor
 import com.hgabriel.gamemetascore.utilities.toLabel
 
-class GameAddAdapter : ListAdapter<IgdbGame, RecyclerView.ViewHolder>(GameDiffCallback()) {
+class GameAddAdapter(private val onAdd: (igdbGame: IgdbGame) -> Unit) :
+    ListAdapter<IgdbGame, RecyclerView.ViewHolder>(GameDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         GameAddViewHolder(
@@ -22,7 +24,8 @@ class GameAddAdapter : ListAdapter<IgdbGame, RecyclerView.ViewHolder>(GameDiffCa
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ),
+            onAdd
         )
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -30,8 +33,10 @@ class GameAddAdapter : ListAdapter<IgdbGame, RecyclerView.ViewHolder>(GameDiffCa
         (holder as GameAddViewHolder).bind(game)
     }
 
-    class GameAddViewHolder(private val binding: ListItemGameAddBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class GameAddViewHolder(
+        private val binding: ListItemGameAddBinding,
+        private val onAdd: (igdbGame: IgdbGame) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: IgdbGame) {
             binding.apply {
@@ -62,12 +67,9 @@ class GameAddAdapter : ListAdapter<IgdbGame, RecyclerView.ViewHolder>(GameDiffCa
         }
 
         private fun addGame(game: IgdbGame, view: View) {
-            Toast.makeText(view.context, "SOON", Toast.LENGTH_SHORT).show()
-            /*
-            val direction =
-                GamesFragmentDirections.actionGameListFragmentToGameDetailFragment(game.id)
+            onAdd(game)
+            val direction = GameAddFragmentDirections.actionGameAddFragmentToGameListFragment()
             view.findNavController().navigate(direction)
-             */
         }
     }
 

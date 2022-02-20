@@ -2,8 +2,8 @@ package com.hgabriel.gamemetascore.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hgabriel.gamemetascore.data.GameAddRepository
 import com.hgabriel.gamemetascore.data.IgdbGame
-import com.hgabriel.gamemetascore.data.IgdbRepository
 import com.hgabriel.gamemetascore.data.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -11,10 +11,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GameAddViewModel @Inject constructor(private val repository: IgdbRepository) : ViewModel() {
+class GameAddViewModel @Inject constructor(private val repository: GameAddRepository) :
+    ViewModel() {
 
     private val keyword: MutableStateFlow<String> = MutableStateFlow("")
     val uiState: Flow<GameAddUiState> = keyword.mapLatest { keyword ->
@@ -32,6 +34,12 @@ class GameAddViewModel @Inject constructor(private val repository: IgdbRepositor
 
     fun search(s: String) {
         keyword.value = s
+    }
+
+    fun addGame(igdbGame: IgdbGame) {
+        viewModelScope.launch {
+            repository.addGame(igdbGame)
+        }
     }
 
     sealed class GameAddUiState {

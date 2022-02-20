@@ -33,7 +33,7 @@ class GameAddFragment : Fragment() {
         val binding = FragmentGameAddBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
-        val adapter = GameAddAdapter()
+        val adapter = GameAddAdapter { addGame(it) }
         val linearLayoutManager = LinearLayoutManager(context)
         binding.rvGames.apply {
             layoutManager = linearLayoutManager
@@ -98,5 +98,9 @@ class GameAddFragment : Fragment() {
             }
             adapter.submitList(games)
         }
+    }
+
+    private fun addGame(igdbGame: IgdbGame) {
+        viewModel.addGame(igdbGame)
     }
 }
