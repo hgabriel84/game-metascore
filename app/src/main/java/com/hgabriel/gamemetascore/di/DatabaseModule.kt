@@ -2,7 +2,7 @@ package com.hgabriel.gamemetascore.di
 
 import android.content.Context
 import androidx.room.Room
-import com.hgabriel.gamemetascore.data.GameDao
+import com.hgabriel.gamemetascore.data.GamesDao
 import com.hgabriel.gamemetascore.data.GameDatabase
 import dagger.Module
 import dagger.Provides
@@ -23,5 +23,5 @@ class DatabaseModule {
             .build()
 
     @Provides
-    fun provideGameDao(db: GameDatabase): GameDao = db.gameDao()
+    fun provideGameDao(db: GameDatabase): GamesDao = db.gameDao()
 }

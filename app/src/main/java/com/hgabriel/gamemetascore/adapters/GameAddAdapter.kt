@@ -3,24 +3,22 @@ package com.hgabriel.gamemetascore.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.navigation.findNavController
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.hgabriel.gamemetascore.R
-import com.hgabriel.gamemetascore.data.Game
-import com.hgabriel.gamemetascore.databinding.ListItemGameBinding
-import com.hgabriel.gamemetascore.ui.GamesFragmentDirections
+import com.hgabriel.gamemetascore.data.IgdbGame
+import com.hgabriel.gamemetascore.databinding.ListItemGameAddBinding
 import com.hgabriel.gamemetascore.utilities.getTotalRatingTextColor
 import com.hgabriel.gamemetascore.utilities.toLabel
 
-class GamesAdapter : ListAdapter<Game, RecyclerView.ViewHolder>(GameDiffCallback()) {
+class GameAddAdapter : ListAdapter<IgdbGame, RecyclerView.ViewHolder>(GameDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        GameViewHolder(
-            ListItemGameBinding.inflate(
+        GameAddViewHolder(
+            ListItemGameAddBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -29,13 +27,13 @@ class GamesAdapter : ListAdapter<Game, RecyclerView.ViewHolder>(GameDiffCallback
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val game = getItem(position)
-        (holder as GameViewHolder).bind(game)
+        (holder as GameAddViewHolder).bind(game)
     }
 
-    class GameViewHolder(private val binding: ListItemGameBinding) :
+    class GameAddViewHolder(private val binding: ListItemGameAddBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Game) {
+        fun bind(item: IgdbGame) {
             binding.apply {
 
                 // labels
@@ -53,41 +51,31 @@ class GamesAdapter : ListAdapter<Game, RecyclerView.ViewHolder>(GameDiffCallback
                 // image
                 Glide.with(root).load(item.cover).into(ivCover)
 
-                // liked game
-                ivLiked.visibility = if (item.liked) View.VISIBLE else View.INVISIBLE
+                // colors
+                tvTotalRating.setTextColor(getTotalRatingTextColor(root.context, item.totalRating))
 
                 // on click
-                itemView.setOnClickListener {
-                    navigateToGame(item, it)
-                }
-
-                // colors
-                if (item.played) {
-                    clContent.setBackgroundColor(
-                        ContextCompat.getColor(root.context, R.color.list_item_game_played_bg)
-                    )
-                } else {
-                    clContent.setBackgroundColor(
-                        ContextCompat.getColor(root.context, R.color.list_item_game_bg)
-                    )
-                }
-                tvTotalRating.setTextColor(getTotalRatingTextColor(root.context, item.totalRating))
+                ivAdd.setOnClickListener { addGame(item, it) }
 
                 executePendingBindings()
             }
         }
 
-        private fun navigateToGame(game: Game, view: View) {
+        private fun addGame(game: IgdbGame, view: View) {
+            Toast.makeText(view.context, "SOON", Toast.LENGTH_SHORT).show()
+            /*
             val direction =
                 GamesFragmentDirections.actionGameListFragmentToGameDetailFragment(game.id)
             view.findNavController().navigate(direction)
+             */
         }
     }
 
-    private class GameDiffCallback : DiffUtil.ItemCallback<Game>() {
-        override fun areItemsTheSame(oldItem: Game, newItem: Game): Boolean =
+    private class GameDiffCallback : DiffUtil.ItemCallback<IgdbGame>() {
+        override fun areItemsTheSame(oldItem: IgdbGame, newItem: IgdbGame): Boolean =
             oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: Game, newItem: Game): Boolean = oldItem == newItem
+        override fun areContentsTheSame(oldItem: IgdbGame, newItem: IgdbGame): Boolean =
+            oldItem == newItem
     }
 }

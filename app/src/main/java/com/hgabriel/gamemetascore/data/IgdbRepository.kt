@@ -14,9 +14,9 @@ class IgdbRepository @Inject constructor(private val igdbService: IgdbService) {
         val result = igdbService.getGame(body.toRequestBody())
         return if (result.isSuccessful) {
             result.body()?.toIgdbGame()?.let { Resource.success(it) }
-                ?: Resource.error("Error fetching game", null)
+                ?: Resource.error("Error fetching game")
         } else {
-            Resource.error("Error fetching game", null)
+            Resource.error("Error fetching game")
         }
     }
 
@@ -26,34 +26,31 @@ class IgdbRepository @Inject constructor(private val igdbService: IgdbService) {
         val result = igdbService.searchGame(body.toRequestBody())
         return if (result.isSuccessful) {
             result.body()?.toIgdbGames()?.let { Resource.success(it) }
-                ?: Resource.error("Error searching game", null)
+                ?: Resource.error("Error searching game")
         } else {
-            Resource.error("Error searching game", null)
+            Resource.error("Error searching game")
         }
     }
 
-    suspend fun getCoverUrl(id: Int): Resource<String> {
+    private suspend fun getCoverUrl(id: Int): String? {
         val body = "fields image_id; where id = $id;"
         val result = igdbService.getCoverUrl(body.toRequestBody())
-        return if (result.isSuccessful) {
-            result.body()?.toCoverUrl()?.let { Resource.success(it) }
-                ?: Resource.error("Error fetching game cover", null)
-        } else {
-            Resource.error("Error fetching game cover", null)
-        }
+        return if (result.isSuccessful) result.body()?.toCoverUrl() else null
     }
 
-    private fun List<IgdbGameResponse>.toIgdbGames(): List<IgdbGame> = map { it.toIgdbGame() }
+    private suspend fun List<IgdbGameResponse>.toIgdbGames(): List<IgdbGame> =
+        map { it.toIgdbGame() }
 
-    private fun List<IgdbGameResponse>.toIgdbGame(): IgdbGame? = firstOrNull()?.toIgdbGame()
+    private suspend fun List<IgdbGameResponse>.toIgdbGame(): IgdbGame? = firstOrNull()?.toIgdbGame()
 
-    private fun IgdbGameResponse.toIgdbGame() =
+    private suspend fun IgdbGameResponse.toIgdbGame() =
         IgdbGame(
             id = id,
             name = name,
             storyline = storyline,
             summary = summary,
             coverId = cover,
+            cover = cover?.let { getCoverUrl(cover) },
             criticsRating = criticsRating,
             usersRating = usersRating,
             totalRating = totalRating

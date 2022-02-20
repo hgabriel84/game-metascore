@@ -13,6 +13,10 @@
     <color name="list_item_game_played_bg">#FFBDFDF6</color>
     <color name="list_item_game_liked">#FFF44336</color>
 
+    <!-- list item game add -->
+    <color name="list_item_game_add_label">#FF000000</color>
+    <color name="list_item_game_add_bg">#FFF8F8F8</color>
+
     <!-- score -->
     <color name="green_score">#FF66CC33</color>
     <color name="yellow_score">#FFFFCC33</color>

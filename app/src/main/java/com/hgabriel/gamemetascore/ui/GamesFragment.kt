@@ -67,9 +67,11 @@ class GamesFragment : Fragment() {
     }
 
     private fun setLoadingState(binding: FragmentGamesBinding) {
-        binding.tvEmptyState.visibility = View.GONE
-        binding.pbLoading.visibility = View.VISIBLE
-        binding.grGames.visibility = View.GONE
+        binding.apply {
+            tvEmptyState.visibility = View.GONE
+            pbLoading.visibility = View.VISIBLE
+            grGames.visibility = View.GONE
+        }
     }
 
     private fun setSuccessState(
@@ -80,14 +82,18 @@ class GamesFragment : Fragment() {
     ) {
         binding.pbLoading.visibility = View.GONE
         if (games.isEmpty()) {
-            binding.tvEmptyState.visibility = View.VISIBLE
-            binding.grGames.visibility = View.GONE
+            binding.apply {
+                tvEmptyState.visibility = View.VISIBLE
+                grGames.visibility = View.GONE
+            }
         } else {
-            binding.tvEmptyState.visibility = View.GONE
-            binding.grGames.visibility = View.VISIBLE
-            binding.ivSort.apply {
-                setImageResource(orderIcon)
-                setOnClickListener { viewModel.toggleOrder() }
+            binding.apply {
+                tvEmptyState.visibility = View.GONE
+                grGames.visibility = View.VISIBLE
+                ivSort.apply {
+                    setImageResource(orderIcon)
+                    setOnClickListener { viewModel.toggleOrder() }
+                }
             }
             adapter.submitList(games)
         }
