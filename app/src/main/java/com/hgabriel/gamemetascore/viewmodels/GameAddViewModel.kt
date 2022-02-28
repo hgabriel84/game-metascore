@@ -26,8 +26,8 @@ class GameAddViewModel @Inject constructor(private val repository: GameAddReposi
 
     private val keyword: MutableStateFlow<String> = MutableStateFlow("")
     val uiState: StateFlow<GameAddUiState> = keyword.flatMapLatest { keyword ->
-        keyword.takeIf { it.isNotEmpty() }?.let {
-            flow {
+        flow {
+            keyword.takeIf { it.isNotEmpty() }?.let {
                 emit(GameAddUiState.Loading)
                 val resource = repository.searchGame(it)
                 if (resource.status == Resource.Status.SUCCESS) {
@@ -35,8 +35,8 @@ class GameAddViewModel @Inject constructor(private val repository: GameAddReposi
                 } else {
                     emit(GameAddUiState.Error(resource.message!!))
                 }
-            }
-        } ?: flow { emit(GameAddUiState.Empty) }
+            } ?: emit(GameAddUiState.Empty)
+        }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
