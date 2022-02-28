@@ -15,6 +15,7 @@
         <entry key="app/src/main/res/layout/fragment_game.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_game_add.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_game_detail.xml" value="0.2558139534883721" />
+        <entry key="app/src/main/res/layout/fragment_game_import.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_game_import_export.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_game_list.xml" value="0.37318840579710144" />
         <entry key="app/src/main/res/layout/fragment_game_search.xml" value="0.37604166666666666" />

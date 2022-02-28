@@ -23,4 +23,7 @@ interface GamesDao {
 
     @Query("DELETE FROM game WHERE id=:id")
     suspend fun deleteById(id: Int)
+
+    @Query("SELECT * FROM game order by UPPER(name) ASC")
+    suspend fun getGames(): List<Game>
 }

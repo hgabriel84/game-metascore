@@ -15,4 +15,6 @@ class MetaGameRepository @Inject constructor(
         gamesRepository.addGame(game)
     }
 
+    suspend fun getGames() = gamesRepository.getGames()
+
 }

@@ -28,4 +28,5 @@ class GamesRepository @Inject constructor(private val gamesDao: GamesDao) {
         gamesDao.insert(game)
     }
 
+    suspend fun getGames() = gamesDao.getGames()
 }

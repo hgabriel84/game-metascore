@@ -10,8 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.google.android.material.snackbar.Snackbar
-import com.hgabriel.gamemetascore.R
 import com.hgabriel.gamemetascore.data.MetaGames
 import com.hgabriel.gamemetascore.databinding.FragmentGameImportBinding
 import com.hgabriel.gamemetascore.viewmodels.GameImportViewModel
@@ -48,12 +46,10 @@ class GameImportFragment : Fragment() {
     private fun subscribeUi(binding: FragmentGameImportBinding) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { uiState ->
+                viewModel.importUiState.collect { uiState ->
                     when (uiState) {
-                        GameImportViewModel.GameImportUiState.Error -> setErrorState(binding)
                         GameImportViewModel.GameImportUiState.Initial -> setInitialState(binding)
                         GameImportViewModel.GameImportUiState.Loading -> setLoadingState(binding)
-                        GameImportViewModel.GameImportUiState.Success -> setSuccessState(binding)
                     }
                 }
             }
@@ -67,26 +63,6 @@ class GameImportFragment : Fragment() {
         }
     }
 
-    private fun setErrorState(binding: FragmentGameImportBinding) {
-        Snackbar
-            .make(binding.root, getString(R.string.game_import_error), Snackbar.LENGTH_SHORT)
-            .show()
-        binding.apply {
-            group.visibility = View.VISIBLE
-            pbLoading.visibility = View.GONE
-        }
-    }
-
-    private fun setSuccessState(binding: FragmentGameImportBinding) {
-        Snackbar
-            .make(binding.root, getString(R.string.game_import_error), Snackbar.LENGTH_SHORT)
-            .show()
-        binding.apply {
-            group.visibility = View.VISIBLE
-            pbLoading.visibility = View.GONE
-        }
-    }
-
     private fun setInitialState(binding: FragmentGameImportBinding) {
         binding.apply {
             group.visibility = View.VISIBLE
@@ -96,6 +72,7 @@ class GameImportFragment : Fragment() {
 
     private fun setupListeners(binding: FragmentGameImportBinding) {
         binding.btImportFile.setOnClickListener { fileResult.launch("application/json") }
+        binding.btExportFile.setOnClickListener { saveResult.launch("games.json") }
     }
 
     private val fileResult =
@@ -104,5 +81,15 @@ class GameImportFragment : Fragment() {
             val bufferedReader = BufferedReader(InputStreamReader(inputStream))
             val jsonString = bufferedReader.readText()
             adapter.fromJson(jsonString)?.let { viewModel.importGames(it) }
+        }
+
+    private val saveResult =
+        registerForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
+            val json = adapter.toJson(viewModel.exportGames)
+            val writer = activity?.contentResolver?.openOutputStream(uri)?.writer()
+            writer?.apply {
+                write(json)
+                close()
+            }
         }
 }

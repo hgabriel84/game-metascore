@@ -38,4 +38,5 @@
     <!-- import games -->
     <color name="game_import_label">#FFF8F8F8</color>
     <color name="game_import_bg">@color/primary</color>
+    <color name="game_import_explain_label">#FF848484</color>
 </resources>

@@ -14,10 +14,9 @@
     <string name="import_export">Import/Export</string>
     <string name="game_import_label">Import games from file</string>
     <string name="game_export_label">Export games to file</string>
+    <string name="game_import_explain_label">The file should contain the list of games in json as this example</string>
     <string name="game_import_bt">Open file</string>
     <string name="game_export_bt">Export</string>
-    <string name="game_import_error">Some games were not imported</string>
-    <string name="game_import_success">All games were imported successfully</string>
     <string name="add_game_no_results">No games found</string>
     <string name="add_game_empty">Search by game title</string>
     <string name="add_game_search_hint">Game name</string>
@@ -27,4 +26,5 @@
     <string name="game_add_cover_content_description">game cover</string>
     <string name="sort_content_description">sort games</string>
     <string name="game_add_action_content_description">add game</string>
+    <string name="game_import_action_content_description">import games</string>
 </resources>

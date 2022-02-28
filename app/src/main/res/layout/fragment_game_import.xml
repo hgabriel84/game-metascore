@@ -24,6 +24,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/tvJson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_import_explain_label"
+            android:textColor="@color/game_import_explain_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvImportFile" />
+
+        <ImageView
+            android:id="@+id/ivJson"
+            android:layout_width="180dp"
+            android:layout_height="206dp"
+            android:layout_marginTop="4dp"
+            android:contentDescription="@string/game_import_action_content_description"
+            android:src="@drawable/iv_json"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvJson" />
+
         <Button
             android:id="@+id/btImportFile"
             android:layout_width="wrap_content"
@@ -31,11 +52,11 @@
             android:text="@string/game_import_bt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvImportFile" />
+            app:layout_constraintTop_toBottomOf="@id/ivJson" />
 
         <TextView
             android:id="@+id/tvExportFile"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/game_import_bg"
             android:paddingStart="4dp"
