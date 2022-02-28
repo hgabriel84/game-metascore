@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_add_24"
         android:title="@string/add" />
     <item
-        android:id="@+id/game_import_export_fragment"
+        android:id="@+id/game_import_fragment"
         android:icon="@drawable/ic_share_24"
         android:title="@string/import_export" />
 </menu>

@@ -3,6 +3,8 @@ package com.hgabriel.gamemetascore.utilities
 import android.content.Context
 import androidx.core.content.ContextCompat
 import com.hgabriel.gamemetascore.R
+import com.hgabriel.gamemetascore.data.Game
+import com.hgabriel.gamemetascore.data.IgdbGame
 import kotlin.math.roundToInt
 
 fun Float?.toLabel(): String = this?.roundToInt()?.toString() ?: "-"
@@ -16,3 +18,14 @@ fun getTotalRatingTextColor(context: Context, score: Float?) =
             else -> ContextCompat.getColor(context, R.color.primary)
         }
     } ?: ContextCompat.getColor(context, R.color.primary)
+
+fun IgdbGame.toGame() = Game(
+    id = id,
+    name = name,
+    cover = cover,
+    summary = summary,
+    storyline = storyline,
+    criticsRating = criticsRating,
+    usersRating = usersRating,
+    totalRating = totalRating
+)

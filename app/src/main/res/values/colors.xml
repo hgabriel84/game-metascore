@@ -34,4 +34,8 @@
     <color name="add_game_toolbar_label">#FFF8F8F8</color>
     <color name="add_game_toolbar_hint_label">#FFD5D5D5</color>
     <color name="add_game_no_results_label">#FF848484</color>
+
+    <!-- import games -->
+    <color name="game_import_label">#FFF8F8F8</color>
+    <color name="game_import_bg">@color/primary</color>
 </resources>

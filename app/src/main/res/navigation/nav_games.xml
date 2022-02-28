@@ -45,9 +45,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/game_import_export_fragment"
-        android:name="com.hgabriel.gamemetascore.ui.GameImportExportFragment"
-        tools:layout="@layout/fragment_game_import_export">
+        android:id="@+id/game_import_fragment"
+        android:name="com.hgabriel.gamemetascore.ui.GameImportFragment"
+        tools:layout="@layout/fragment_game_import">
 
     </fragment>
 
