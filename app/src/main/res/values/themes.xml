@@ -20,7 +20,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.VideogamesScores.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.GameMetascore.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.VideogamesScores.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.GameMetascore.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.GameMetascore.SearchView" parent="">
+        <item name="android:editTextColor">@color/add_game_toolbar_label</item>
+        <item name="android:textColorHint">@color/add_game_toolbar_hint_label</item>
+    </style>
 </resources>

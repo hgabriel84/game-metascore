@@ -13,6 +13,8 @@
     <string name="games">Games</string>
     <string name="import_export">Import/Export</string>
     <string name="add_game_no_results">No games found</string>
+    <string name="add_game_empty">Search by game title</string>
+    <string name="add_game_search_hint">Game name</string>
     <string name="liked_game_content_description">liked game</string>
     <string name="delete_game_content_description">delete game</string>
     <string name="game_cover_content_description">game cover</string>

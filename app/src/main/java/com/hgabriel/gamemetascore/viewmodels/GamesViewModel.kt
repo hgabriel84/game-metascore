@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -20,7 +21,7 @@ import javax.inject.Inject
 class GamesViewModel @Inject constructor(private val repository: GamesRepository) : ViewModel() {
 
     private val order: MutableStateFlow<GameOrder> = MutableStateFlow(GameOrder.RATING)
-    val uiState: Flow<GamesUiState> = order.flatMapLatest { order ->
+    val uiState: StateFlow<GamesUiState> = order.flatMapLatest { order ->
         repository.games(order).map { GamesUiState.Success(it, getOrderIcon()) }
     }.stateIn(
         scope = viewModelScope,

@@ -12,7 +12,7 @@
         <entry key="app/src/main/res/layout/bottom_sheet_add_game.xml" value="0.1828774062816616" />
         <entry key="app/src/main/res/layout/bottom_sheet_edit_game.xml" value="0.13858695652173914" />
         <entry key="app/src/main/res/layout/fragment_game.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_game_add.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_game_add.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_game_detail.xml" value="0.2558139534883721" />
         <entry key="app/src/main/res/layout/fragment_game_import_export.xml" value="0.24547101449275363" />
         <entry key="app/src/main/res/layout/fragment_game_list.xml" value="0.37318840579710144" />

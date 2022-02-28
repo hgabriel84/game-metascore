@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -40,11 +41,27 @@ class GameAddFragment : Fragment() {
             addItemDecoration(DividerItemDecoration(context, linearLayoutManager.orientation))
             this.adapter = adapter
         }
+
+        setupToolbar(binding)
         subscribeUi(binding, adapter)
 
-        viewModel.search("last of us")
-
         return binding.root
+    }
+
+    private fun setupToolbar(binding: FragmentGameAddBinding) {
+        binding.svSearch.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    viewModel.search(query)
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    if (newText.isEmpty()) viewModel.search("")
+                    return false
+                }
+            }
+        )
     }
 
     private fun subscribeUi(binding: FragmentGameAddBinding, adapter: GameAddAdapter) {
@@ -53,6 +70,7 @@ class GameAddFragment : Fragment() {
                 viewModel.uiState.collect { uiState ->
                     when (uiState) {
                         GameAddViewModel.GameAddUiState.Loading -> setLoadingState(binding)
+                        GameAddViewModel.GameAddUiState.Empty -> setEmptyState(binding)
                         is GameAddViewModel.GameAddUiState.Error ->
                             setErrorState(binding, uiState.message)
                         is GameAddViewModel.GameAddUiState.Success ->
@@ -65,8 +83,18 @@ class GameAddFragment : Fragment() {
 
     private fun setLoadingState(binding: FragmentGameAddBinding) {
         binding.apply {
-            tvNoResults.visibility = View.GONE
             pbLoading.visibility = View.VISIBLE
+            tvEmpty.visibility = View.GONE
+            tvNoResults.visibility = View.GONE
+            rvGames.visibility = View.GONE
+        }
+    }
+
+    private fun setEmptyState(binding: FragmentGameAddBinding) {
+        binding.apply {
+            tvEmpty.visibility = View.VISIBLE
+            tvNoResults.visibility = View.GONE
+            pbLoading.visibility = View.GONE
             rvGames.visibility = View.GONE
         }
     }
@@ -75,6 +103,7 @@ class GameAddFragment : Fragment() {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
         binding.apply {
             tvNoResults.visibility = View.VISIBLE
+            tvEmpty.visibility = View.GONE
             pbLoading.visibility = View.GONE
             rvGames.visibility = View.GONE
         }
@@ -85,18 +114,21 @@ class GameAddFragment : Fragment() {
         games: List<IgdbGame>,
         adapter: GameAddAdapter
     ) {
-        binding.pbLoading.visibility = View.GONE
+        binding.apply {
+            pbLoading.visibility = View.GONE
+            tvEmpty.visibility = View.GONE
+        }
         if (games.isEmpty()) {
             binding.apply {
                 tvNoResults.visibility = View.VISIBLE
                 rvGames.visibility = View.GONE
             }
         } else {
+            adapter.submitList(games)
             binding.apply {
                 tvNoResults.visibility = View.GONE
                 rvGames.visibility = View.VISIBLE
             }
-            adapter.submitList(games)
         }
     }
 
