@@ -17,14 +17,14 @@
 
         <ImageView
             android:id="@+id/ivSort"
-            android:scaleType="centerInside"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="end"
             android:contentDescription="@string/sort_content_description"
+            android:scaleType="centerInside"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/primary"
+            app:tint="?attr/colorPrimary"
             tools:srcCompat="@drawable/ic_score_24" />
 
         <androidx.recyclerview.widget.RecyclerView

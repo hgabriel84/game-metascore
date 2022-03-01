@@ -26,7 +26,6 @@
             android:layout_marginEnd="5dp"
             android:maxLines="2"
             android:textAllCaps="true"
-            android:textColor="@color/list_item_game_label"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/tvTotalRating"
@@ -39,7 +38,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:textColor="@color/list_item_game_label"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@id/tvUsersRating"
             app:layout_constraintEnd_toStartOf="@id/tvTotalRating"
@@ -52,24 +50,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
-            android:textColor="@color/list_item_game_label"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tvTotalRating"
             app:layout_constraintStart_toEndOf="@+id/ivCover"
             tools:text="userscore: 88" />
-
-        <TextView
-            android:id="@+id/tvTotalRating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="92" />
 
         <ImageView
             android:id="@+id/ivLiked"
@@ -82,8 +67,34 @@
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/list_item_game_liked"
+            app:tint="?attr/colorPrimary"
             tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/ivPlayed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/played_game_content_description"
+            android:src="@drawable/ic_videogame_24"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="?attr/colorPrimary"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tvTotalRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/ivPlayed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivLiked"
+            tools:text="92" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

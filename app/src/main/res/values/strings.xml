@@ -21,6 +21,7 @@
     <string name="add_game_empty">Search by game title</string>
     <string name="add_game_search_hint">Game name</string>
     <string name="liked_game_content_description">liked game</string>
+    <string name="played_game_content_description">played game</string>
     <string name="delete_game_content_description">delete game</string>
     <string name="game_cover_content_description">game cover</string>
     <string name="game_add_cover_content_description">game cover</string>

@@ -3,7 +3,6 @@ package com.hgabriel.gamemetascore.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -56,17 +55,15 @@ class GamesAdapter : ListAdapter<Game, RecyclerView.ViewHolder>(GameDiffCallback
                 // liked game
                 ivLiked.visibility = if (item.liked) View.VISIBLE else View.INVISIBLE
 
+                // played game
+                ivPlayed.visibility = if (item.played) View.VISIBLE else View.INVISIBLE
+
                 // on click
                 itemView.setOnClickListener {
                     navigateToGame(item, it)
                 }
 
                 // colors
-                if (item.played) {
-                    clContent.setBackgroundColor(
-                        ContextCompat.getColor(root.context, R.color.list_item_game_played_bg)
-                    )
-                }
                 tvTotalRating.setTextColor(getTotalRatingTextColor(root.context, item.totalRating))
 
                 executePendingBindings()
