@@ -29,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/game_import_explain_label"
-            android:textColor="@color/game_import_explain_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvImportFile" />
@@ -83,7 +82,7 @@
             android:id="@+id/group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="tvImportFile,btImportFile,tvExportFile,btExportFile" />
+            app:constraint_referenced_ids="tvImportFile,tvJson,ivJson,btImportFile,tvExportFile,btExportFile" />
 
         <ProgressBar
             android:id="@+id/pbLoading"

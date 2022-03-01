@@ -6,8 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/clContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/list_item_game_bg">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/ivCover"
@@ -70,8 +69,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="92"
-            tools:textColor="@color/primary" />
+            tools:text="92" />
 
         <ImageView
             android:id="@+id/ivLiked"

@@ -3,6 +3,7 @@
     <style name="Theme.GameMetascore" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorPrimaryVariant">@color/primary_variant</item>
         <item name="colorOnPrimary">@color/on_primary</item>
         <!-- Secondary brand color. -->
@@ -20,9 +21,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.GameMetascore.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.GameMetascore.AppBarOverlay" parent="ThemeOverlay.AppCompat.DayNight.ActionBar" />
 
-    <style name="Theme.GameMetascore.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.GameMetascore.PopupOverlay" parent="ThemeOverlay.AppCompat.DayNight" />
 
     <style name="Theme.GameMetascore.SearchView" parent="">
         <item name="android:editTextColor">@color/add_game_toolbar_label</item>

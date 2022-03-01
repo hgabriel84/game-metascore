@@ -66,10 +66,6 @@ class GamesAdapter : ListAdapter<Game, RecyclerView.ViewHolder>(GameDiffCallback
                     clContent.setBackgroundColor(
                         ContextCompat.getColor(root.context, R.color.list_item_game_played_bg)
                     )
-                } else {
-                    clContent.setBackgroundColor(
-                        ContextCompat.getColor(root.context, R.color.list_item_game_bg)
-                    )
                 }
                 tvTotalRating.setTextColor(getTotalRatingTextColor(root.context, item.totalRating))
 

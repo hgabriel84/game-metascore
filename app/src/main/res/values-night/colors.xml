@@ -9,12 +9,12 @@
     <color name="on_secondary">#FF000000</color>
 
     <!-- list item game -->
-    <color name="list_item_game_label">#FF000000</color>
-    <color name="list_item_game_played_bg">#FFBDFDF6</color>
+    <color name="list_item_game_label">#FFF8F8F8</color>
+    <color name="list_item_game_played_bg">#FF0070D1</color>
     <color name="list_item_game_liked">#FFF44336</color>
 
     <!-- list item game add -->
-    <color name="list_item_game_add_label">#FF000000</color>
+    <color name="list_item_game_add_label">#FFF8F8F8</color>
 
     <!-- score -->
     <color name="green_score">#FF66CC33</color>
@@ -22,10 +22,6 @@
     <color name="red_score">#FFFF0000</color>
 
     <!-- game detail -->
-    <color name="game_detail_bg">#FFF8F8F8</color>
-    <color name="game_detail_label">#FF000000</color>
-    <color name="game_detail_divider">#FFF2EDEA</color>
-    <color name="game_detail_edit_icon">@color/primary</color>
     <color name="game_detail_toolbar_label">#FFF2EDEA</color>
 
     <!-- add game -->

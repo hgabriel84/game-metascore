@@ -13,12 +13,12 @@ fun Float?.toLabel(): String = this?.roundToInt()?.toString() ?: "-"
 fun getTotalRatingTextColor(context: Context, score: Float?) =
     score?.let {
         when (it) {
-            in 0f..49.9f -> ContextCompat.getColor(context, R.color.red_score)
-            in 50f..79.9f -> ContextCompat.getColor(context, R.color.yellow_score)
+            in 0f..50f -> ContextCompat.getColor(context, R.color.red_score)
+            in 50f..80f -> ContextCompat.getColor(context, R.color.yellow_score)
             in 80f..100f -> ContextCompat.getColor(context, R.color.green_score)
-            else -> ContextCompat.getColor(context, R.color.primary)
+            else -> ContextCompat.getColor(context, R.color.yellow_score)
         }
-    } ?: ContextCompat.getColor(context, R.color.primary)
+    } ?: ContextCompat.getColor(context, R.color.yellow_score)
 
 fun IgdbGame.toGame() = Game(
     id = id,

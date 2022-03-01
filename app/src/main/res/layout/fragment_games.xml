@@ -44,7 +44,6 @@
             android:padding="10dp"
             android:text="@string/add_game_explained"
             android:textAlignment="center"
-            android:textColor="@color/list_item_game_empty_label"
             android:textSize="20sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
