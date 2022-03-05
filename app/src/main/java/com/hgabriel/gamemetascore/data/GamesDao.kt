@@ -15,6 +15,12 @@ interface GamesDao {
     @Query("SELECT * FROM game order by UPPER(name) ASC")
     fun gamesByName(): Flow<List<Game>>
 
+    @Query("SELECT * FROM game WHERE UPPER(name) LIKE :keyword order by totalRating DESC")
+    fun gamesByRating(keyword: String): Flow<List<Game>>
+
+    @Query("SELECT * FROM game WHERE UPPER(name) LIKE :keyword order by UPPER(name) ASC")
+    fun gamesByName(keyword: String): Flow<List<Game>>
+
     @Query("SELECT * FROM game where id=:id")
     suspend fun getGameById(id: Int): Game
 

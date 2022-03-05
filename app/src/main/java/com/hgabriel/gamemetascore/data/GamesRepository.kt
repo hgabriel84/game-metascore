@@ -12,6 +12,12 @@ class GamesRepository @Inject constructor(private val gamesDao: GamesDao) {
             GameOrder.NAME -> gamesDao.gamesByName()
         }
 
+    fun games(order: GameOrder, keyword: String) =
+        when (order) {
+            GameOrder.RATING -> gamesDao.gamesByRating("%${keyword.uppercase()}%")
+            GameOrder.NAME -> gamesDao.gamesByName("%${keyword.uppercase()}%")
+        }
+
     suspend fun getGame(id: Int) = gamesDao.getGameById(id)
 
     suspend fun addGame(game: Game) = gamesDao.insert(game)

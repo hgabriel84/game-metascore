@@ -13,13 +13,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible"
-            app:constraint_referenced_ids="ivSort,rvGames" />
+            app:constraint_referenced_ids="ivSort,rvGames,svGame" />
+
+        <SearchView
+            android:id="@+id/svGame"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:scaleType="centerInside"
+            app:layout_constraintEnd_toStartOf="@id/ivSort"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/ivSort"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_gravity="end"
             android:contentDescription="@string/sort_content_description"
             android:scaleType="centerInside"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,14 +50,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/add_game_explained"
             android:textAlignment="center"
             android:textSize="20sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/add_game_explained" />
 
         <ProgressBar
             android:id="@+id/pbLoading"

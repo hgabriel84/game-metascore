@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -83,6 +84,11 @@ class GamesFragment : Fragment() {
         binding.pbLoading.visibility = View.GONE
         if (games.isEmpty()) {
             binding.apply {
+                if (svGame.query.isEmpty()) {
+                    tvEmptyState.text = getString(R.string.add_game_explained)
+                } else {
+                    tvEmptyState.text = getString(R.string.no_game_found)
+                }
                 tvEmptyState.visibility = View.VISIBLE
                 grGames.visibility = View.GONE
             }
@@ -94,6 +100,19 @@ class GamesFragment : Fragment() {
                     setImageResource(orderIcon)
                     setOnClickListener { viewModel.toggleOrder() }
                 }
+                svGame.setOnQueryTextListener(
+                    object : SearchView.OnQueryTextListener {
+                        override fun onQueryTextSubmit(query: String): Boolean {
+                            viewModel.search(query)
+                            return false
+                        }
+
+                        override fun onQueryTextChange(newText: String): Boolean {
+                            if (newText.isEmpty()) viewModel.search("")
+                            return false
+                        }
+                    }
+                )
             }
             adapter.submitList(games)
         }
