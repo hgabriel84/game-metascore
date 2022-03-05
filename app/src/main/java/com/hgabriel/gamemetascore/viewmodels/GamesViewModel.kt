@@ -20,7 +20,7 @@ import javax.inject.Inject
 class GamesViewModel @Inject constructor(private val repository: GamesRepository) : ViewModel() {
 
     private val order: MutableStateFlow<GameOrder> = MutableStateFlow(GameOrder.RATING)
-    private var keyword: MutableStateFlow<String> = MutableStateFlow("")
+    private val keyword: MutableStateFlow<String> = MutableStateFlow("")
     val uiState: StateFlow<GamesUiState> = order.flatMapLatest { order ->
         keyword.flatMapLatest { keyword ->
             if (keyword.isEmpty()) {
