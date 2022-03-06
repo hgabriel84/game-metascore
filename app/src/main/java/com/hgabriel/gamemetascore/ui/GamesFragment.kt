@@ -58,9 +58,11 @@ class GamesFragment : Fragment() {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     when (uiState) {
-                        GamesViewModel.GamesUiState.Loading -> setLoadingState(binding)
                         is GamesViewModel.GamesUiState.Success ->
                             setSuccessState(binding, uiState.games, uiState.orderIcon, adapter)
+                        GamesViewModel.GamesUiState.Loading -> setLoadingState(binding)
+                        GamesViewModel.GamesUiState.Empty -> setEmptyState(binding)
+                        GamesViewModel.GamesUiState.NoResults -> setNoResultsState(binding)
                     }
                 }
             }
@@ -70,8 +72,27 @@ class GamesFragment : Fragment() {
     private fun setLoadingState(binding: FragmentGamesBinding) {
         binding.apply {
             tvEmptyState.visibility = View.GONE
-            pbLoading.visibility = View.VISIBLE
             grGames.visibility = View.GONE
+            pbLoading.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setEmptyState(binding: FragmentGamesBinding) {
+        binding.apply {
+            grGames.visibility = View.GONE
+            pbLoading.visibility = View.GONE
+            tvEmptyState.text = getString(R.string.add_game_explained)
+            tvEmptyState.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setNoResultsState(binding: FragmentGamesBinding) {
+        binding.apply {
+            grGames.visibility = View.GONE
+            pbLoading.visibility = View.GONE
+            tvEmptyState.text = getString(R.string.no_game_found)
+            tvEmptyState.visibility = View.VISIBLE
+            svGame.visibility = View.VISIBLE
         }
     }
 
@@ -81,41 +102,29 @@ class GamesFragment : Fragment() {
         orderIcon: Int,
         adapter: GamesAdapter
     ) {
-        binding.pbLoading.visibility = View.GONE
-        if (games.isEmpty()) {
-            binding.apply {
-                if (svGame.query.isEmpty()) {
-                    tvEmptyState.text = getString(R.string.add_game_explained)
-                } else {
-                    tvEmptyState.text = getString(R.string.no_game_found)
-                }
-                tvEmptyState.visibility = View.VISIBLE
-                grGames.visibility = View.GONE
+        binding.apply {
+            pbLoading.visibility = View.GONE
+            tvEmptyState.visibility = View.GONE
+            ivSort.apply {
+                setImageResource(orderIcon)
+                setOnClickListener { viewModel.toggleOrder() }
             }
-        } else {
-            binding.apply {
-                tvEmptyState.visibility = View.GONE
-                grGames.visibility = View.VISIBLE
-                ivSort.apply {
-                    setImageResource(orderIcon)
-                    setOnClickListener { viewModel.toggleOrder() }
-                }
-                svGame.setOnQueryTextListener(
-                    object : SearchView.OnQueryTextListener {
-                        override fun onQueryTextSubmit(query: String): Boolean {
-                            viewModel.search(query)
-                            return false
-                        }
-
-                        override fun onQueryTextChange(newText: String): Boolean {
-                            if (newText.isEmpty()) viewModel.search("")
-                            return false
-                        }
+            svGame.setOnQueryTextListener(
+                object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        viewModel.search(query)
+                        return false
                     }
-                )
-            }
-            adapter.submitList(games)
+
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        if (newText.isEmpty()) viewModel.search("")
+                        return false
+                    }
+                }
+            )
+            grGames.visibility = View.VISIBLE
         }
+        adapter.submitList(games)
     }
 
     private fun setRestoreGameState(view: View, game: Game) {

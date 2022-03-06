@@ -24,9 +24,9 @@ class GamesViewModel @Inject constructor(private val repository: GamesRepository
     val uiState: StateFlow<GamesUiState> = order.flatMapLatest { order ->
         keyword.flatMapLatest { keyword ->
             if (keyword.isEmpty()) {
-                repository.games(order).map { GamesUiState.Success(it, getOrderIcon()) }
+                repository.games(order).map { getGames(it) }
             } else {
-                repository.games(order, keyword).map { GamesUiState.Success(it, getOrderIcon()) }
+                repository.games(order, keyword).map { getGamesByKeyword(it) }
             }
         }
     }.stateIn(
@@ -52,9 +52,17 @@ class GamesViewModel @Inject constructor(private val repository: GamesRepository
         GameOrder.NAME -> R.drawable.ic_alpha_24
     }
 
+    private fun getGames(games: List<Game>): GamesUiState =
+        if (games.isEmpty()) GamesUiState.Empty else GamesUiState.Success(games, getOrderIcon())
+
+    private fun getGamesByKeyword(games: List<Game>): GamesUiState =
+        if (games.isEmpty()) GamesUiState.NoResults else GamesUiState.Success(games, getOrderIcon())
+
     sealed class GamesUiState {
         data class Success(val games: List<Game>, val orderIcon: Int) : GamesUiState()
         object Loading : GamesUiState()
+        object Empty : GamesUiState()
+        object NoResults : GamesUiState()
     }
 
 }
