@@ -70,30 +70,35 @@ class GamesFragment : Fragment() {
     }
 
     private fun setLoadingState(binding: FragmentGamesBinding) {
-        binding.apply {
-            tvEmptyState.visibility = View.GONE
-            grGames.visibility = View.GONE
-            pbLoading.visibility = View.VISIBLE
-        }
+        setState(
+            binding = binding,
+            toolbarVisibility = View.GONE,
+            recyclerViewVisibility = View.GONE,
+            emptyStateVisibility = View.GONE,
+            loadingVisibility = View.VISIBLE
+        )
     }
 
     private fun setEmptyState(binding: FragmentGamesBinding) {
-        binding.apply {
-            grGames.visibility = View.GONE
-            pbLoading.visibility = View.GONE
-            tvEmptyState.text = getString(R.string.add_game_explained)
-            tvEmptyState.visibility = View.VISIBLE
-        }
+        binding.tvEmptyState.text = getString(R.string.add_game_explained)
+        setState(
+            binding = binding,
+            toolbarVisibility = View.GONE,
+            recyclerViewVisibility = View.GONE,
+            emptyStateVisibility = View.VISIBLE,
+            loadingVisibility = View.GONE
+        )
     }
 
     private fun setNoResultsState(binding: FragmentGamesBinding) {
-        binding.apply {
-            grGames.visibility = View.GONE
-            pbLoading.visibility = View.GONE
-            tvEmptyState.text = getString(R.string.no_game_found)
-            tvEmptyState.visibility = View.VISIBLE
-            svGame.visibility = View.VISIBLE
-        }
+        binding.tvEmptyState.text = getString(R.string.no_game_found)
+        setState(
+            binding = binding,
+            toolbarVisibility = View.VISIBLE,
+            recyclerViewVisibility = View.GONE,
+            emptyStateVisibility = View.VISIBLE,
+            loadingVisibility = View.GONE
+        )
     }
 
     private fun setSuccessState(
@@ -103,8 +108,6 @@ class GamesFragment : Fragment() {
         adapter: GamesAdapter
     ) {
         binding.apply {
-            pbLoading.visibility = View.GONE
-            tvEmptyState.visibility = View.GONE
             ivSort.apply {
                 setImageResource(orderIcon)
                 setOnClickListener { viewModel.toggleOrder() }
@@ -122,9 +125,30 @@ class GamesFragment : Fragment() {
                     }
                 }
             )
-            grGames.visibility = View.VISIBLE
         }
         adapter.submitList(games)
+        setState(
+            binding = binding,
+            toolbarVisibility = View.VISIBLE,
+            recyclerViewVisibility = View.VISIBLE,
+            emptyStateVisibility = View.GONE,
+            loadingVisibility = View.GONE
+        )
+    }
+
+    private fun setState(
+        binding: FragmentGamesBinding,
+        toolbarVisibility: Int,
+        recyclerViewVisibility: Int,
+        emptyStateVisibility: Int,
+        loadingVisibility: Int
+    ) {
+        binding.apply {
+            toolbar.visibility = toolbarVisibility
+            rvGames.visibility = recyclerViewVisibility
+            tvEmptyState.visibility = emptyStateVisibility
+            pbLoading.visibility = loadingVisibility
+        }
     }
 
     private fun setRestoreGameState(view: View, game: Game) {
