@@ -45,7 +45,7 @@ class GameImportViewModel @Inject constructor(private val repository: MetaGameRe
         started = SharingStarted.Lazily,
         initialValue = GameImportUiState.Initial
     )
-    lateinit var exportGames : MetaGames
+    lateinit var exportGames: MetaGames
 
     init {
         viewModelScope.launch {

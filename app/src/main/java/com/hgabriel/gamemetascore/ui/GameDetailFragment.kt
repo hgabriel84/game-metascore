@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
@@ -16,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
+import com.google.android.material.appbar.MaterialToolbar
 import com.hgabriel.gamemetascore.R
 import com.hgabriel.gamemetascore.data.Game
 import com.hgabriel.gamemetascore.databinding.FragmentGameDetailBinding
@@ -45,7 +45,7 @@ class GameDetailFragment : Fragment() {
         return binding.root
     }
 
-    private fun setupToolbar(toolbar: Toolbar) {
+    private fun setupToolbar(toolbar: MaterialToolbar) {
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         toolbar.setupWithNavController(navController, appBarConfiguration)
@@ -123,5 +123,4 @@ class GameDetailFragment : Fragment() {
         const val GAME_DETAIL_REQUEST_KEY = "GAME_DETAIL_REQUEST_KEY"
         const val GAME_KEY = "game"
     }
-
 }
