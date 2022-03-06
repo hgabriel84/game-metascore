@@ -13,6 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.hgabriel.gamemetascore.R
 import com.hgabriel.gamemetascore.adapters.GameAddAdapter
 import com.hgabriel.gamemetascore.data.IgdbGame
 import com.hgabriel.gamemetascore.databinding.FragmentGameAddBinding
@@ -41,7 +42,6 @@ class GameAddFragment : Fragment() {
             addItemDecoration(DividerItemDecoration(context, linearLayoutManager.orientation))
             this.adapter = adapter
         }
-
         setupToolbar(binding)
         subscribeUi(binding, adapter)
 
@@ -69,12 +69,13 @@ class GameAddFragment : Fragment() {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
                     when (uiState) {
-                        GameAddViewModel.GameAddUiState.Loading -> setLoadingState(binding)
-                        GameAddViewModel.GameAddUiState.Empty -> setEmptyState(binding)
                         is GameAddViewModel.GameAddUiState.Error ->
                             setErrorState(binding, uiState.message)
                         is GameAddViewModel.GameAddUiState.Success ->
                             setSuccessState(binding, uiState.games, adapter)
+                        GameAddViewModel.GameAddUiState.Loading -> setLoadingState(binding)
+                        GameAddViewModel.GameAddUiState.Initial -> setInitialState(binding)
+                        GameAddViewModel.GameAddUiState.NoResults -> setNoResultsState(binding)
                     }
                 }
             }
@@ -82,31 +83,40 @@ class GameAddFragment : Fragment() {
     }
 
     private fun setLoadingState(binding: FragmentGameAddBinding) {
-        binding.apply {
-            pbLoading.visibility = View.VISIBLE
-            tvEmpty.visibility = View.GONE
-            tvNoResults.visibility = View.GONE
-            rvGames.visibility = View.GONE
-        }
+        setState(
+            binding = binding,
+            toolbarVisibility = View.GONE,
+            recyclerViewVisibility = View.GONE,
+            emptyStateVisibility = View.GONE,
+            loadingVisibility = View.VISIBLE
+        )
     }
 
-    private fun setEmptyState(binding: FragmentGameAddBinding) {
-        binding.apply {
-            tvEmpty.visibility = View.VISIBLE
-            tvNoResults.visibility = View.GONE
-            pbLoading.visibility = View.GONE
-            rvGames.visibility = View.GONE
-        }
+    private fun setInitialState(binding: FragmentGameAddBinding) {
+        binding.tvEmptyState.text = getString(R.string.add_game_initial)
+        setState(
+            binding = binding,
+            toolbarVisibility = View.VISIBLE,
+            recyclerViewVisibility = View.GONE,
+            emptyStateVisibility = View.VISIBLE,
+            loadingVisibility = View.GONE
+        )
+    }
+
+    private fun setNoResultsState(binding: FragmentGameAddBinding) {
+        binding.tvEmptyState.text = getString(R.string.no_game_found)
+        setState(
+            binding = binding,
+            toolbarVisibility = View.VISIBLE,
+            recyclerViewVisibility = View.GONE,
+            emptyStateVisibility = View.VISIBLE,
+            loadingVisibility = View.GONE
+        )
     }
 
     private fun setErrorState(binding: FragmentGameAddBinding, message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
-        binding.apply {
-            tvNoResults.visibility = View.VISIBLE
-            tvEmpty.visibility = View.GONE
-            pbLoading.visibility = View.GONE
-            rvGames.visibility = View.GONE
-        }
+        setNoResultsState(binding)
     }
 
     private fun setSuccessState(
@@ -114,21 +124,28 @@ class GameAddFragment : Fragment() {
         games: List<IgdbGame>,
         adapter: GameAddAdapter
     ) {
+        adapter.submitList(games)
+        setState(
+            binding = binding,
+            toolbarVisibility = View.VISIBLE,
+            recyclerViewVisibility = View.VISIBLE,
+            emptyStateVisibility = View.GONE,
+            loadingVisibility = View.GONE
+        )
+    }
+
+    private fun setState(
+        binding: FragmentGameAddBinding,
+        toolbarVisibility: Int,
+        recyclerViewVisibility: Int,
+        emptyStateVisibility: Int,
+        loadingVisibility: Int
+    ) {
         binding.apply {
-            pbLoading.visibility = View.GONE
-            tvEmpty.visibility = View.GONE
-        }
-        if (games.isEmpty()) {
-            binding.apply {
-                tvNoResults.visibility = View.VISIBLE
-                rvGames.visibility = View.GONE
-            }
-        } else {
-            adapter.submitList(games)
-            binding.apply {
-                tvNoResults.visibility = View.GONE
-                rvGames.visibility = View.VISIBLE
-            }
+            toolbar.visibility = toolbarVisibility
+            rvGames.visibility = recyclerViewVisibility
+            tvEmptyState.visibility = emptyStateVisibility
+            pbLoading.visibility = loadingVisibility
         }
     }
 

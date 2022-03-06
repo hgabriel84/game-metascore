@@ -156,5 +156,4 @@ class GamesFragment : Fragment() {
             .setAction(R.string.undo) { viewModel.restoreGame(game) }
             .show()
     }
-
 }

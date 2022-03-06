@@ -6,16 +6,11 @@ import com.hgabriel.gamemetascore.data.GameAddRepository
 import com.hgabriel.gamemetascore.data.IgdbGame
 import com.hgabriel.gamemetascore.data.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,17 +26,20 @@ class GameAddViewModel @Inject constructor(private val repository: GameAddReposi
                 emit(GameAddUiState.Loading)
                 val resource = repository.searchGame(it)
                 if (resource.status == Resource.Status.SUCCESS) {
-                    emit(GameAddUiState.Success(resource.data!!))
+                    emit(getGames(resource.data!!))
                 } else {
                     emit(GameAddUiState.Error(resource.message!!))
                 }
-            } ?: emit(GameAddUiState.Empty)
+            } ?: emit(GameAddUiState.Initial)
         }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = GameAddUiState.Empty
+        initialValue = GameAddUiState.Initial
     )
+
+    private fun getGames(games: List<IgdbGame>): GameAddUiState =
+        if (games.isEmpty()) GameAddUiState.NoResults else GameAddUiState.Success(games)
 
     fun search(s: String) {
         keyword.value = s
@@ -54,7 +52,8 @@ class GameAddViewModel @Inject constructor(private val repository: GameAddReposi
     sealed class GameAddUiState {
         data class Success(val games: List<IgdbGame>) : GameAddUiState()
         data class Error(val message: String) : GameAddUiState()
-        object Empty : GameAddUiState()
         object Loading : GameAddUiState()
+        object Initial : GameAddUiState()
+        object NoResults : GameAddUiState()
     }
 }

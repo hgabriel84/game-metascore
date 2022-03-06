@@ -4,6 +4,7 @@
     <string name="users_rating">users: %s</string>
     <string name="add_game_explained">Start adding games to your collection</string>
     <string name="no_game_found">No games found with that name</string>
+    <string name="add_game_initial">Search by game title</string>
     <string name="played">Played</string>
     <string name="liked">Liked</string>
     <string name="delete">Delete</string>

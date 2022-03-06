@@ -64,5 +64,4 @@ class GamesViewModel @Inject constructor(private val repository: GamesRepository
         object Empty : GamesUiState()
         object NoResults : GamesUiState()
     }
-
 }
