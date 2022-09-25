@@ -17,7 +17,6 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -77,19 +76,23 @@ class GameImportFragment : Fragment() {
 
     private val fileResult =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            val inputStream = activity?.contentResolver?.openInputStream(uri)
-            val bufferedReader = BufferedReader(InputStreamReader(inputStream))
-            val jsonString = bufferedReader.readText()
-            adapter.fromJson(jsonString)?.let { viewModel.importGames(it) }
+            uri?.let {
+                val inputStream = activity?.contentResolver?.openInputStream(it)
+                val bufferedReader = BufferedReader(InputStreamReader(inputStream))
+                val jsonString = bufferedReader.readText()
+                adapter.fromJson(jsonString)?.let { games -> viewModel.importGames(games) }
+            }
         }
 
     private val saveResult =
-        registerForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
-            val json = adapter.toJson(viewModel.exportGames)
-            val writer = activity?.contentResolver?.openOutputStream(uri)?.writer()
-            writer?.apply {
-                write(json)
-                close()
+        registerForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
+            uri?.let {
+                val json = adapter.toJson(viewModel.exportGames)
+                val writer = activity?.contentResolver?.openOutputStream(it)?.writer()
+                writer?.apply {
+                    write(json)
+                    close()
+                }
             }
         }
 }

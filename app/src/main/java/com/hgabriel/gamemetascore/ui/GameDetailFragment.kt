@@ -23,7 +23,6 @@ import com.hgabriel.gamemetascore.utilities.getTotalRatingTextColor
 import com.hgabriel.gamemetascore.utilities.toLabel
 import com.hgabriel.gamemetascore.viewmodels.GameDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

@@ -40,7 +40,6 @@ class GameAddAdapter(private val onAdd: (igdbGame: IgdbGame) -> Unit) :
 
         fun bind(item: IgdbGame) {
             binding.apply {
-
                 // labels
                 tvName.text = item.name
                 tvCriticsRating.text = String.format(

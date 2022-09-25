@@ -20,7 +20,6 @@ import com.hgabriel.gamemetascore.data.Game
 import com.hgabriel.gamemetascore.databinding.FragmentGamesBinding
 import com.hgabriel.gamemetascore.viewmodels.GamesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

@@ -9,5 +9,5 @@ data class IgdbGame(
     val criticsRating: Float? = null,
     val usersRating: Float? = null,
     val totalRating: Float? = null,
-    val coverId: Int? = null,
+    val coverId: Int? = null
 )

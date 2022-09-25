@@ -58,5 +58,4 @@ class IgdbDataSource @Inject constructor(private val igdbService: IgdbService) {
 
     private fun List<CoverResponse>.toCoverUrl(): String? =
         firstOrNull()?.imageId?.let { "https://images.igdb.com/igdb/image/upload/t_cover_big/$it.png" }
-
 }

@@ -16,5 +16,4 @@ class MetaGameRepository @Inject constructor(
     }
 
     suspend fun getGames() = gamesRepository.getGames()
-
 }

@@ -36,7 +36,6 @@ class GamesAdapter : ListAdapter<Game, RecyclerView.ViewHolder>(GameDiffCallback
 
         fun bind(item: Game) {
             binding.apply {
-
                 // labels
                 tvName.text = item.name
                 tvCriticsRating.text = String.format(

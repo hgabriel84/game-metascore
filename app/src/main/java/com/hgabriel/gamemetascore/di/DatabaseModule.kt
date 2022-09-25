@@ -2,8 +2,8 @@ package com.hgabriel.gamemetascore.di
 
 import android.content.Context
 import androidx.room.Room
-import com.hgabriel.gamemetascore.data.GamesDao
 import com.hgabriel.gamemetascore.data.GameDatabase
+import com.hgabriel.gamemetascore.data.GamesDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
