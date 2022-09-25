@@ -33,6 +33,4 @@ class GamesRepository @Inject constructor(private val gamesDao: GamesDao) {
         val game = gamesDao.getGameById(id).apply { liked = !liked }
         gamesDao.insert(game)
     }
-
-    suspend fun getGames() = gamesDao.getGames()
 }

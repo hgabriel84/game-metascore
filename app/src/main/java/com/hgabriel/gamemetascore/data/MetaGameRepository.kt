@@ -6,14 +6,14 @@ import javax.inject.Singleton
 @Singleton
 class MetaGameRepository @Inject constructor(
     private val igdbDataSource: IgdbDataSource,
-    private val gamesRepository: GamesRepository
+    private val gamesDao: GamesDao
 ) {
 
     suspend fun getGameDetail(id: Int): Resource<IgdbGame> = igdbDataSource.getGameDetail(id)
 
     suspend fun addGame(game: Game) {
-        gamesRepository.addGame(game)
+        gamesDao.insert(game)
     }
 
-    suspend fun getGames() = gamesRepository.getGames()
+    suspend fun getGames() = gamesDao.getGames()
 }
