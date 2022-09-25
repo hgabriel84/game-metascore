@@ -7,7 +7,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface GamesDao {
+interface GameDao {
 
     @Query("SELECT * FROM game order by totalRating DESC")
     fun gamesByRating(): Flow<List<Game>>
@@ -22,7 +22,7 @@ interface GamesDao {
     fun gamesByName(keyword: String): Flow<List<Game>>
 
     @Query("SELECT * FROM game where id=:id")
-    suspend fun getGameById(id: Int): Game
+    suspend fun gameById(id: Int): Game
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(game: Game)
@@ -31,5 +31,5 @@ interface GamesDao {
     suspend fun deleteById(id: Int)
 
     @Query("SELECT * FROM game order by UPPER(name) ASC")
-    suspend fun getGames(): List<Game>
+    suspend fun games(): List<Game>
 }

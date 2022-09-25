@@ -2,13 +2,13 @@ package com.hgabriel.gamemetascore.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hgabriel.gamemetascore.data.GameAddRepository
+import com.hgabriel.gamemetascore.data.GameRepository
 import com.hgabriel.gamemetascore.data.IgdbGame
 import com.hgabriel.gamemetascore.data.Resource
+import com.hgabriel.gamemetascore.utilities.toGame
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
@@ -16,11 +16,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GameAddViewModel @Inject constructor(private val repository: GameAddRepository) :
+class GameAddViewModel @Inject constructor(private val repository: GameRepository) :
     ViewModel() {
 
-    private val keyword: MutableStateFlow<String> = MutableStateFlow("")
-    val uiState: StateFlow<GameAddUiState> = keyword.flatMapLatest { keyword ->
+    private val keyword = MutableStateFlow("")
+    val uiState = keyword.flatMapLatest { keyword ->
         flow {
             keyword.takeIf { it.isNotEmpty() }?.let {
                 emit(GameAddUiState.Loading)
@@ -38,16 +38,15 @@ class GameAddViewModel @Inject constructor(private val repository: GameAddReposi
         initialValue = GameAddUiState.Initial
     )
 
-    private fun getGames(games: List<IgdbGame>): GameAddUiState =
+    private fun getGames(games: List<IgdbGame>) =
         if (games.isEmpty()) GameAddUiState.NoResults else GameAddUiState.Success(games)
 
     fun search(s: String) {
         keyword.value = s
     }
 
-    fun addGame(igdbGame: IgdbGame) {
-        viewModelScope.launch { repository.addGame(igdbGame) }
-    }
+    fun addGame(igdbGame: IgdbGame) =
+        viewModelScope.launch { repository.addGame(igdbGame.toGame()) }
 
     sealed class GameAddUiState {
         data class Success(val games: List<IgdbGame>) : GameAddUiState()

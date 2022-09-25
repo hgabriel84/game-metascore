@@ -4,10 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hgabriel.gamemetascore.data.Game
-import com.hgabriel.gamemetascore.data.GamesRepository
+import com.hgabriel.gamemetascore.data.GameRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -16,13 +15,13 @@ import javax.inject.Inject
 @HiltViewModel
 class GameDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val repository: GamesRepository
+    private val repository: GameRepository
 ) : ViewModel() {
 
-    private val gameId: Int = savedStateHandle.get<Int>(GAME_ID_SAVED_STATE_KEY)!!
+    private val gameId = savedStateHandle.get<Int>(GAME_ID_SAVED_STATE_KEY)!!
 
-    val uiState: StateFlow<GameDetailUiState> = flow {
-        emit(GameDetailUiState.Success(repository.getGame(gameId)))
+    val uiState = flow {
+        emit(GameDetailUiState.Success(repository.game(gameId)))
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Lazily,

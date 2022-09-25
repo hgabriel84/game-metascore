@@ -13,5 +13,5 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideIgdbService(): IgdbService = IgdbService.create()
+    fun provideIgdbService() = IgdbService.create()
 }

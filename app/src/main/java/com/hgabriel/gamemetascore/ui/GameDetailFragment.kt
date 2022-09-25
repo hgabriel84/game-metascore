@@ -51,7 +51,7 @@ class GameDetailFragment : Fragment() {
         toolbar.inflateMenu(R.menu.menu_game_detail)
     }
 
-    private fun subscribeUi(binding: FragmentGameDetailBinding) {
+    private fun subscribeUi(binding: FragmentGameDetailBinding) =
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
@@ -63,13 +63,12 @@ class GameDetailFragment : Fragment() {
                 }
             }
         }
-    }
 
     private fun setLoadingState(binding: FragmentGameDetailBinding) {
         binding.pbLoading.visibility = View.VISIBLE
     }
 
-    private fun setSuccessState(binding: FragmentGameDetailBinding, game: Game) {
+    private fun setSuccessState(binding: FragmentGameDetailBinding, game: Game) =
         binding.apply {
             pbLoading.visibility = View.GONE
 
@@ -110,7 +109,6 @@ class GameDetailFragment : Fragment() {
             // cover
             Glide.with(root).load(game.cover).into(ivCover)
         }
-    }
 
     private fun onDelete(game: Game) {
         viewModel.delete()

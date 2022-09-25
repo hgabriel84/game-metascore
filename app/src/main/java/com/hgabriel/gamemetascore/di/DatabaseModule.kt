@@ -3,7 +3,6 @@ package com.hgabriel.gamemetascore.di
 import android.content.Context
 import androidx.room.Room
 import com.hgabriel.gamemetascore.data.GameDatabase
-import com.hgabriel.gamemetascore.data.GamesDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,11 +16,11 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideGameDatabase(@ApplicationContext appContext: Context): GameDatabase =
+    fun provideGameDatabase(@ApplicationContext appContext: Context) =
         Room
             .databaseBuilder(appContext, GameDatabase::class.java, "games.db")
             .build()
 
     @Provides
-    fun provideGameDao(db: GameDatabase): GamesDao = db.gameDao()
+    fun provideGameDao(db: GameDatabase) = db.gameDao()
 }

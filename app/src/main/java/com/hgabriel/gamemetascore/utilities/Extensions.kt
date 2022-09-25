@@ -8,7 +8,7 @@ import com.hgabriel.gamemetascore.data.IgdbGame
 import com.hgabriel.gamemetascore.data.MetaGame
 import kotlin.math.roundToInt
 
-fun Float?.toLabel(): String = this?.roundToInt()?.toString() ?: "-"
+fun Float?.toLabel() = this?.roundToInt()?.toString() ?: "-"
 
 fun getTotalRatingTextColor(context: Context, score: Float?) =
     score?.let {

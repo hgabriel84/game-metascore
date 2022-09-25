@@ -42,7 +42,7 @@ class GameImportFragment : Fragment() {
         return binding.root
     }
 
-    private fun subscribeUi(binding: FragmentGameImportBinding) {
+    private fun subscribeUi(binding: FragmentGameImportBinding) =
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.importUiState.collect { uiState ->
@@ -53,21 +53,18 @@ class GameImportFragment : Fragment() {
                 }
             }
         }
-    }
 
-    private fun setLoadingState(binding: FragmentGameImportBinding) {
+    private fun setLoadingState(binding: FragmentGameImportBinding) =
         binding.apply {
             pbLoading.visibility = View.VISIBLE
             group.visibility = View.GONE
         }
-    }
 
-    private fun setInitialState(binding: FragmentGameImportBinding) {
+    private fun setInitialState(binding: FragmentGameImportBinding) =
         binding.apply {
             group.visibility = View.VISIBLE
             pbLoading.visibility = View.GONE
         }
-    }
 
     private fun setupListeners(binding: FragmentGameImportBinding) {
         binding.btImportFile.setOnClickListener { fileResult.launch("application/json") }

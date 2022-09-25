@@ -38,10 +38,9 @@ class IgdbDataSource @Inject constructor(private val igdbService: IgdbService) {
         return if (result.isSuccessful) result.body()?.toCoverUrl() else null
     }
 
-    private suspend fun List<IgdbGameResponse>.toIgdbGames(): List<IgdbGame> =
-        map { it.toIgdbGame() }
+    private suspend fun List<IgdbGameResponse>.toIgdbGames() = map { it.toIgdbGame() }
 
-    private suspend fun List<IgdbGameResponse>.toIgdbGame(): IgdbGame? = firstOrNull()?.toIgdbGame()
+    private suspend fun List<IgdbGameResponse>.toIgdbGame() = firstOrNull()?.toIgdbGame()
 
     private suspend fun IgdbGameResponse.toIgdbGame() =
         IgdbGame(
@@ -56,6 +55,6 @@ class IgdbDataSource @Inject constructor(private val igdbService: IgdbService) {
             totalRating = totalRating
         )
 
-    private fun List<CoverResponse>.toCoverUrl(): String? =
+    private fun List<CoverResponse>.toCoverUrl() =
         firstOrNull()?.imageId?.let { "https://images.igdb.com/igdb/image/upload/t_cover_big/$it.png" }
 }

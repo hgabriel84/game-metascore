@@ -6,8 +6,8 @@
 
     <fragment
         android:id="@+id/game_list_fragment"
-        android:name="com.hgabriel.gamemetascore.ui.GamesFragment"
-        tools:layout="@layout/fragment_games">
+        android:name="com.hgabriel.gamemetascore.ui.GameFragment"
+        tools:layout="@layout/fragment_game">
 
         <action
             android:id="@+id/action_game_list_fragment_to_game_detail_fragment"

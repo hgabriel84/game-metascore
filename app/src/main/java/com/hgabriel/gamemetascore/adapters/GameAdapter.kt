@@ -11,11 +11,11 @@ import com.bumptech.glide.Glide
 import com.hgabriel.gamemetascore.R
 import com.hgabriel.gamemetascore.data.Game
 import com.hgabriel.gamemetascore.databinding.ListItemGameBinding
-import com.hgabriel.gamemetascore.ui.GamesFragmentDirections
+import com.hgabriel.gamemetascore.ui.GameFragmentDirections
 import com.hgabriel.gamemetascore.utilities.getTotalRatingTextColor
 import com.hgabriel.gamemetascore.utilities.toLabel
 
-class GamesAdapter : ListAdapter<Game, RecyclerView.ViewHolder>(GameDiffCallback()) {
+class GameAdapter : ListAdapter<Game, RecyclerView.ViewHolder>(GameDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         GameViewHolder(
@@ -71,7 +71,7 @@ class GamesAdapter : ListAdapter<Game, RecyclerView.ViewHolder>(GameDiffCallback
 
         private fun navigateToGame(game: Game, view: View) {
             val direction =
-                GamesFragmentDirections.actionGameListFragmentToGameDetailFragment(game.id)
+                GameFragmentDirections.actionGameListFragmentToGameDetailFragment(game.id)
             view.findNavController().navigate(direction)
         }
     }

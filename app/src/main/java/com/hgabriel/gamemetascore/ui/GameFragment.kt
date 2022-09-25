@@ -15,15 +15,15 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.hgabriel.gamemetascore.R
-import com.hgabriel.gamemetascore.adapters.GamesAdapter
+import com.hgabriel.gamemetascore.adapters.GameAdapter
 import com.hgabriel.gamemetascore.data.Game
-import com.hgabriel.gamemetascore.databinding.FragmentGamesBinding
+import com.hgabriel.gamemetascore.databinding.FragmentGameBinding
 import com.hgabriel.gamemetascore.viewmodels.GamesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class GamesFragment : Fragment() {
+class GameFragment : Fragment() {
 
     private val viewModel: GamesViewModel by viewModels()
 
@@ -32,10 +32,10 @@ class GamesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentGamesBinding.inflate(inflater, container, false)
+        val binding = FragmentGameBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
-        val adapter = GamesAdapter()
+        val adapter = GameAdapter()
         val linearLayoutManager = LinearLayoutManager(context)
         binding.rvGames.apply {
             layoutManager = linearLayoutManager
@@ -52,7 +52,7 @@ class GamesFragment : Fragment() {
         return binding.root
     }
 
-    private fun subscribeUi(binding: FragmentGamesBinding, adapter: GamesAdapter) {
+    private fun subscribeUi(binding: FragmentGameBinding, adapter: GameAdapter) =
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
@@ -66,9 +66,8 @@ class GamesFragment : Fragment() {
                 }
             }
         }
-    }
 
-    private fun setLoadingState(binding: FragmentGamesBinding) {
+    private fun setLoadingState(binding: FragmentGameBinding) =
         setState(
             binding = binding,
             toolbarVisibility = View.GONE,
@@ -76,9 +75,8 @@ class GamesFragment : Fragment() {
             emptyStateVisibility = View.GONE,
             loadingVisibility = View.VISIBLE
         )
-    }
 
-    private fun setEmptyState(binding: FragmentGamesBinding) {
+    private fun setEmptyState(binding: FragmentGameBinding) {
         binding.tvEmptyState.text = getString(R.string.add_game_explained)
         setState(
             binding = binding,
@@ -89,7 +87,7 @@ class GamesFragment : Fragment() {
         )
     }
 
-    private fun setNoResultsState(binding: FragmentGamesBinding) {
+    private fun setNoResultsState(binding: FragmentGameBinding) {
         binding.tvEmptyState.text = getString(R.string.no_game_found)
         setState(
             binding = binding,
@@ -101,10 +99,10 @@ class GamesFragment : Fragment() {
     }
 
     private fun setSuccessState(
-        binding: FragmentGamesBinding,
+        binding: FragmentGameBinding,
         games: List<Game>,
         orderIcon: Int,
-        adapter: GamesAdapter
+        adapter: GameAdapter
     ) {
         binding.apply {
             ivSort.apply {
@@ -136,23 +134,21 @@ class GamesFragment : Fragment() {
     }
 
     private fun setState(
-        binding: FragmentGamesBinding,
+        binding: FragmentGameBinding,
         toolbarVisibility: Int,
         recyclerViewVisibility: Int,
         emptyStateVisibility: Int,
         loadingVisibility: Int
-    ) {
+    ) =
         binding.apply {
             toolbar.visibility = toolbarVisibility
             rvGames.visibility = recyclerViewVisibility
             tvEmptyState.visibility = emptyStateVisibility
             pbLoading.visibility = loadingVisibility
         }
-    }
 
-    private fun setRestoreGameState(view: View, game: Game) {
+    private fun setRestoreGameState(view: View, game: Game) =
         Snackbar.make(view, R.string.game_deleted, Snackbar.LENGTH_SHORT)
             .setAction(R.string.undo) { viewModel.restoreGame(game) }
             .show()
-    }
 }

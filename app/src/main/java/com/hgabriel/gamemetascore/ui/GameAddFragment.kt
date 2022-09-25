@@ -47,7 +47,7 @@ class GameAddFragment : Fragment() {
         return binding.root
     }
 
-    private fun setupToolbar(binding: FragmentGameAddBinding) {
+    private fun setupToolbar(binding: FragmentGameAddBinding) =
         binding.svSearch.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
@@ -61,9 +61,8 @@ class GameAddFragment : Fragment() {
                 }
             }
         )
-    }
 
-    private fun subscribeUi(binding: FragmentGameAddBinding, adapter: GameAddAdapter) {
+    private fun subscribeUi(binding: FragmentGameAddBinding, adapter: GameAddAdapter) =
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
@@ -79,9 +78,8 @@ class GameAddFragment : Fragment() {
                 }
             }
         }
-    }
 
-    private fun setLoadingState(binding: FragmentGameAddBinding) {
+    private fun setLoadingState(binding: FragmentGameAddBinding) =
         setState(
             binding = binding,
             toolbarVisibility = View.GONE,
@@ -89,7 +87,6 @@ class GameAddFragment : Fragment() {
             emptyStateVisibility = View.GONE,
             loadingVisibility = View.VISIBLE
         )
-    }
 
     private fun setInitialState(binding: FragmentGameAddBinding) {
         binding.tvEmptyState.text = getString(R.string.add_game_initial)
@@ -139,16 +136,13 @@ class GameAddFragment : Fragment() {
         recyclerViewVisibility: Int,
         emptyStateVisibility: Int,
         loadingVisibility: Int
-    ) {
+    ) =
         binding.apply {
             toolbar.visibility = toolbarVisibility
             rvGames.visibility = recyclerViewVisibility
             tvEmptyState.visibility = emptyStateVisibility
             pbLoading.visibility = loadingVisibility
         }
-    }
 
-    private fun addGame(igdbGame: IgdbGame) {
-        viewModel.addGame(igdbGame)
-    }
+    private fun addGame(igdbGame: IgdbGame) = viewModel.addGame(igdbGame)
 }
