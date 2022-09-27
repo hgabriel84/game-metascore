@@ -1,6 +1,5 @@
 package com.hgabriel.gamemetascore.data
 
-import android.util.Log
 import com.hgabriel.gamemetascore.utilities.toGame
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -56,7 +55,6 @@ class GameRepository @Inject constructor(
                 }
                 if (localGame != game) {
                     gameDao.insert(game)
-                    Log.d("LOG", "${game.name} was updated")
                 }
             }
         }
