@@ -30,4 +30,5 @@
     <string name="sort_content_description">sort games</string>
     <string name="game_add_action_content_description">add game</string>
     <string name="game_import_action_content_description">import games</string>
+    <string name="sync_games_background">Games data being updated on background</string>
 </resources>
