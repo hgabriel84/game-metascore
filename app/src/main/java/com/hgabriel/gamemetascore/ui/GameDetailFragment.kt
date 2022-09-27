@@ -66,11 +66,13 @@ class GameDetailFragment : Fragment() {
 
     private fun setLoadingState(binding: FragmentGameDetailBinding) {
         binding.pbLoading.visibility = View.VISIBLE
+        binding.clUserInput.visibility = View.GONE
     }
 
     private fun setSuccessState(binding: FragmentGameDetailBinding, game: Game) =
         binding.apply {
             pbLoading.visibility = View.GONE
+            clUserInput.visibility = View.VISIBLE
 
             // labels
             toolbar.title = game.name

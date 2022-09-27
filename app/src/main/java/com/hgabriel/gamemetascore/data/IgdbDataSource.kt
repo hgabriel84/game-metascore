@@ -8,7 +8,7 @@ import javax.inject.Singleton
 @Singleton
 class IgdbDataSource @Inject constructor(private val igdbService: IgdbService) {
 
-    suspend fun getGameDetail(id: Int): Resource<IgdbGame> {
+    suspend fun gameDetail(id: Int): Resource<IgdbGame> {
         val body =
             "fields id,name,storyline,summary,cover,aggregated_rating,rating,total_rating; where id = ($id);"
         val result = igdbService.getGame(body.toRequestBody())
@@ -32,7 +32,7 @@ class IgdbDataSource @Inject constructor(private val igdbService: IgdbService) {
         }
     }
 
-    private suspend fun getCoverUrl(id: Int): String? {
+    private suspend fun coverUrl(id: Int): String? {
         val body = "fields image_id; where id = $id;"
         val result = igdbService.getCoverUrl(body.toRequestBody())
         return if (result.isSuccessful) result.body()?.toCoverUrl() else null
@@ -49,7 +49,7 @@ class IgdbDataSource @Inject constructor(private val igdbService: IgdbService) {
             storyline = storyline,
             summary = summary,
             coverId = cover,
-            cover = cover?.let { getCoverUrl(cover) },
+            cover = cover?.let { coverUrl(cover) },
             criticsRating = criticsRating,
             usersRating = usersRating,
             totalRating = totalRating

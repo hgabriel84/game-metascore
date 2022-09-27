@@ -1,5 +1,7 @@
 package com.hgabriel.gamemetascore.data
 
+import android.util.Log
+import com.hgabriel.gamemetascore.utilities.toGame
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -41,5 +43,21 @@ class GameRepository @Inject constructor(
 
     suspend fun searchGame(keyword: String) = igdbDataSource.searchGame(keyword)
 
-    suspend fun gameDetail(id: Int) = igdbDataSource.getGameDetail(id)
+    suspend fun gameDetail(id: Int) = igdbDataSource.gameDetail(id)
+
+    suspend fun sync() =
+        gameDao.games().forEach { localGame ->
+            val resource = igdbDataSource.gameDetail(localGame.id)
+            if (resource.status == Resource.Status.SUCCESS) {
+                val game = resource.data!!.toGame()
+                game.apply {
+                    liked = localGame.liked
+                    played = localGame.played
+                }
+                if (localGame != game) {
+                    gameDao.insert(game)
+                    Log.d("LOG", "${game.name} was updated")
+                }
+            }
+        }
 }
