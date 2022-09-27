@@ -44,10 +44,12 @@ class GameRepository @Inject constructor(
 
     suspend fun gameDetail(id: Int) = igdbDataSource.gameDetail(id)
 
-    suspend fun sync() =
-        gameDao.games().forEach { localGame ->
-            val resource = igdbDataSource.gameDetail(localGame.id)
+    suspend fun sync() {
+        val ids = gameDao.games().map { it.id }
+        ids.forEach { id ->
+            val resource = igdbDataSource.gameDetail(id)
             if (resource.status == Resource.Status.SUCCESS) {
+                val localGame = gameDao.gameById(id)
                 val game = resource.data!!.toGame()
                 game.apply {
                     liked = localGame.liked
@@ -58,4 +60,5 @@ class GameRepository @Inject constructor(
                 }
             }
         }
+    }
 }
