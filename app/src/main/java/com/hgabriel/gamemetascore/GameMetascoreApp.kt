@@ -2,7 +2,6 @@ package com.hgabriel.gamemetascore
 
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
-import androidx.viewbinding.BuildConfig
 import androidx.work.Configuration
 import com.hgabriel.gamemetascore.sync.SyncGameWorker
 import dagger.hilt.android.HiltAndroidApp
@@ -23,6 +22,6 @@ class GameMetascoreApp : Application(), Configuration.Provider {
         SyncGameWorker.sync(applicationContext)
     }
 
-    override fun getWorkManagerConfiguration() =
-        Configuration.Builder().setWorkerFactory(workerFactory).build()
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder().setWorkerFactory(workerFactory).build()
 }

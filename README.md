@@ -18,7 +18,7 @@ This is only for personal use.
 ### IGDB API Authentication
 
 To access IGDB API, you need to follow [these instructions](https://api-docs.igdb.com/#account-creation).
-Once you have a Client ID / Client Secret, add them to the `gradle.properties.template` file. Rename the file to `gradle.properties` before you build the project.
+Once you have a Client ID / Client Secret, add them to the `local.properties` file.
 
 ```
 twitch_client_id=<your client id>

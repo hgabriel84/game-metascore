@@ -22,7 +22,7 @@ class IgdbDataSource @Inject constructor(private val igdbService: IgdbService) {
 
     suspend fun searchGame(keyword: String): Resource<List<IgdbGame>> {
         val body =
-            "fields id,name,storyline,summary,cover,aggregated_rating,rating,total_rating; search \"$keyword\";"
+            "fields id,name,storyline,summary,cover,aggregated_rating,rating,total_rating; search \"$keyword\"; where platforms = (48, 167);"
         val result = igdbService.searchGame(body.toRequestBody())
         return if (result.isSuccessful) {
             result.body()?.toIgdbGames()?.let { Resource.success(it) }
