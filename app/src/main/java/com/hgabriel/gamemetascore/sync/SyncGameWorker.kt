@@ -1,6 +1,7 @@
 package com.hgabriel.gamemetascore.sync
 
 import android.content.Context
+import android.content.pm.ServiceInfo
 import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.Constraints
@@ -27,15 +28,23 @@ class SyncGameWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
-        repository.sync()
-        Result.success()
+        try {
+            repository.sync()
+            Result.success()
+        } catch (_: Exception) {
+            if (runAttemptCount < 3) Result.retry() else Result.failure()
+        }
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo =
-        ForegroundInfo(SyncNotificationId, getNotification())
+        ForegroundInfo(
+            SyncNotificationId,
+            getNotification(),
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+        )
 
     private fun getNotification() =
-        NotificationCompat.Builder(context, SyncNotificationChannelID)
+        NotificationCompat.Builder(context, SYNC_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_videogame_24)
             .setContentTitle(context.getString(R.string.app_name))
             .setContentText(context.getString(R.string.sync_games_background))
@@ -44,7 +53,7 @@ class SyncGameWorker @AssistedInject constructor(
 
     companion object {
         private const val SyncNotificationId = 0
-        private const val SyncNotificationChannelID = "SyncNotificationChannel"
+        const val SYNC_NOTIFICATION_CHANNEL_ID = "SyncNotificationChannel"
 
         fun sync(context: Context) {
             val syncConstraints = Constraints.Builder()

@@ -23,17 +23,20 @@ class GameImportViewModel @Inject constructor(private val repository: GameReposi
     private val importGames = MutableStateFlow(MetaGames(emptyList()))
     val importUiState = importGames.flatMapLatest { metaGames ->
         flow {
-            metaGames.takeIf { it.games.isNotEmpty() }?.let {
+            metaGames.takeIf { it.games.isNotEmpty() }?.let { metaGames ->
                 emit(GameImportUiState.Loading)
-                it.games.forEach { metaGame ->
-                    val resource = repository.gameDetail(metaGame.id)
+                metaGames.games.chunked(50).forEach { chunk ->
+                    val ids = chunk.map { it.id }
+                    val resource = repository.gamesDetail(ids)
                     if (resource.status == Resource.Status.SUCCESS) {
-                        val game = resource.data!!.toGame()
-                        game.apply {
-                            liked = metaGame.liked
-                            played = metaGame.played
+                        resource.data!!.forEach { igdbGame ->
+                            val metaGame = chunk.first { it.id == igdbGame.id }
+                            val game = igdbGame.toGame().apply {
+                                liked = metaGame.liked
+                                played = metaGame.played
+                            }
+                            repository.addGame(game)
                         }
-                        repository.addGame(game)
                     }
                 }
                 emit(GameImportUiState.Initial)

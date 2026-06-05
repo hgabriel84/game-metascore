@@ -14,5 +14,6 @@ data class IgdbGameResponse(
 )
 
 data class CoverResponse(
-    @Json(name = "image_id") val imageId: String
+    @Json(name = "image_id") val imageId: String,
+    @Json(name = "game") val game: String
 )
