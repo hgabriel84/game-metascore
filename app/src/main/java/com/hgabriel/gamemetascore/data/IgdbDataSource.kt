@@ -8,15 +8,17 @@ import javax.inject.Singleton
 @Singleton
 class IgdbDataSource @Inject constructor(private val igdbService: IgdbService) {
 
-    suspend fun gameDetail(id: Int): Resource<IgdbGame> {
+    suspend fun gamesDetail(ids: List<Int>): Resource<List<IgdbGame>> {
+        val idsString = ids.joinToString(", ")
         val body =
-            "fields id,name,storyline,summary,cover,aggregated_rating,rating,total_rating; where id = ($id);"
+            "fields id,name,storyline,summary,cover,aggregated_rating,rating,total_rating; where id = ($idsString); limit ${ids.size};"
         val result = igdbService.getGame(body.toRequestBody())
         return if (result.isSuccessful) {
-            result.body()?.toIgdbGame()?.let { Resource.success(it) }
-                ?: Resource.error("Error fetching game")
+            val covers = coverUrl(ids)
+            result.body()?.toIgdbGames(covers)?.let { Resource.success(it) }
+                ?: Resource.error("Error fetching games")
         } else {
-            Resource.error("Error fetching game")
+            Resource.error("Error fetching games")
         }
     }
 
@@ -25,36 +27,43 @@ class IgdbDataSource @Inject constructor(private val igdbService: IgdbService) {
             "fields id,name,storyline,summary,cover,aggregated_rating,rating,total_rating; search \"$keyword\"; where platforms = (48, 167);"
         val result = igdbService.searchGame(body.toRequestBody())
         return if (result.isSuccessful) {
-            result.body()?.toIgdbGames()?.let { Resource.success(it) }
+            val ids = result.body()?.map { it.id } ?: emptyList()
+            val covers = coverUrl(ids)
+            result.body()?.toIgdbGames(covers)?.let { Resource.success(it) }
                 ?: Resource.error("Error searching game")
         } else {
             Resource.error("Error searching game")
         }
     }
 
-    private suspend fun coverUrl(id: Int): String? {
-        val body = "fields image_id; where id = $id;"
+    private suspend fun coverUrl(ids: List<Int>): Map<Int, String?> {
+        val idsString = ids.joinToString(", ")
+        val body = "fields image_id,game; where game = ($idsString); limit ${ids.size};"
         val result = igdbService.getCoverUrl(body.toRequestBody())
-        return if (result.isSuccessful) result.body()?.toCoverUrl() else null
+        return if (result.isSuccessful) {
+            val covers = result.body() ?: emptyList()
+            ids.associateWith { id ->
+                covers.firstOrNull { it.game == id.toString() }?.imageId
+            }
+        } else {
+            ids.associateWith { null }
+        }
     }
 
-    private suspend fun List<IgdbGameResponse>.toIgdbGames() = map { it.toIgdbGame() }
+    private fun List<IgdbGameResponse>.toIgdbGames(covers: Map<Int, String?>) =
+        map { it.toIgdbGame(covers) }
 
-    private suspend fun List<IgdbGameResponse>.toIgdbGame() = firstOrNull()?.toIgdbGame()
-
-    private suspend fun IgdbGameResponse.toIgdbGame() =
+    private fun IgdbGameResponse.toIgdbGame(covers: Map<Int, String?>) =
         IgdbGame(
             id = id,
             name = name,
             storyline = storyline,
             summary = summary,
             coverId = cover,
-            cover = cover?.let { coverUrl(cover) },
+            cover = covers[id]?.let { "https://images.igdb.com/igdb/image/upload/t_cover_big/$it.png" },
             criticsRating = criticsRating,
             usersRating = usersRating,
             totalRating = totalRating
         )
 
-    private fun List<CoverResponse>.toCoverUrl() =
-        firstOrNull()?.imageId?.let { "https://images.igdb.com/igdb/image/upload/t_cover_big/$it.png" }
 }

@@ -42,21 +42,23 @@ class GameRepository @Inject constructor(
 
     suspend fun searchGame(keyword: String) = igdbDataSource.searchGame(keyword)
 
-    suspend fun gameDetail(id: Int) = igdbDataSource.gameDetail(id)
+    suspend fun gamesDetail(ids: List<Int>) = igdbDataSource.gamesDetail(ids)
 
     suspend fun sync() {
-        val ids = gameDao.games().map { it.id }
-        ids.forEach { id ->
-            val resource = igdbDataSource.gameDetail(id)
+        val games = gameDao.games()
+        games.chunked(50).forEach { chunk ->
+            val ids = chunk.map { it.id }
+            val resource = igdbDataSource.gamesDetail(ids)
             if (resource.status == Resource.Status.SUCCESS) {
-                val localGame = gameDao.gameById(id)
-                val game = resource.data!!.toGame()
-                game.apply {
-                    liked = localGame.liked
-                    played = localGame.played
-                }
-                if (localGame != game) {
-                    gameDao.insert(game)
+                resource.data!!.forEach { igdbGame ->
+                    val localGame = chunk.first { it.id == igdbGame.id }
+                    val game = igdbGame.toGame().apply {
+                        liked = localGame.liked
+                        played = localGame.played
+                    }
+                    if (localGame != game) {
+                        gameDao.insert(game)
+                    }
                 }
             }
         }
